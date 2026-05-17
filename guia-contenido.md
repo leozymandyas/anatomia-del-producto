@@ -9,7 +9,6 @@ Cómo escribir artículos, crear secciones y estructurar el sitio.
 ```
 src/content/docs/
 ├── index.mdx              → página de inicio (ruta: /)
-├── sobre-mi.md            → ruta: /sobre-mi/
 ├── contacto.md            → ruta: /contacto/
 ├── cabeza/                → sección "Cabeza" en el sidebar
 │   └── mi-articulo.md     → ruta: /cabeza/mi-articulo/
@@ -32,32 +31,68 @@ Todo artículo empieza con un bloque de **frontmatter** (entre `---`) seguido de
 ---
 title: Título del artículo
 description: Una frase que describe el artículo. Aparece en SEO y en vistas previas.
-tags: [producto, IA, estrategia]
+tags: ["producto", "IA", "estrategia"]
+pubDate: 2025-03-15
 ---
 
-El primer párrafo va aquí, sin ningún encabezado encima. Este texto
-es la introducción del artículo.
+El primer párrafo va aquí, sin ningún encabezado encima.
 
 ## Primer subtítulo
 
 Contenido de la sección...
-
-## Segundo subtítulo
-
-Más contenido...
 ```
 
 ### Campos del frontmatter
 
 | Campo | Obligatorio | Descripción |
 |---|---|---|
-| `title` | Sí | Título del artículo. Aparece como h1 y en la pestaña. |
+| `title` | Sí | Título del artículo. Aparece como h1 y en el sidebar. |
 | `description` | Recomendado | Descripción corta para SEO y tarjetas de vista previa. |
 | `tags` | No | Lista de etiquetas. Genera chips y páginas `/tags/<tag>/`. |
+| `pubDate` | Recomendado | Fecha de publicación (YYYY-MM-DD). Usada para el botón "Último artículo" del inicio. |
+| `icon` | No | Ícono que aparece junto al título. Puede ser un emoji (`🧠`) o una ruta de imagen (`/favicon.svg`). |
+| `relatedArticles` | No | Lista de IDs de artículos relacionados. Muestra tarjetas al final del artículo. |
+| `pageTheme` | No | Tema de color de la página (ej: `terracota`). |
 
-### Tema de color de la página (`pageTheme`)
+### El campo `pubDate`
 
-Puedes cambiar los colores del área de contenido de una página sin afectar el sidebar ni el menú. El sidebar, el header y la navegación conservan siempre sus colores normales.
+Controla qué artículo aparece en el botón "Último artículo →" de la página de inicio. El botón apunta siempre al artículo con la fecha más reciente dentro de las secciones Cabeza, Caja torácica y Extremidades.
+
+```yaml
+pubDate: 2025-03-15
+```
+
+> El campo es interno — no se muestra visiblemente en el artículo.
+
+### El campo `icon`
+
+Aparece alineado al lado izquierdo del título (`<h1>`). Acepta dos formatos:
+
+```yaml
+# Emoji
+icon: 🧠
+
+# Ruta de imagen (debe existir en /public/ o como asset)
+icon: /favicon.svg
+```
+
+### El campo `relatedArticles`
+
+Muestra tarjetas de artículos relacionados al final del contenido, antes de la navegación anterior/siguiente. Se escribe como lista de IDs de documento (ruta relativa sin extensión desde `src/content/docs/`):
+
+```yaml
+relatedArticles:
+  - cabeza/ia-y-el-futuro-de-los-productos-digitales
+  - extremidades/herramientas-ia-para-equipos-de-producto
+```
+
+El ID es la ruta del archivo sin `src/content/docs/` y sin extensión.
+
+---
+
+## Tema de color de la página (`pageTheme`)
+
+Puedes cambiar los colores del área de contenido de una página sin afectar el sidebar ni el menú.
 
 ```yaml
 ---
@@ -77,7 +112,6 @@ pageTheme: terracota
 2. Duplica el bloque `terracota` y cambia el nombre y los colores. Usa valores hex directos (no variables CSS) para evitar referencias circulares:
 
 ```css
-/* Tema: marino — ejemplo */
 .main-pane:has([data-page-theme='marino']) {
   background-color: #1A2A45;
   color: #FDF5E5;
@@ -99,23 +133,16 @@ pageTheme: terracota
   color: #FDF5E5;
   text-decoration-color: rgba(253, 245, 229, 0.5);
 }
-
-.main-pane:has([data-page-theme='marino']) a:hover {
-  text-decoration-color: #FDF5E5;
-}
-
-.main-pane:has([data-page-theme='marino']) .tag-chip {
-  background-color: rgba(253, 245, 229, 0.18);
-  color: #FDF5E5;
-}
 ```
 
-3. Usa `pageTheme: marino` en el frontmatter del artículo.
+3. Usa `pageTheme: marino` en el frontmatter.
 
-### Sobre los tags
+---
 
-- Se escriben como lista: `tags: [producto, IA]` o `tags: ["Producto Digital", "IA"]`
-- Si el tag tiene espacios, usa comillas: `"Producto Digital"`
+## Sobre los tags
+
+- Se escriben como lista: `tags: ["Producto Digital", "IA"]`
+- Si el tag tiene espacios, usa comillas
 - Al usar un tag por primera vez se crea automáticamente su página en `/tags/<tag>/`
 - Usa tags consistentes entre artículos (misma capitalización y ortografía)
 
@@ -127,8 +154,6 @@ pageTheme: terracota
 |---|---|
 | `.md` | La mayoría de artículos. Solo texto, imágenes y Markdown estándar. |
 | `.mdx` | Cuando necesitas insertar componentes como `<YouTube>` o elementos interactivos. |
-
-Para artículos normales, usa `.md`. Solo cambia a `.mdx` si el artículo necesita un componente.
 
 ---
 
@@ -170,7 +195,9 @@ También puedes poner imágenes en `public/` y referenciarlas con ruta absoluta:
 ![Descripción](/imagenes/mi-imagen.png)
 ```
 
-Formatos soportados: `.png`, `.jpg`, `.webp`, `.gif`, `.svg`
+### Links externos
+
+Cualquier link que empiece con `http://` o `https://` se abre automáticamente en una pestaña nueva (`target="_blank"`). Los links internos (que empiezan con `/`) abren en la misma pestaña. No necesitas configurar nada.
 
 ---
 
@@ -182,7 +209,8 @@ Los artículos `.mdx` pueden usar el componente `<YouTube>`:
 ---
 title: Mi artículo con video
 description: Descripción del artículo.
-tags: [producto]
+tags: ["producto"]
+pubDate: 2025-03-15
 ---
 
 import YouTube from '../../../components/YouTube.astro';
@@ -190,8 +218,6 @@ import YouTube from '../../../components/YouTube.astro';
 Texto introductorio del artículo.
 
 <YouTube id="dQw4w9WgXcQ" />
-
-Texto después del video.
 ```
 
 El `id` es el código que aparece en la URL de YouTube después de `?v=`.
@@ -205,7 +231,7 @@ Una "sección" es una carpeta dentro de `src/content/docs/` + una entrada en el 
 ### Paso 1: Crear la carpeta
 
 ```
-src/content/docs/columna/       ← nombre en minúsculas, sin espacios ni tildes
+src/content/docs/columna/
 ```
 
 ### Paso 2: Agregar la sección al sidebar
@@ -216,7 +242,7 @@ Abre `astro.config.mjs` y agrega una entrada en el array `sidebar`:
 sidebar: [
   // ... entradas existentes ...
   {
-    label: 'Columna',           // nombre que se ve en el sidebar
+    label: 'Columna',
     items: [
       { autogenerate: { directory: 'columna' } }
     ],
@@ -224,82 +250,33 @@ sidebar: [
 ]
 ```
 
-`autogenerate` hace que todos los archivos de esa carpeta aparezcan automáticamente.
-
 ### Paso 3: Crear el primer artículo de la sección
-
-```
-src/content/docs/columna/mi-primer-articulo.md
-```
 
 ```markdown
 ---
 title: Mi primer artículo de Columna
 description: Descripción del artículo.
-tags: [columna]
+tags: ["columna"]
+pubDate: 2025-04-01
 ---
 
 Contenido del artículo...
 ```
 
-Guarda el archivo y la sección aparece en el sidebar de inmediato (en desarrollo local).
-
 ---
 
-## Agregar subsecciones (Cabeza > Ojos > Artículo)
+## Agregar subsecciones
 
-Puedes anidar un nivel más creando subcarpetas dentro de una sección. No hace falta tocar `astro.config.mjs` si ya usas `autogenerate` — Starlight convierte las subcarpetas en grupos automáticamente.
-
-### Estructura de carpetas
+Puedes anidar carpetas dentro de una sección. Con `autogenerate`, Starlight convierte las subcarpetas en grupos automáticamente.
 
 ```
 src/content/docs/
 └── cabeza/
     ├── ojos/
-    │   ├── ia-y-vision.md
-    │   └── reconocimiento-de-patrones.md
+    │   └── ia-y-vision.md
     └── oidos/
         └── procesamiento-de-audio.md
 ```
-
-Resultado en el sidebar:
-```
-▼ Cabeza
-    ▼ Ojos
-        IA y visión
-        Reconocimiento de patrones
-    ▼ Oídos
-        Procesamiento de audio
-```
-
-El label del grupo viene del nombre de la carpeta (capitalizado automáticamente).
-
-### Si quieres un label personalizado para la subsección
-
-Reemplaza el `autogenerate` de la sección en `astro.config.mjs` con una lista manual:
-
-```js
-{
-  label: 'Cabeza',
-  items: [
-    {
-      label: 'Visión e imágenes',        // label personalizado
-      items: [{ autogenerate: { directory: 'cabeza/ojos' } }],
-    },
-    {
-      label: 'Sonido',
-      items: [{ autogenerate: { directory: 'cabeza/oidos' } }],
-    },
-  ],
-},
-```
-
-### Rutas resultantes
-
-| Archivo | URL |
-|---|---|
-| `cabeza/ojos/ia-y-vision.md` | `/cabeza/ojos/ia-y-vision/` |
-| `cabeza/oidos/procesamiento.md` | `/cabeza/oidos/procesamiento/` |
 
 ---
 
@@ -311,60 +288,32 @@ Para controlar el orden usa un prefijo numérico en el nombre del archivo:
 
 ```
 cabeza/
-├── 01-introduccion.md          → aparece primero
-├── 02-ia-y-producto.md         → segundo
-└── 03-estrategia.md            → tercero
+├── 01-introduccion.md
+├── 02-ia-y-producto.md
+└── 03-estrategia.md
 ```
 
-El número no aparece en la URL (Astro lo elimina del slug automáticamente).
-
-Si prefieres nombres sin número, también puedes listar los artículos manualmente en `astro.config.mjs`:
-
-```js
-{
-  label: 'Cabeza',
-  items: [
-    { label: 'Introducción', link: '/cabeza/introduccion/' },
-    { label: 'IA y producto', link: '/cabeza/ia-y-producto/' },
-  ],
-}
-```
+El número no aparece en la URL.
 
 ---
 
-## Cambiar el título de un artículo en el sidebar
+## Quitar un artículo del sidebar
 
-Por defecto el sidebar usa el `title` del frontmatter. Para usar un título diferente (más corto) en el sidebar, configúralo manualmente:
+Si borras un archivo `.md`, desaparece automáticamente del sidebar. No hace falta tocar `astro.config.mjs` si usas `autogenerate`.
 
-```js
-{
-  label: 'Cabeza',
-  items: [
-    { autogenerate: { directory: 'cabeza' } }
-  ],
-}
-```
-
-O listando manualmente con `label` propio:
-
-```js
-items: [
-  { label: 'Intro corta', link: '/cabeza/introduccion-al-producto-digital/' },
-]
-```
+Si el artículo estaba listado manualmente en `astro.config.mjs` (como "Inicio" o "Contacto"), también debes quitarlo de ahí.
 
 ---
 
 ## Crear páginas especiales (sin sección)
 
-Páginas como "Sobre mí" o "Contacto" van directamente en `src/content/docs/` (sin subcarpeta) y se agregan manualmente al sidebar:
+Páginas como "Contacto" van directamente en `src/content/docs/` y se agregan manualmente al sidebar:
 
 ```js
 {
   label: 'Anatomía del producto',
   items: [
     { label: 'Inicio', link: '/' },
-    { label: 'Sobre mí', link: '/sobre-mi/' },
     { label: 'Contacto', link: '/contacto/' },
   ],
 },
@@ -374,15 +323,24 @@ Páginas como "Sobre mí" o "Contacto" van directamente en `src/content/docs/` (
 
 ## Páginas automáticas del sitio
 
-El sitio incluye dos páginas generadas automáticamente que no requieren mantenimiento:
-
 | URL | Descripción |
 |---|---|
-| `/articulos/` | Índice de todos los artículos, ordenados alfabéticamente con su sección y tags |
-| `/tags/` | Lista de todos los tags usados, con el número de artículos de cada uno |
+| `/articulos/` | Índice de todos los artículos, ordenados con su sección y tags |
+| `/tags/` | Lista de todos los tags usados |
 | `/tags/<tag>/` | Artículos filtrados por un tag específico |
 
-Estas páginas se actualizan solas cada vez que publicas un artículo nuevo. No necesitas tocarlas.
+Se actualizan solas cada vez que publicas un artículo nuevo.
+
+---
+
+## Navegación al final de los artículos
+
+Al final de cada artículo aparecen (en este orden):
+
+1. **Tarjetas de artículos relacionados** — si el artículo tiene `relatedArticles` en el frontmatter
+2. **Navegación Anterior / Siguiente** — siempre presente (excepto en el primero y último artículo de la secuencia del sidebar)
+
+No necesitas configurar nada para la navegación. Los artículos relacionados se configuran con el campo `relatedArticles`.
 
 ---
 
@@ -392,23 +350,25 @@ Todos los artículos muestran automáticamente al final:
 
 > Copyright © Todos los Derechos Reservados Leonardo Ruano Hernández {año}
 
-No necesitas añadirlo manualmente. El componente `Footer.astro` lo inserta en cada página. El año se actualiza solo.
+El año se actualiza solo. No necesitas añadirlo manualmente.
 
 ---
 
 ## Sidebar colapsable
 
-En escritorio, el sidebar tiene un botón `‹` en la esquina superior derecha que lo colapsa a un rail de íconos. El estado se guarda automáticamente en el navegador — si lo cierras y vuelves, queda igual. No necesitas configurar nada.
+En escritorio, el sidebar tiene un botón en la esquina superior derecha que lo colapsa a un rail de íconos. El estado se guarda automáticamente en el navegador.
+
+El bloque de branding (logo + nombre + botón) es **sticky** — permanece visible aunque hagas scroll dentro del sidebar.
 
 ---
 
 ## Flujo completo: publicar un artículo nuevo
 
 1. Crea el archivo `.md` en la carpeta correcta
-2. Escribe el frontmatter (`title`, `description`, `tags`)
-3. Escribe el contenido en Markdown
-4. Prueba localmente: `npm run dev`
-5. Cuando se vea bien, publica:
+2. Escribe el frontmatter con al menos `title`, `description`, `tags`, `pubDate`
+3. (Opcional) Agrega `relatedArticles` con IDs de otros artículos
+4. Escribe el contenido en Markdown
+5. Publica:
    ```bash
    git add .
    git commit -m "Nuevo artículo: nombre del artículo"
@@ -423,7 +383,7 @@ En escritorio, el sidebar tiene un botón `‹` en la esquina superior derecha q
 | Archivo | URL resultante |
 |---|---|
 | `docs/index.mdx` | `/` |
-| `docs/sobre-mi.md` | `/sobre-mi/` |
+| `docs/contacto.md` | `/contacto/` |
 | `docs/cabeza/ia-y-producto.md` | `/cabeza/ia-y-producto/` |
 | `docs/cabeza/01-intro.md` | `/cabeza/intro/` (el número se elimina) |
 | `docs/caja-toracica/mvp.md` | `/caja-toracica/mvp/` |

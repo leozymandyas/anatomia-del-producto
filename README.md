@@ -26,7 +26,7 @@ npm run preview  # previsualizar el build
 
 Vercel despliega en ~1 minuto.
 
-Ver **`guia-contenido.md`** para documentación completa de estructura, frontmatter, tags, temas de color, secciones y más.
+Ver **`guia-contenido.md`** para documentación completa.
 
 ---
 
@@ -34,36 +34,56 @@ Ver **`guia-contenido.md`** para documentación completa de estructura, frontmat
 
 ```
 src/
-├── assets/                    → imágenes y logos
+├── assets/                        → imágenes y logos (logo.svg)
 ├── components/
-│   ├── overrides/             → componentes que reemplazan los de Starlight
-│   │   ├── Footer.astro       → copyright automático en cada página
-│   │   ├── Header.astro       → header oculto en desktop
-│   │   ├── MarkdownContent.astro → añade tags y soporte de pageTheme
-│   │   ├── MobileMenuFooter.astro
-│   │   ├── PageSidebar.astro  → TOC integrado en el sidebar
-│   │   └── Sidebar.astro      → sidebar con collapse, branding y copyright
-│   ├── SidebarWithToc.astro
-│   └── YouTube.astro          → componente para incrustar videos
+│   ├── overrides/                 → componentes que reemplazan los de Starlight
+│   │   ├── Footer.astro           → copyright automático al final de cada página
+│   │   ├── Header.astro           → header oculto en desktop, visible en móvil
+│   │   ├── MarkdownContent.astro  → añade tags, artículos relacionados y paginación
+│   │   ├── MobileMenuFooter.astro → vacío (elimina selector de tema oscuro/claro)
+│   │   ├── PageSidebar.astro      → TOC móvil (el de escritorio está en el sidebar)
+│   │   ├── PageTitle.astro        → título con soporte de ícono (emoji o imagen)
+│   │   └── Sidebar.astro          → sidebar con branding sticky, collapse y copyright
+│   ├── RelatedArticles.astro      → tarjetas de artículos relacionados
+│   ├── SidebarWithToc.astro       → sidebar con TOC integrado
+│   ├── UltimoArticulo.astro       → botón "Último artículo →" de la página de inicio
+│   └── YouTube.astro              → componente para incrustar videos de YouTube
 ├── content/
-│   └── docs/
-│       ├── index.mdx          → página de inicio (/)
-│       ├── sobre-mi.md
-│       ├── contacto.md
-│       ├── cabeza/            → sección Cabeza
-│       ├── caja-toracica/     → sección Caja torácica
-│       └── extremidades/      → sección Extremidades
+│   ├── docs/
+│   │   ├── index.mdx              → página de inicio (/)
+│   │   ├── contacto.md            → /contacto/
+│   │   ├── cabeza/                → sección Cabeza
+│   │   ├── caja-toracica/         → sección Caja torácica
+│   │   └── extremidades/          → sección Extremidades
+│   └── i18n/
+│       └── es.json                → sobreescribe textos de Starlight en español
 ├── pages/
-│   ├── articulos/index.astro  → /articulos/ — índice completo
+│   ├── 404.astro                  → página de error personalizada con botón de inicio
+│   ├── articulos/index.astro      → /articulos/ — índice completo de artículos
 │   └── tags/
-│       ├── index.astro        → /tags/ — lista de tags
-│       └── [tag].astro        → /tags/<tag>/ — artículos por tag
+│       ├── index.astro            → /tags/ — lista de todos los tags
+│       └── [tag].astro            → /tags/<tag>/ — artículos por tag
 └── styles/
-    └── custom.css             → paleta, tipografía, layout, temas de página
+    └── custom.css                 → paleta, tipografía, layout, temas de página
 
-astro.config.mjs               → configuración del sitio y sidebar
-guia-contenido.md              → guía para escribir y publicar artículos
+astro.config.mjs                   → configuración del sitio, sidebar y rehype plugins
+src/content.config.ts              → esquema de frontmatter con campos personalizados
+guia-contenido.md                  → guía para escribir y publicar artículos
 ```
+
+---
+
+## Campos de frontmatter disponibles
+
+| Campo | Tipo | Descripción |
+|---|---|---|
+| `title` | string | Título del artículo (obligatorio) |
+| `description` | string | Descripción SEO |
+| `tags` | string[] | Etiquetas del artículo |
+| `pubDate` | fecha | Fecha de publicación (YYYY-MM-DD). Determina el "Último artículo" del inicio. |
+| `icon` | string | Ícono junto al título: emoji (`🧠`) o ruta de imagen (`/favicon.svg`) |
+| `relatedArticles` | string[] | IDs de artículos relacionados (tarjetas al final del artículo) |
+| `pageTheme` | string | Tema de color de la página (ej: `terracota`) |
 
 ---
 
@@ -73,7 +93,9 @@ guia-contenido.md              → guía para escribir y publicar artículos
 |---|---|---|
 | `--c-bg` | `#FDF5E5` | Fondo general (crema cálida) |
 | `--c-navy` | `#B25F28` | Acento principal (terracota) |
+| `--c-navy-dark` | `#7A3F18` | Hover del acento |
 | `--c-text` | `#3D2010` | Texto del cuerpo |
+| `--c-text-strong` | `#2A1508` | Negritas |
 
 Para cambiar la paleta, edita las variables `--c-*` en `src/styles/custom.css`.
 
@@ -86,3 +108,15 @@ Para cambiar la paleta, edita las variables `--c-*` en `src/styles/custom.css`.
 - **Lato** — cuerpo del texto
 
 Cargadas desde Google Fonts en `astro.config.mjs`.
+
+---
+
+## Comportamientos automáticos
+
+- **Links externos** — cualquier URL `http(s)://` en el contenido abre en pestaña nueva (`target="_blank"`), implementado con un plugin rehype en `astro.config.mjs`
+- **Último artículo** — el botón de la página de inicio apunta siempre al artículo con `pubDate` más reciente entre las secciones de contenido
+- **Artículos relacionados** — se muestran al final del artículo si tiene el campo `relatedArticles`
+- **Paginación** — anterior/siguiente aparece debajo de los artículos relacionados
+- **TOC en sidebar** — en escritorio, la tabla de contenidos aparece inline bajo el artículo activo en el sidebar izquierdo (no en un panel derecho)
+- **Sidebar sticky** — el bloque de logo/nombre permanece visible al hacer scroll en el sidebar
+- **Sidebar colapsable** — botón en la esquina superior derecha; estado guardado en localStorage
