@@ -23,6 +23,11 @@ h6,
 	font-family: 'PT Serif', serif;
 }
 
+/* Ocultar ícono de ancla en encabezados */
+.sl-markdown-content .sl-anchor-link {
+	display: none;
+}
+
 /* Título del artículo (h1 generado por Starlight fuera de .sl-markdown-content) */
 h1#_top {
 	color: #6A5142;
