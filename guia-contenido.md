@@ -74,18 +74,38 @@ pageTheme: terracota
 **Cómo crear un tema nuevo:**
 
 1. Abre `src/styles/custom.css` y busca la sección `/* Temas de página */`
-2. Duplica el bloque `terracota` y cambia el nombre y los colores:
+2. Duplica el bloque `terracota` y cambia el nombre y los colores. Usa valores hex directos (no variables CSS) para evitar referencias circulares:
 
 ```css
 /* Tema: marino — ejemplo */
 .main-pane:has([data-page-theme='marino']) {
   background-color: #1A2A45;
+  color: #FDF5E5;
+  --c-navy:              #FDF5E5;
+  --c-text:              #FDF5E5;
+  --c-text-strong:       #FDF5E5;
+  --c-border:            rgba(253, 245, 229, 0.25);
+  --c-border-soft:       rgba(253, 245, 229, 0.18);
+  --sl-color-bg:         #1A2A45;
+  --sl-color-text:       #FDF5E5;
+  --sl-color-white:      #FDF5E5;
+  --sl-color-text-accent:#FDF5E5;
+  --sl-color-accent:     #FDF5E5;
+  --sl-color-hairline:        rgba(253, 245, 229, 0.25);
+  --sl-color-hairline-light:  rgba(253, 245, 229, 0.18);
 }
-.main-pane:has([data-page-theme='marino']) [data-page-theme='marino'],
-.main-pane:has([data-page-theme='marino']) h1#_top {
-  --c-navy: #FDF5E5;
-  --c-text: #FDF5E5;
-  --c-text-strong: #FDF5E5;
+
+.main-pane:has([data-page-theme='marino']) a {
+  color: #FDF5E5;
+  text-decoration-color: rgba(253, 245, 229, 0.5);
+}
+
+.main-pane:has([data-page-theme='marino']) a:hover {
+  text-decoration-color: #FDF5E5;
+}
+
+.main-pane:has([data-page-theme='marino']) .tag-chip {
+  background-color: rgba(253, 245, 229, 0.18);
   color: #FDF5E5;
 }
 ```
@@ -349,6 +369,36 @@ Páginas como "Sobre mí" o "Contacto" van directamente en `src/content/docs/` (
   ],
 },
 ```
+
+---
+
+## Páginas automáticas del sitio
+
+El sitio incluye dos páginas generadas automáticamente que no requieren mantenimiento:
+
+| URL | Descripción |
+|---|---|
+| `/articulos/` | Índice de todos los artículos, ordenados alfabéticamente con su sección y tags |
+| `/tags/` | Lista de todos los tags usados, con el número de artículos de cada uno |
+| `/tags/<tag>/` | Artículos filtrados por un tag específico |
+
+Estas páginas se actualizan solas cada vez que publicas un artículo nuevo. No necesitas tocarlas.
+
+---
+
+## Footer de copyright
+
+Todos los artículos muestran automáticamente al final:
+
+> Copyright © Todos los Derechos Reservados Leonardo Ruano Hernández {año}
+
+No necesitas añadirlo manualmente. El componente `Footer.astro` lo inserta en cada página. El año se actualiza solo.
+
+---
+
+## Sidebar colapsable
+
+En escritorio, el sidebar tiene un botón `‹` en la esquina superior derecha que lo colapsa a un rail de íconos. El estado se guarda automáticamente en el navegador — si lo cierras y vuelves, queda igual. No necesitas configurar nada.
 
 ---
 
