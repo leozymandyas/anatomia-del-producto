@@ -3,6 +3,7 @@
 	.header {
 		display: none;
 	}
+
 	:root {
 		--sl-nav-height: 0rem;
 	}
@@ -10,14 +11,16 @@
 
 /* ─── Sidebar colapsable (solo desktop) ──────────────────────────────────────── */
 @media (min-width: 50rem) {
+
 	/* Animar el ancho del sidebar */
 	.sidebar-pane {
 		transition: width 0.2s ease-in-out;
 	}
+
 	/* Animar el padding del contenido principal */
 	.main-frame {
 		transition: padding-inline-start 0.2s ease-in-out,
-		            padding-inline-end 0.2s ease-in-out;
+			padding-inline-end 0.2s ease-in-out;
 	}
 
 	/* Estado colapsado */
@@ -66,14 +69,17 @@
 	width: 8px;
 	height: 8px;
 }
+
 ::-webkit-scrollbar-track {
 	background: #FFE4B5;
 }
+
 ::-webkit-scrollbar-thumb {
 	background-color: #A89080;
 	border-radius: 999px;
 	border: 2px solid #FFE4B5;
 }
+
 ::-webkit-scrollbar-thumb:hover {
 	background-color: #7A6A60;
 }
@@ -110,16 +116,16 @@ h6,
 
 /* Título del artículo (h1 generado por Starlight fuera de .sl-markdown-content) */
 h1#_top {
-	color: #6A5142;
+	color: #87734A;
 }
 
 /* Encabezados dentro del contenido markdown */
 .sl-markdown-content :is(h2, h3, h4, h5, h6) {
-	color: #6A5142;
+	color: #87734A;
 }
 
 .sl-markdown-content strong {
-	color: #282828;
+	color: #5B4524;
 }
 
 /* ─── Paleta cálida (fuerza modo claro siempre) ─────────────────────────────── */
@@ -127,10 +133,10 @@ h1#_top {
 :root[data-theme='light'],
 :root[data-theme='dark'] {
 	/* Fondos */
-	--sl-color-bg: #FFE4B5;
-	--sl-color-bg-nav: #FFE4B5;
-	--sl-color-bg-sidebar: #FFE4B5;
-	--sl-color-black: #FFE4B5;
+	--sl-color-bg: #E5DFC5;
+	--sl-color-bg-nav: #E5DFC5;
+	--sl-color-bg-sidebar: #E5DFC5;
+	--sl-color-black: #E5DFC5;
 
 	/* Texto */
 	--sl-color-text: #4A2F1A;
