@@ -52,47 +52,48 @@ const { sidebar, toc } = Astro.locals.starlightRoute;
 </script>
 
 <style>
+	/* Oculto en móvil — el header nativo ya muestra el título del sitio */
 	.sidebar-brand {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 0.5rem;
-		padding-bottom: 0.75rem;
-		border-bottom: 1px solid var(--sl-color-hairline);
-		margin-bottom: 0.25rem;
-	}
-
-	.brand-link {
-		display: flex;
-		align-items: center;
-		gap: 0.55rem;
-		text-decoration: none;
-		color: var(--c-navy);
-		font-family: 'Alegreya', serif;
-		font-size: 1rem;
-		font-weight: 700;
-		line-height: 1.2;
-		min-width: 0;
-	}
-
-	.brand-logo {
-		width: 30px;
-		height: 30px;
-		flex-shrink: 0;
-	}
-
-	.brand-name {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		transition: opacity 0.15s, width 0.15s;
-	}
-
-	.collapse-btn {
 		display: none;
 	}
 
 	@media (min-width: 50rem) {
+		.sidebar-brand {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 0.5rem;
+			padding-bottom: 0.75rem;
+			border-bottom: 1px solid var(--sl-color-hairline);
+			margin-bottom: 0.25rem;
+		}
+
+		.brand-link {
+			display: flex;
+			align-items: center;
+			gap: 0.55rem;
+			text-decoration: none;
+			color: var(--c-navy);
+			font-family: 'Alegreya', serif;
+			font-size: 1rem;
+			font-weight: 700;
+			line-height: 1.2;
+			min-width: 0;
+		}
+
+		.brand-logo {
+			width: 30px;
+			height: 30px;
+			flex-shrink: 0;
+		}
+
+		.brand-name {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			transition: opacity 0.15s, width 0.15s;
+		}
+
 		.collapse-btn {
 			flex-shrink: 0;
 			display: flex;
@@ -107,9 +108,7 @@ const { sidebar, toc } = Astro.locals.starlightRoute;
 			cursor: pointer;
 			transition: background-color 0.15s, color 0.15s, transform 0.2s;
 		}
-	}
 
-	@media (min-width: 50rem) {
 		.collapse-btn:hover {
 			background-color: rgba(178, 95, 40, 0.12); /* --c-navy al 12% */
 			color: var(--c-navy);
