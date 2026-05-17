@@ -1,10 +1,12 @@
 ---
 import '@astrojs/starlight/style/markdown.css';
+import RelatedArticles from '../RelatedArticles.astro';
 
 const entry = Astro.locals.starlightRoute.entry;
 const data = entry.data as Record<string, unknown>;
 const tags = (data.tags ?? []) as string[];
 const pageTheme = (data.pageTheme ?? '') as string;
+const relatedArticles = (data.relatedArticles ?? []) as string[];
 
 function slugifyTag(tag: string) {
 	return tag.toLowerCase().replace(/\s+/g, '-');
@@ -12,16 +14,13 @@ function slugifyTag(tag: string) {
 ---
 
 <div class="sl-markdown-content" data-page-theme={pageTheme || undefined}>
-	{
-		tags.length > 0 && (
-			<div class="article-tags-header">
-				{tags.map((tag) => (
-					<a href={`/tags/${slugifyTag(tag)}/`} class="tag-chip">
-						{tag}
-					</a>
-				))}
-			</div>
-		)
-	}
+	{tags.length > 0 && (
+		<div class="article-tags-header">
+			{tags.map((tag) => (
+				<a href={`/tags/${slugifyTag(tag)}/`} class="tag-chip">{tag}</a>
+			))}
+		</div>
+	)}
 	<slot />
+	<RelatedArticles ids={relatedArticles} />
 </div>

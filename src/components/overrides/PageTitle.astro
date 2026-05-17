@@ -2,9 +2,14 @@
 const { entry } = Astro.locals.starlightRoute;
 const data = entry.data as Record<string, unknown>;
 const icon = (data.icon ?? '') as string;
+const isImage = icon.startsWith('/') || icon.startsWith('http://') || icon.startsWith('https://');
 ---
 
-{icon && <span class="page-title-icon" aria-hidden="true">{icon}</span>}
+{icon && (
+	isImage
+		? <img src={icon} alt="" aria-hidden="true" class="page-title-icon-img" />
+		: <span class="page-title-icon" aria-hidden="true">{icon}</span>
+)}
 <h1 id="_top">{entry.data.title}</h1>
 
 <style>
@@ -13,5 +18,13 @@ const icon = (data.icon ?? '') as string;
 		font-size: 2.5rem;
 		line-height: 1;
 		margin-bottom: 0.4rem;
+	}
+
+	.page-title-icon-img {
+		display: block;
+		width: 3rem;
+		height: 3rem;
+		object-fit: contain;
+		margin-bottom: 0.6rem;
 	}
 </style>

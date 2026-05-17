@@ -3,6 +3,9 @@ title: IA y el futuro de los productos digitales
 description: Cómo la inteligencia artificial está redefiniendo la forma en que creamos, lanzamos e iteramos productos digitales.
 tags: ["IA", "Producto Digital", "Tendencias"]
 pubDate: 2025-01-10
+relatedArticles:
+  - caja-toracica/como-validar-un-mvp-con-ia
+  - extremidades/herramientas-ia-para-equipos-de-producto
 ---
 
 La inteligencia artificial no es una herramienta más en el stack de un equipo de producto. Es un cambio de paradigma que afecta cada fase del ciclo de vida: desde cómo descubrimos oportunidades hasta cómo entregamos valor a los usuarios.

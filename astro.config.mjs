@@ -2,8 +2,28 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
+/** Abre en nueva pestaña cualquier enlace que apunte a http(s):// */
+function externalLinks() {
+	return function (/** @type {any} */ tree) {
+		function walk(/** @type {any} */ node) {
+			if (node.type === 'element' && node.tagName === 'a') {
+				const href = node.properties?.href ?? '';
+				if (/^https?:\/\//.test(href)) {
+					node.properties.target = '_blank';
+					node.properties.rel = 'noopener noreferrer';
+				}
+			}
+			(node.children ?? []).forEach(walk);
+		}
+		walk(tree);
+	};
+}
+
 export default defineConfig({
 	site: 'https://anatomia-del-producto.com',
+	markdown: {
+		rehypePlugins: [externalLinks],
+	},
 	integrations: [
 		starlight({
 			title: 'Anatomía del Producto',

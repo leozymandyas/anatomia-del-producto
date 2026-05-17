@@ -1,0 +1,88 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+	ids: string[];
+}
+
+const { ids } = Astro.props;
+
+if (!ids || ids.length === 0) return;
+
+const allDocs = await getCollection('docs');
+const articles = ids
+	.map((id) => allDocs.find((doc) => doc.id === id))
+	.filter(Boolean) as typeof allDocs;
+---
+
+{articles.length > 0 && (
+	<aside class="related-articles">
+		<p class="related-label">Artículos relacionados</p>
+		<div class="related-grid">
+			{articles.map((art) => (
+				<a href={`/${art.id}/`} class="related-card">
+					<span class="related-card-title">{art.data.title}</span>
+					{art.data.description && (
+						<span class="related-card-desc">{art.data.description}</span>
+					)}
+				</a>
+			))}
+		</div>
+	</aside>
+)}
+
+<style>
+	.related-articles {
+		margin-top: 2.5rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--sl-color-hairline);
+	}
+
+	.related-label {
+		font-size: 0.72rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--c-gray-4);
+		margin-bottom: 0.75rem;
+	}
+
+	.related-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		gap: 0.75rem;
+	}
+
+	.related-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+		padding: 0.9rem 1rem;
+		border: 1px solid var(--sl-color-hairline);
+		border-radius: 0.5rem;
+		text-decoration: none;
+		transition: border-color 0.15s, background-color 0.15s;
+	}
+
+	.related-card:hover {
+		border-color: var(--c-navy);
+		background-color: var(--c-navy-tint);
+	}
+
+	.related-card-title {
+		font-size: var(--sl-text-sm);
+		font-weight: 600;
+		color: var(--c-navy);
+		line-height: 1.3;
+	}
+
+	.related-card-desc {
+		font-size: 0.76rem;
+		color: var(--c-gray-3);
+		line-height: 1.4;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+</style>

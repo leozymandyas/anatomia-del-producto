@@ -11,6 +11,7 @@ export const collections = {
 				pageTheme: z.string().optional(),
 				pubDate: z.date().optional(),
 				icon: z.string().optional(),
+				relatedArticles: z.array(z.string()).optional().default([]),
 			}),
 		}),
 	}),

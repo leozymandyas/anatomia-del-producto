@@ -3,6 +3,9 @@ title: Herramientas de IA para equipos de producto en 2025
 description: Las herramientas de inteligencia artificial más útiles para PMs, diseñadores y desarrolladores que construyen productos digitales.
 tags: ["IA", "Herramientas", "Producto Digital"]
 pubDate: 2025-02-20
+relatedArticles:
+  - cabeza/ia-y-el-futuro-de-los-productos-digitales
+  - caja-toracica/como-validar-un-mvp-con-ia
 ---
 
 El ecosistema de herramientas de IA para equipos de producto creció exponencialmente en 2024. Aquí está la selección que realmente vale la pena conocer en 2025.

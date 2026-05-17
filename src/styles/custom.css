@@ -371,6 +371,17 @@ button[data-open-modal] kbd {
 	background-color: rgba(253, 245, 229, 0.32);
 }
 
+/* El botón "Último artículo" es crema sobre terracota — el link override
+   del tema lo haría invisible; esta regla restaura el color correcto. */
+.main-pane:has([data-page-theme='terracota']) a.btn-ultimo {
+	color: #B25F28;
+	text-decoration: none;
+}
+
+.main-pane:has([data-page-theme='terracota']) a.btn-ultimo:hover {
+	color: #7A3F18;
+}
+
 /* ─── Tags de artículos ──────────────────────────────────────────────────────── */
 .article-tags-header {
 	display: flex;
