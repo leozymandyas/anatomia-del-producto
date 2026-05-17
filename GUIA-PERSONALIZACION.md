@@ -1,236 +1,212 @@
 # Guía de personalización — Anatomía del Producto
 
-Cómo cambiar colores, tipografías y secciones por tu cuenta.
+Referencia práctica para mantener y cambiar el sitio sin tener que recordar cómo funciona por dentro.
 
 ---
 
-## 1. Cambiar colores
+## Stack
 
-Todos los colores del sitio se controlan desde un solo archivo:
-
-```
-src/styles/custom.css
-```
-
-Dentro de ese archivo hay un bloque de variables CSS:
-
-```css
-:root,
-:root[data-theme='light'],
-:root[data-theme='dark'] {
-    --sl-color-bg:         #DCC7A7;  /* fondo de la página */
-    --sl-color-bg-nav:     #CDB99A;  /* fondo del header */
-    --sl-color-bg-sidebar: #D5BFA0;  /* fondo del sidebar */
-    --sl-color-text:       #45423F;  /* color del texto normal */
-    --sl-color-accent:     #6A5142;  /* color de énfasis (encabezados, activo) */
-    ...
-}
-```
-
-Para cambiar un color, simplemente reemplaza el valor hexadecimal (`#DCC7A7`, etc.) por el color que quieras. Puedes usar cualquier herramienta para elegir colores, como [coolors.co](https://coolors.co) o el selector de color de tu editor.
-
-### Referencia de variables y dónde se ven
-
-| Variable | Dónde afecta |
+| Capa | Tecnología |
 |---|---|
-| `--sl-color-bg` | Fondo principal de cada página |
-| `--sl-color-bg-nav` | Barra de navegación superior (header) |
-| `--sl-color-bg-sidebar` | Panel lateral izquierdo |
-| `--sl-color-text` | Texto del cuerpo de los artículos |
-| `--sl-color-accent` | Encabezados h1–h6, enlace activo en sidebar |
-| `--sl-color-text-accent` | Color de texto de énfasis, títulos en tarjetas |
-| `--sl-color-text-invert` | Texto sobre el fondo del enlace activo en sidebar |
-| `--sl-color-hairline` | Líneas divisorias y bordes sutiles |
-| `--sl-color-gray-1` a `--sl-color-gray-7` | Degradado de tonos para texto secundario, bordes, etc. |
-
-### Colores especiales que no son variables
-
-Algunos colores están definidos directamente (sin variables) porque son muy específicos:
-
-```css
-/* En custom.css */
-
-h1#_top { color: #6A5142; }                  /* título del artículo */
-.sl-markdown-content strong { color: #282828; } /* negritas */
-.group-label .large { color: #523C2E; }       /* secciones del sidebar */
-.site-title { color: #542C14; }               /* "Anatomía del Producto" en el header */
-.tag-chip { color: #523C2E; }                 /* chips de tags */
-```
-
-Para cambiarlos, localiza esa línea en `custom.css` y cambia el hexadecimal.
+| Framework | Astro 6 |
+| Tema de documentación | Starlight 0.39 |
+| Hosting | Vercel (auto-deploy desde GitHub) |
+| Repositorio | `leozymandyas/anatomia-del-producto` |
+| Dominio | `anatomia-del-producto.com` |
 
 ---
 
-## 2. Cambiar tipografías
+## Paleta de colores
 
-Las fuentes se cargan desde Google Fonts. El proceso tiene dos pasos:
+Los colores están definidos como variables CSS en `src/styles/custom.css`, en el bloque `:root { /* Paleta de colores */ }`. Cambiar un valor aquí lo propaga a todo el sitio.
 
-### Paso A — Actualizar la URL en `astro.config.mjs`
+| Variable | Valor | Rol |
+|---|---|---|
+| `--c-bg` | `#FDF5E5` | Fondo de página, sidebar, nav, modal de búsqueda |
+| `--c-text` | `#3A2852` | Cuerpo de texto (párrafos, listas) |
+| `--c-text-strong` | `#2D1A3D` | Negritas dentro del contenido |
+| `--c-navy` | `#432A59` | Títulos, acento principal, tags, sidebar, links activos |
+| `--c-navy-dark` | `#2D1A3D` | Hover sobre elementos de acento |
+| `--c-navy-tint` | `#E0D4EC` | Fondo de acento muy suave |
+| `--c-gray-1..7` | `#1E1228` → `#EDE8F5` | Escala morado-grisácea (texto secundario, bordes) |
+| `--c-border` | `#C0B0D4` | Bordes estándar |
+| `--c-border-soft` | `#D0C4E0` | Bordes interiores del sidebar |
+| `--c-border-dark` | `#A890C0` | Bordes con más contraste |
+| `--c-scroll-thumb` | `#9070A8` | Thumb de la scrollbar |
+| `--c-scroll-track` | `#EDE8F5` | Track de la scrollbar |
 
-Busca el bloque `head` dentro de `starlight({...})`:
+### Cómo cambiar la paleta completa
 
-```js
-head: [
-    ...
-    {
-        tag: 'link',
-        attrs: {
-            rel: 'stylesheet',
-            href: 'https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,700;1,400&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap',
-        },
-    },
-],
-```
-
-Para añadir una fuente nueva, ve a [fonts.google.com](https://fonts.google.com), elige la fuente, haz clic en "Get embed code" y copia solo la parte del `href` del link. Añádela a la URL existente con `&family=NombreDeLaFuente`.
-
-### Paso B — Aplicar la fuente en `custom.css`
-
-```css
-body {
-    font-family: 'Lato', sans-serif;     /* texto del cuerpo */
-}
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'PT Serif', serif;       /* encabezados */
-}
-.site-title {
-    font-family: 'Alegreya', serif;       /* título del sitio en el header */
-}
-```
-
-Cambia el nombre de la fuente entre comillas por el nombre exacto que aparece en Google Fonts.
+1. Abre `src/styles/custom.css`
+2. Edita los valores en el bloque `:root { /* Paleta de colores */ }`
+3. Los tokens de Starlight (`--sl-color-*`) están mapeados a estas variables en el bloque siguiente — no hace falta tocarlos
 
 ---
 
-## 3. Añadir una nueva sección al sidebar
+## Tipografía
 
-El sidebar se configura en `astro.config.mjs`, dentro del bloque `sidebar: [...]`.
+Las fuentes vienen de Google Fonts y se cargan en `astro.config.mjs` (sección `head`).
 
-### Paso A — Crear la carpeta en el contenido
+| Fuente | Rol |
+|---|---|
+| **Lato** | Cuerpo de texto (párrafos, UI) |
+| **PT Serif** | Todos los encabezados h1–h6 |
+| **Alegreya** | Título del sitio en el sidebar |
 
-Crea una carpeta dentro de `src/content/docs/` con el nombre de la sección (sin espacios, en minúsculas con guiones):
+Para cambiar una fuente: reemplaza la URL en el `<link>` de Google Fonts en `astro.config.mjs` y actualiza el `font-family` en `custom.css`.
+
+---
+
+## Estructura de archivos clave
 
 ```
-src/content/docs/
-└── mi-nueva-seccion/
-    └── primer-articulo.md
+src/
+├── assets/
+│   └── logo.svg                  # Logo (figura vitruviana naranja)
+├── components/
+│   ├── overrides/
+│   │   ├── Header.astro          # Header reducido — solo visible en móvil
+│   │   ├── Sidebar.astro         # Sidebar con branding y botón de colapsar
+│   │   ├── PageSidebar.astro     # TOC en móvil (sin panel derecho en desktop)
+│   │   ├── MarkdownContent.astro # Inserta tags encima del contenido
+│   │   └── MobileMenuFooter.astro# Vacío — elimina selector de tema en móvil
+│   └── SidebarWithToc.astro      # Sidebar recursivo con TOC inline
+├── content/
+│   ├── docs/                     # Artículos del sitio (.md / .mdx)
+│   │   ├── index.mdx             # Página de inicio
+│   │   ├── sobre-mi.md
+│   │   ├── contacto.md
+│   │   ├── articulos.md          # Índice de todos los artículos
+│   │   ├── cabeza/               # Sección "Cabeza"
+│   │   ├── caja-toracica/        # Sección "Caja torácica"
+│   │   └── extremidades/         # Sección "Extremidades"
+│   └── i18n/
+│       └── es.json               # Textos de interfaz en español
+├── styles/
+│   └── custom.css                # Todo el estilo personalizado del sitio
+└── content.config.ts             # Esquema de colecciones (docs + i18n)
+
+public/
+└── favicon.svg                   # Copia del logo para favicon
+
+astro.config.mjs                  # Configuración principal: sidebar, fuentes, overrides
+guia-personalizacion.md           # Este archivo
 ```
 
-### Paso B — Registrar la sección en el sidebar
+---
 
-En `astro.config.mjs`, añade un objeto dentro del array `sidebar`:
+## Agregar un artículo
+
+1. Crea un archivo `.md` en la carpeta de sección correcta:
+   ```
+   src/content/docs/cabeza/nombre-del-articulo.md
+   ```
+
+2. Agrega el frontmatter:
+   ```yaml
+   ---
+   title: Título del artículo
+   description: Frase corta que describe el artículo (SEO y vista previa).
+   tags: [producto, estrategia]
+   ---
+   ```
+
+3. Escribe el contenido en Markdown debajo del frontmatter.
+
+El artículo aparece automáticamente en el sidebar gracias a `autogenerate`.
+
+### Tags
+
+Los tags se renderizan como chips encima del artículo y enlazan a `/tags/<tag>/`. Se declaran en el frontmatter:
+
+```yaml
+tags: [producto, IA, estrategia]
+```
+
+---
+
+## Cambiar el sidebar
+
+El sidebar se configura en `astro.config.mjs`, propiedad `sidebar`:
 
 ```js
 sidebar: [
-    // ... secciones existentes ...
-    {
-        label: 'Mi nueva sección',        // nombre que aparece en el sidebar
-        items: [
-            { autogenerate: { directory: 'mi-nueva-seccion' } },
-        ],
-    },
-],
+  { label: 'Anatomía del producto', items: [
+    { label: 'Inicio', link: '/' },
+    { label: 'Sobre mí', link: '/sobre-mi/' },
+  ]},
+  { label: 'Cabeza', items: [{ autogenerate: { directory: 'cabeza' } }] },
+  { label: 'Caja torácica', items: [{ autogenerate: { directory: 'caja-toracica' } }] },
+  { label: 'Extremidades', items: [{ autogenerate: { directory: 'extremidades' } }] },
+  { label: 'Todos los artículos', link: '/articulos/', attrs: { class: 'sidebar-sep-link' } },
+  { label: 'Tags', link: '/tags/' },
+]
 ```
 
-Con `autogenerate`, cualquier artículo `.md` que pongas dentro de esa carpeta aparecerá automáticamente en el sidebar sin que tengas que tocar la config de nuevo.
+- `autogenerate` genera los links desde los archivos de la carpeta automáticamente
+- La clase `sidebar-sep-link` pinta un separador visual encima del link
 
-### Variante: sección con enlaces fijos (sin autogenerate)
+### Sidebar colapsable
 
-Si quieres control total sobre qué artículos aparecen y en qué orden:
+El sidebar se puede colapsar en desktop. El estado se persiste en `localStorage` (`sidebar-collapsed`). Cuando está colapsado:
 
-```js
+- Ancho: `3.75rem` en lugar de `18.75rem` (variable `--sl-sidebar-width`)
+- Solo se ve el logo y el botón de colapsar; se ocultan buscador, nombre y links
+
+La lógica vive en `src/components/overrides/Sidebar.astro` y el CSS en `custom.css` bajo `/* Sidebar colapsable */`.
+
+---
+
+## Internacionalización (textos de interfaz)
+
+Los textos de la UI en español están en `src/content/i18n/es.json`:
+
+```json
 {
-    label: 'Mi sección',
-    items: [
-        { label: 'Artículo 1', link: '/mi-nueva-seccion/articulo-1/' },
-        { label: 'Artículo 2', link: '/mi-nueva-seccion/articulo-2/' },
-    ],
-},
+  "tableOfContents.onThisPage": "Anatomía de la página"
+}
+```
+
+Para cambiar una etiqueta de UI busca la clave en la documentación de Starlight i18n y agrégala aquí.
+
+---
+
+## Despliegue
+
+El sitio se despliega automáticamente en Vercel al hacer push a `main`.
+
+```bash
+git add .
+git commit -m "descripción del cambio"
+git push
+```
+
+Para probar localmente antes de publicar:
+
+```bash
+npm run dev       # servidor en http://localhost:4321
+npm run build     # compila y detecta errores
+npm run preview   # previsualiza el build
 ```
 
 ---
 
-## 4. Añadir artículos a una sección existente
+## Cambiar el logo / favicon
 
-1. Crea un archivo `.md` en la carpeta correspondiente:
-
-```
-src/content/docs/cabeza/mi-nuevo-articulo.md
-```
-
-2. Añade el frontmatter al inicio del archivo:
-
-```markdown
----
-title: Título del artículo
-description: Descripción breve (aparece en el índice y en Google).
-tags: ["IA", "Estrategia"]
----
-
-Aquí empieza el contenido en Markdown...
-
-## Un subtítulo
-
-Texto normal. **Negrita.** *Cursiva.*
-
-### Un sub-subtítulo
-
-Más contenido.
-```
-
-3. El artículo aparece solo en el sidebar (si la sección usa `autogenerate`). No necesitas tocar ningún otro archivo.
+1. Reemplaza `public/favicon.svg` y `src/assets/logo.svg` con el nuevo SVG
+2. El favicon se aplica automáticamente (configurado en `astro.config.mjs`)
+3. Si el navegador sigue mostrando el favicon anterior, fuerza recarga con `Ctrl+Shift+R`
 
 ---
 
-## 5. Crear una página especial (sin sección)
+## Decisiones de diseño importantes
 
-Para páginas que van directas en la raíz (como "Contacto" o "Sobre mí"):
-
-1. Crea el archivo en `src/content/docs/` directamente (sin subcarpeta):
-
-```
-src/content/docs/mi-pagina.md
-```
-
-2. Añádela manualmente al sidebar en `astro.config.mjs`:
-
-```js
-{ label: 'Mi página', link: '/mi-pagina/' },
-```
-
----
-
-## 6. Cambiar el orden de los artículos en el sidebar
-
-Cuando usas `autogenerate`, Starlight ordena los artículos alfabéticamente por el nombre del archivo. Para controlar el orden tienes dos opciones:
-
-**Opción A — Prefijos numéricos en el nombre del archivo:**
-```
-01-introduccion.md
-02-conceptos-clave.md
-03-casos-practicos.md
-```
-Los prefijos no aparecen en la URL ni en el título.
-
-**Opción B — Campo `order` en el frontmatter:**
-```markdown
----
-title: Mi artículo
-order: 2
----
-```
-
----
-
-## 7. Referencia rápida de archivos
-
-| Qué quiero cambiar | Archivo a editar |
+| Decisión | Razón |
 |---|---|
-| Colores del sitio | `src/styles/custom.css` |
-| Fuentes tipográficas | `astro.config.mjs` (URL) + `src/styles/custom.css` (reglas) |
-| Estructura del sidebar | `astro.config.mjs` → bloque `sidebar` |
-| Favicon (pestaña) | `public/favicon.svg` |
-| Logo junto al título | `src/assets/logo.svg` |
-| Título del sitio | `astro.config.mjs` → `title:` |
-| Descripción del sitio (SEO) | `astro.config.mjs` → `description:` |
-| Contenido de un artículo | El archivo `.md` correspondiente en `src/content/docs/` |
+| Header oculto en desktop | Estilo tipo Godot Docs — el branding vive en el sidebar |
+| TOC inline en sidebar | Elimina el panel derecho y centra el contenido |
+| Modo oscuro/claro desactivado | La paleta se fuerza sobreescribiendo `[data-theme='dark']` con los mismos valores |
+| `--sl-color-black` = `--c-bg` | Corrige el fondo blanco del modal de búsqueda (Pagefind usa esta variable) |
+| Script `is:inline` en Sidebar | Restaura el estado colapsado antes del primer paint — evita flash del sidebar expandido |
+| i18n collection en content.config.ts | Necesario para que `es.json` sea procesado por Starlight |
+| `h1#_top` separado de `.sl-markdown-content` | El h1 del título lo genera Starlight fuera del contenido markdown, requiere selector propio |
