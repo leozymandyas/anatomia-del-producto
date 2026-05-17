@@ -238,6 +238,20 @@ h1#_top {
 	display: none;
 }
 
+/* ─── Sidebar: colores de links ──────────────────────────────────────────────── */
+/*
+  --sl-color-gray-2 y --sl-color-white están mapeados a marrones muy oscuros que
+  parecen negros. Estos overrides los corrigen con mayor especificidad.
+*/
+.sidebar-pane a:not([aria-current='page']) {
+	color: var(--c-gray-3);
+}
+
+.sidebar-pane a:hover:not([aria-current='page']),
+.sidebar-pane a:focus:not([aria-current='page']) {
+	color: var(--c-navy);
+}
+
 /* ─── Sidebar: etiquetas de grupos (Cabeza, Caja torácica…) ─────────────────── */
 .group-label .large {
 	color: var(--c-navy);
