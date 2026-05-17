@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════════════════
    ANATOMÍA DEL PRODUCTO — Estilos globales personalizados
-   Paleta: crema cálida (#FDF5E5) × morado (#432A59)
+   Paleta: crema cálida (#FDF5E5) × verde salvia (#7B9A80)
    ═══════════════════════════════════════════════════════════════════════════════ */
 
 /* ─── Paleta de colores ──────────────────────────────────────────────────────── */
@@ -14,32 +14,32 @@
 	--c-bg:                #FDF5E5;   /* crema cálida — página, sidebar, nav, modal */
 
 	/* ── Texto */
-	--c-text:              #3A2852;   /* morado oscuro legible — cuerpo del artículo */
-	--c-text-strong:       #2D1A3D;   /* morado profundo — negritas */
+	--c-text:              #2E3D30;   /* verde oscuro legible — cuerpo del artículo */
+	--c-text-strong:       #1E2E20;   /* verde profundo — negritas */
 
 	/* ── Acento / títulos */
-	--c-navy:              #432A59;   /* morado — títulos, tags, sidebar, acento */
-	--c-navy-dark:         #2D1A3D;   /* morado profundo — hover de acento */
-	--c-navy-tint:         #E0D4EC;   /* morado muy claro — fondos de acento sutil */
+	--c-navy:              #7B9A80;   /* verde salvia — títulos, tags, sidebar, acento */
+	--c-navy-dark:         #4A6B50;   /* verde salvia oscuro — hover de acento */
+	--c-navy-tint:         #D4E4D8;   /* verde muy claro — fondos de acento sutil */
 
-	/* ── Escala morado-grisácea (1 = más oscuro → 7 = más claro) */
-	--c-gray-1:            #1E1228;
-	--c-gray-2:            #3A2852;
-	--c-gray-3:            #5A4070;
-	--c-gray-4:            #8A70A0;
-	--c-gray-5:            #B09CC0;
-	--c-gray-6:            #D4C8E0;
-	--c-gray-7:            #EDE8F5;
+	/* ── Escala verde-grisácea (1 = más oscuro → 7 = más claro) */
+	--c-gray-1:            #1E2E20;
+	--c-gray-2:            #2E3D30;
+	--c-gray-3:            #4A6050;
+	--c-gray-4:            #7A9A80;
+	--c-gray-5:            #A8C0B0;
+	--c-gray-6:            #CCD8CE;
+	--c-gray-7:            #E8F0EA;
 
 	/* ── Bordes */
-	--c-border:            #C0B0D4;   /* borde estándar */
-	--c-border-soft:       #D0C4E0;   /* borde suave (sidebar interno) */
-	--c-border-dark:       #A890C0;   /* borde con más contraste */
+	--c-border:            #B0C8B8;   /* borde estándar */
+	--c-border-soft:       #C4D8CA;   /* borde suave (sidebar interno) */
+	--c-border-dark:       #96B0A0;   /* borde con más contraste */
 
 	/* ── Scrollbar */
-	--c-scroll-thumb:      #9070A8;
-	--c-scroll-track:      #EDE8F5;
-	--c-scroll-thumb-hover:#5A4070;
+	--c-scroll-thumb:      #7B9A80;
+	--c-scroll-track:      #E8F0EA;
+	--c-scroll-thumb-hover:#4A6B50;
 }
 
 /* ─── Tokens Starlight (mapeados desde la paleta) ───────────────────────────── */
@@ -60,7 +60,7 @@
 	/* Texto */
 	--sl-color-text:           var(--c-text);
 	--sl-color-text-accent:    var(--c-navy);
-	--sl-color-text-invert:    #F2EEF8;        /* texto claro sobre fondo de acento (link activo) */
+	--sl-color-text-invert:    #EEF4F0;        /* texto claro sobre fondo de acento (link activo) */
 	--sl-color-white:          var(--c-gray-1);
 
 	/* Acento */
@@ -279,7 +279,7 @@ button[data-open-modal] kbd {
 	align-items: center;
 	padding: 0.15rem 0.6rem;
 	border-radius: 4px;
-	background-color: rgba(67, 42, 89, 0.1); /* --c-navy al 10% */
+	background-color: rgba(123, 154, 128, 0.15); /* --c-navy al 15% */
 	color: var(--c-navy);
 	font-size: 0.8rem;
 	font-weight: 500;
@@ -290,6 +290,6 @@ button[data-open-modal] kbd {
 }
 
 .tag-chip:hover {
-	background-color: rgba(67, 42, 89, 0.2); /* --c-navy al 20% */
+	background-color: rgba(123, 154, 128, 0.28); /* --c-navy al 28% */
 	color: var(--c-navy-dark);
 }
