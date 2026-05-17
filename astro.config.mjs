@@ -22,6 +22,10 @@ export default defineConfig({
 						href: 'https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,700;1,400&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap',
 					},
 				},
+				{
+					tag: 'link',
+					attrs: { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg?v=2' },
+				},
 			],
 			favicon: '/favicon.svg',
 			logo: { src: './src/assets/logo.svg', alt: 'Anatomía del Producto', replacesTitle: false },
