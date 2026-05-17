@@ -11,6 +11,7 @@ import SiteTitle from 'virtual:starlight/components/SiteTitle';
 		<!-- Search moved to sidebar; slot vacío para conservar el grid de 3 columnas -->
 	</div>
 	<div class="sl-hidden md:sl-flex print:hidden right-group">
+		<a href="/contacto/" class="contact-btn">Contacto</a>
 		<LanguageSelect />
 	</div>
 </div>
@@ -35,6 +36,22 @@ import SiteTitle from 'virtual:starlight/components/SiteTitle';
 		.right-group {
 			gap: 1rem;
 			align-items: center;
+		}
+
+		.contact-btn {
+			font-size: var(--sl-text-sm);
+			font-weight: 600;
+			color: #542C14;
+			text-decoration: none;
+			padding: 0.35rem 0.9rem;
+			border: 1.5px solid #A89080;
+			border-radius: 0.4rem;
+			transition: background-color 0.15s, border-color 0.15s;
+			white-space: nowrap;
+		}
+		.contact-btn:hover {
+			background-color: rgba(106, 81, 66, 0.1);
+			border-color: #7A6A60;
 		}
 
 		@media (min-width: 50rem) {
