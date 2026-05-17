@@ -5,10 +5,15 @@ body {
 
 .site-title {
 	font-family: 'Alegreya', serif;
-	color: #542C14;
+	color: #C65D00;
 }
 
-h1, h2, h3, h4, h5, h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
 .sl-markdown-content h1,
 .sl-markdown-content h2,
 .sl-markdown-content h3,
@@ -37,19 +42,19 @@ h1#_top {
 :root[data-theme='light'],
 :root[data-theme='dark'] {
 	/* Fondos */
-	--sl-color-bg:         #DCC7A7;
-	--sl-color-bg-nav:     #CDB99A;
-	--sl-color-bg-sidebar: #D5BFA0;
+	--sl-color-bg: #FFE4B5;
+	--sl-color-bg-nav: #FFE4B5;
+	--sl-color-bg-sidebar: #FFE4B5;
 
 	/* Texto */
-	--sl-color-text:        #45423F;
-	--sl-color-text-accent: #6A5142;
+	--sl-color-text: #4A2F1A;
+	--sl-color-text-accent: #C65D00;
 	--sl-color-text-invert: #F2E8D8;
-	--sl-color-white:       #3A3230;
+	--sl-color-white: #3A3230;
 
 	/* Acento */
-	--sl-color-accent:      #6A5142;
-	--sl-color-accent-low:  #EAD9C8;
+	--sl-color-accent: #6A5142;
+	--sl-color-accent-low: #EAD9C8;
 	--sl-color-accent-high: #3D2E24;
 
 	/* Escala de grises cálidos */
@@ -62,7 +67,7 @@ h1#_top {
 	--sl-color-gray-7: #EDE4D8;
 
 	/* Bordes */
-	--sl-color-hairline:       #C4AF98;
+	--sl-color-hairline: #C4AF98;
 	--sl-color-hairline-light: #CEC0B0;
 	--sl-color-hairline-shade: #B8A48C;
 }
