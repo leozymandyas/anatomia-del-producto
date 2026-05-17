@@ -45,6 +45,7 @@ h1#_top {
 	--sl-color-bg: #FFE4B5;
 	--sl-color-bg-nav: #FFE4B5;
 	--sl-color-bg-sidebar: #FFE4B5;
+	--sl-color-black: #FFE4B5;
 
 	/* Texto */
 	--sl-color-text: #4A2F1A;
@@ -149,30 +150,5 @@ button[data-open-modal] kbd {
 }
 
 /* ─── Modal de búsqueda (Pagefind) ──────────────────────────────────────────── */
-#starlight__search,
-#starlight__search .dialog-frame {
-	background-color: var(--sl-color-bg);
-}
-
-/* Variables de Pagefind */
-#starlight__search .pagefind-ui {
-	--pagefind-ui-background:    var(--sl-color-bg);
-	--pagefind-ui-text:          var(--sl-color-text);
-	--pagefind-ui-primary:       var(--sl-color-accent);
-	--pagefind-ui-border:        var(--sl-color-hairline);
-	--pagefind-ui-border-radius: 0.5rem;
-	--pagefind-ui-font:          'Lato', sans-serif;
-	--pagefind-ui-tag:           var(--sl-color-accent-low);
-}
-
-/* Fondo de los resultados y del input */
-#starlight__search .pagefind-ui__form::before,
-#starlight__search .pagefind-ui__search-input,
-#starlight__search .pagefind-ui__result {
-	background-color: var(--sl-color-bg) !important;
-}
-
-#starlight__search .pagefind-ui__search-input {
-	color: var(--sl-color-text);
-	border-color: var(--sl-color-hairline);
-}
+/* El fondo blanco venía de --sl-color-black (en modo claro Starlight lo pone en blanco).
+   Al sobreescribirlo arriba en la paleta, el modal hereda el color correcto. */
