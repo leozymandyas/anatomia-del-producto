@@ -42,6 +42,18 @@
 	--c-scroll-thumb-hover:#7A4A30;
 }
 
+/* ─── Ancho del área de contenido ───────────────────────────────────────────── */
+/*
+  Starlight usa --sl-content-width como max-width del bloque de texto.
+  Con el sidebar expandido (~300px), el main-frame tiene ~980px disponibles.
+  Con 56rem (~896px) el contenido casi lo llena → poco margen visible.
+  Con el sidebar colapsado (~60px), el main-frame tiene ~1220px →
+  el contenido queda centrado con ~162px de margen a cada lado (cambio visible).
+*/
+:root {
+	--sl-content-width: 56rem;
+}
+
 /* ─── Tokens Starlight (mapeados desde la paleta) ───────────────────────────── */
 /*
   Se sobreescriben tanto light como dark para mantener siempre la paleta cálida.
