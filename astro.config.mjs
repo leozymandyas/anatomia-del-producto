@@ -8,6 +8,7 @@ export default defineConfig({
 		starlight({
 			title: 'Anatomía del Producto',
 			description: 'Creación de productos digitales en la era de la inteligencia artificial.',
+			defaultTheme: 'light',
 			defaultLocale: 'root',
 			locales: {
 				root: { label: 'Español', lang: 'es' },
@@ -32,14 +33,18 @@ export default defineConfig({
 				PageSidebar: './src/components/overrides/PageSidebar.astro',
 				MarkdownContent: './src/components/overrides/MarkdownContent.astro',
 			},
-			social: [
-				{ icon: 'x.com', label: 'X / Twitter', href: 'https://x.com/anatomia_prod' },
-			],
 			sidebar: [
+				{
+					label: 'Anatomía del producto',
+					items: [
+						{ label: 'Inicio', link: '/' },
+						{ label: 'Sobre mí', link: '/sobre-mi/' },
+						{ label: 'Contacto', link: '/contacto/' },
+					],
+				},
 				{
 					label: 'Cabeza',
 					items: [
-						{ label: 'Inicio', link: '/' },
 						{ autogenerate: { directory: 'cabeza' } },
 					],
 				},

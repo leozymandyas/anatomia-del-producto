@@ -1,9 +1,6 @@
 ---
-import config from 'virtual:starlight/user-config';
 import LanguageSelect from 'virtual:starlight/components/LanguageSelect';
 import SiteTitle from 'virtual:starlight/components/SiteTitle';
-import SocialIcons from 'virtual:starlight/components/SocialIcons';
-import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
 ---
 
 <div class="header">
@@ -14,11 +11,6 @@ import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
 		<!-- Search moved to sidebar; slot vacío para conservar el grid de 3 columnas -->
 	</div>
 	<div class="sl-hidden md:sl-flex print:hidden right-group">
-		<a href="/contacto/" class="header-contact-link">Contacto</a>
-		<div class="sl-flex social-icons">
-			<SocialIcons />
-		</div>
-		<ThemeSelect />
 		<LanguageSelect />
 	</div>
 </div>
@@ -40,16 +32,9 @@ import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
 			min-width: 0;
 		}
 
-		.right-group,
-		.social-icons {
+		.right-group {
 			gap: 1rem;
 			align-items: center;
-		}
-
-		.social-icons::after {
-			content: '';
-			height: 2rem;
-			border-inline-end: 1px solid var(--sl-color-gray-5);
 		}
 
 		@media (min-width: 50rem) {

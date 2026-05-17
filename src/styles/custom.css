@@ -5,6 +5,7 @@ body {
 
 .site-title {
 	font-family: 'Alegreya', serif;
+	color: #542C14;
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -19,61 +20,79 @@ h1, h2, h3, h4, h5, h6,
 
 /* Título del artículo (h1 generado por Starlight fuera de .sl-markdown-content) */
 h1#_top {
-	color: var(--sl-color-accent);
+	color: #6A5142;
 }
 
 /* Encabezados dentro del contenido markdown */
 .sl-markdown-content :is(h2, h3, h4, h5, h6) {
-	color: var(--sl-color-accent);
+	color: #6A5142;
 }
 
 .sl-markdown-content strong {
-	color: #9333ea;
+	color: #282828;
 }
 
-:root[data-theme='dark'] .sl-markdown-content strong {
-	color: #c084fc;
-}
-
-/* ─── Paleta morada ─────────────────────────────────────────────────────────── */
-:root {
-	--sl-color-accent-low: #ede9fe;
-	--sl-color-accent: #7c3aed;
-	--sl-color-accent-high: #4c1d95;
-}
-
+/* ─── Paleta cálida (fuerza modo claro siempre) ─────────────────────────────── */
+:root,
+:root[data-theme='light'],
 :root[data-theme='dark'] {
-	--sl-color-accent-low: #2e1065;
-	--sl-color-accent: #a78bfa;
-	--sl-color-accent-high: #ddd6fe;
+	/* Fondos */
+	--sl-color-bg:         #DCC7A7;
+	--sl-color-bg-nav:     #CDB99A;
+	--sl-color-bg-sidebar: #D5BFA0;
+
+	/* Texto */
+	--sl-color-text:        #45423F;
+	--sl-color-text-accent: #6A5142;
+	--sl-color-text-invert: #F2E8D8;
+	--sl-color-white:       #3A3230;
+
+	/* Acento */
+	--sl-color-accent:      #6A5142;
+	--sl-color-accent-low:  #EAD9C8;
+	--sl-color-accent-high: #3D2E24;
+
+	/* Escala de grises cálidos */
+	--sl-color-gray-1: #3A3230;
+	--sl-color-gray-2: #4A403B;
+	--sl-color-gray-3: #7A6A60;
+	--sl-color-gray-4: #A89080;
+	--sl-color-gray-5: #C8B5A5;
+	--sl-color-gray-6: #DDD0C0;
+	--sl-color-gray-7: #EDE4D8;
+
+	/* Bordes */
+	--sl-color-hairline:       #C4AF98;
+	--sl-color-hairline-light: #CEC0B0;
+	--sl-color-hairline-shade: #B8A48C;
+}
+
+/* Etiqueta de grupos en sidebar (Cabeza, Caja torácica, etc.) */
+.group-label .large {
+	color: #523C2E;
 }
 
 /* ─── Layout: ocultar panel TOC derecho, crear espacios laterales ────────────── */
 @media (min-width: 72rem) {
-	/* Quitar el panel derecho (TOC va integrado en el sidebar izquierdo) */
 	.right-sidebar-container {
 		display: none;
 	}
 
-	/* Revertir el ancho reducido que Starlight aplica cuando hay TOC derecho */
 	[data-has-sidebar][data-has-toc] .main-pane {
 		width: 100%;
 		order: unset;
 	}
 
-	/* Espacio lateral derecho visible: igual al ancho del sidebar izquierdo,
-	   creando márgenes simétricos y la sensación de contenido "contenido". */
 	[data-has-sidebar] .main-frame {
 		padding-inline-end: var(--sl-sidebar-width);
 	}
 
-	/* Centrar el contenido dentro del área disponible */
 	.main-pane .sl-container {
 		margin-inline: auto;
 	}
 }
 
-/* ─── Tags estilo Notion multi-select ───────────────────────────────────────── */
+/* ─── Tags estilo Notion ─────────────────────────────────────────────────────── */
 .article-tags-header {
 	display: flex;
 	flex-wrap: wrap;
@@ -86,27 +105,19 @@ h1#_top {
 	align-items: center;
 	padding: 0.15rem 0.6rem;
 	border-radius: 4px;
-	background-color: rgba(124, 58, 237, 0.12);
-	color: #5b21b6;
+	background-color: rgba(106, 81, 66, 0.12);
+	color: #523C2E;
 	font-size: 0.8rem;
 	font-weight: 500;
 	text-decoration: none;
 	white-space: nowrap;
-	transition: background-color 0.15s;
+	transition: background-color 0.15s, color 0.15s;
 	line-height: 1.6;
 }
 
 .tag-chip:hover {
-	background-color: rgba(124, 58, 237, 0.22);
-}
-
-:root[data-theme='dark'] .tag-chip {
-	background-color: rgba(167, 139, 250, 0.18);
-	color: #c4b5fd;
-}
-
-:root[data-theme='dark'] .tag-chip:hover {
-	background-color: rgba(167, 139, 250, 0.3);
+	background-color: rgba(106, 81, 66, 0.22);
+	color: #3D2E24;
 }
 
 /* ─── Separador en sidebar antes de "Todos los artículos" ──────────────────── */
@@ -125,29 +136,4 @@ h1#_top {
 .sidebar-search-wrapper button[data-open-modal] {
 	width: 100%;
 	border-radius: 0.5rem;
-}
-
-/* ─── Header: enlace Contacto ───────────────────────────────────────────────── */
-.header-contact-link {
-	display: none;
-	align-items: center;
-	font-size: var(--sl-text-sm);
-	font-weight: 500;
-	color: var(--sl-color-text);
-	text-decoration: none;
-	padding: 0.25rem 0.5rem;
-	border-radius: 0.375rem;
-	transition: color 0.2s, background-color 0.2s;
-	white-space: nowrap;
-}
-
-.header-contact-link:hover {
-	color: var(--sl-color-accent);
-	background-color: var(--sl-color-accent-low);
-}
-
-@media (min-width: 50rem) {
-	.header-contact-link {
-		display: flex;
-	}
 }
