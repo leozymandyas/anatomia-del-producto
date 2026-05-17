@@ -149,18 +149,30 @@ button[data-open-modal] kbd {
 }
 
 /* ─── Modal de búsqueda (Pagefind) ──────────────────────────────────────────── */
-/* Fondo del diálogo */
-dialog[aria-label] {
+#starlight__search,
+#starlight__search .dialog-frame {
 	background-color: var(--sl-color-bg);
 }
 
-/* Variables de Pagefind para que coincidan con la paleta */
-.pagefind-ui {
-	--pagefind-ui-background:     var(--sl-color-bg);
-	--pagefind-ui-text:           var(--sl-color-text);
-	--pagefind-ui-primary:        var(--sl-color-accent);
-	--pagefind-ui-border:         var(--sl-color-hairline);
-	--pagefind-ui-border-radius:  0.5rem;
-	--pagefind-ui-font:           'Lato', sans-serif;
-	--pagefind-ui-tag:            var(--sl-color-accent-low);
+/* Variables de Pagefind */
+#starlight__search .pagefind-ui {
+	--pagefind-ui-background:    var(--sl-color-bg);
+	--pagefind-ui-text:          var(--sl-color-text);
+	--pagefind-ui-primary:       var(--sl-color-accent);
+	--pagefind-ui-border:        var(--sl-color-hairline);
+	--pagefind-ui-border-radius: 0.5rem;
+	--pagefind-ui-font:          'Lato', sans-serif;
+	--pagefind-ui-tag:           var(--sl-color-accent-low);
+}
+
+/* Fondo de los resultados y del input */
+#starlight__search .pagefind-ui__form::before,
+#starlight__search .pagefind-ui__search-input,
+#starlight__search .pagefind-ui__result {
+	background-color: var(--sl-color-bg) !important;
+}
+
+#starlight__search .pagefind-ui__search-input {
+	color: var(--sl-color-text);
+	border-color: var(--sl-color-hairline);
 }
