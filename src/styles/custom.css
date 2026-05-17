@@ -410,6 +410,16 @@ button[data-open-modal] kbd {
 	color: var(--c-navy-dark);
 }
 
+/* ─── TOC móvil: ocultar indicador de sección actual ───────────────────────── */
+/*
+  Starlight muestra en la barra del TOC móvil el nombre de la sección activa
+  (span.display-current). Lo ocultamos porque el TOC está en el sidebar y
+  ese indicador solo añade ruido visual en móvil.
+*/
+mobile-starlight-toc .display-current {
+	display: none;
+}
+
 /* ─── Paginación anterior / siguiente ────────────────────────────────────────── */
 /*
   Starlight renderiza la paginación en @layer starlight.core.
