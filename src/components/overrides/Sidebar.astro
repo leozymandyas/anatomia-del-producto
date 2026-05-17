@@ -22,7 +22,7 @@ const { sidebar, toc } = Astro.locals.starlightRoute;
 		<span class="brand-name">Anatomía del Producto</span>
 	</a>
 	<button class="collapse-btn" id="sidebar-toggle" aria-label="Colapsar menú">
-		<svg aria-hidden="true" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
+		<svg aria-hidden="true" width="14" height="14" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
 			<rect x="104" y="155" width="312" height="36" rx="4" fill="rgb(178,95,40)"/>
 			<rect x="104" y="242" width="312" height="36" rx="4" fill="rgb(178,95,40)"/>
 			<rect x="104" y="329" width="312" height="36" rx="4" fill="rgb(178,95,40)"/>
@@ -121,13 +121,7 @@ const { sidebar, toc } = Astro.locals.starlightRoute;
 			transition: background-color 0.15s, color 0.15s, transform 0.2s;
 		}
 
-		.collapse-btn svg {
-			width: 100%;
-			height: 100%;
-			display: block;
-		}
-
-		.collapse-btn:hover {
+.collapse-btn:hover {
 			background-color: rgba(178, 95, 40, 0.12); /* --c-navy al 12% */
 			color: var(--c-navy);
 		}
