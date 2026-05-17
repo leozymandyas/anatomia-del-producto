@@ -4,6 +4,7 @@ description: Cómo la inteligencia artificial está redefiniendo la forma en que
 tags: ["IA", "Producto Digital", "Tendencias"]
 pubDate: 2025-01-10
 relatedArticles:
+  - cabeza/el-pm-en-la-era-de-la-ia
   - caja-toracica/como-validar-un-mvp-con-ia
   - extremidades/herramientas-ia-para-equipos-de-producto
 ---

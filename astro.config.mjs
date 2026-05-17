@@ -61,7 +61,6 @@ export default defineConfig({
 				MarkdownContent: './src/components/overrides/MarkdownContent.astro',
 				MobileMenuFooter: './src/components/overrides/MobileMenuFooter.astro',
 				Footer: './src/components/overrides/Footer.astro',
-				Pagination: './src/components/overrides/Pagination.astro',
 				PageTitle: './src/components/overrides/PageTitle.astro',
 			},
 			sidebar: [

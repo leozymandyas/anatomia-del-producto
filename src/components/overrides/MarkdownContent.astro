@@ -1,6 +1,7 @@
 ---
 import '@astrojs/starlight/style/markdown.css';
 import RelatedArticles from '../RelatedArticles.astro';
+import Pagination from 'virtual:starlight/components/Pagination';
 
 const entry = Astro.locals.starlightRoute.entry;
 const data = entry.data as Record<string, unknown>;
@@ -23,4 +24,5 @@ function slugifyTag(tag: string) {
 	)}
 	<slot />
 	<RelatedArticles ids={relatedArticles} />
+	<Pagination />
 </div>
