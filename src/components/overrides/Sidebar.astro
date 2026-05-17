@@ -42,6 +42,12 @@ const { sidebar, toc } = Astro.locals.starlightRoute;
 	<MobileMenuFooter />
 </div>
 
+<footer class="sidebar-footer">
+	<span class="sidebar-footer-text">
+		&copy; {new Date().getFullYear()} Leonardo Ruano Hernández
+	</span>
+</footer>
+
 <script>
 	const btn = document.getElementById('sidebar-toggle');
 	btn?.addEventListener('click', () => {
@@ -113,5 +119,24 @@ const { sidebar, toc } = Astro.locals.starlightRoute;
 			background-color: rgba(178, 95, 40, 0.12); /* --c-navy al 12% */
 			color: var(--c-navy);
 		}
+	}
+
+	.sidebar-footer {
+		margin-top: auto;
+		padding-top: 1rem;
+		padding-bottom: 0.75rem;
+		border-top: 1px solid var(--sl-color-hairline);
+	}
+
+	.sidebar-footer-text {
+		display: block;
+		font-size: 0.7rem;
+		color: var(--sl-color-gray-4);
+		text-align: center;
+		line-height: 1.5;
+	}
+
+	[data-sidebar-collapsed] .sidebar-footer-text {
+		display: none;
 	}
 </style>

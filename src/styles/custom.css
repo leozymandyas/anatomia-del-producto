@@ -155,6 +155,29 @@
 	}
 }
 
+/* ─── Footer siempre al fondo de la pantalla ────────────────────────────────── */
+/*
+  Hace que el contenido crezca para llenar el espacio disponible, empujando el
+  footer al borde inferior aunque el artículo sea corto.
+*/
+@media (min-width: 50rem) {
+	.main-frame {
+		min-height: 100dvh;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.main-pane {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.main-pane .sl-container {
+		flex: 1;
+	}
+}
+
 /* ─── Layout: centrar contenido, ocultar panel TOC derecho ──────────────────── */
 /*
   El TOC se muestra inline dentro del sidebar (SidebarWithToc.astro),
