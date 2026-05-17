@@ -40,6 +40,7 @@ export default defineConfig({
 				PageSidebar: './src/components/overrides/PageSidebar.astro',
 				MarkdownContent: './src/components/overrides/MarkdownContent.astro',
 				MobileMenuFooter: './src/components/overrides/MobileMenuFooter.astro',
+				Footer: './src/components/overrides/Footer.astro',
 			},
 			sidebar: [
 				{

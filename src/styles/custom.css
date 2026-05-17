@@ -298,33 +298,41 @@ button[data-open-modal] kbd {
   Para agregar un tema nuevo: duplica un bloque y cambia el nombre y los colores.
 */
 
-/* Tema: terracota — fondo terracota, texto crema */
+/* Tema: terracota — fondo terracota (#B25F28), texto crema (#FDF5E5)
+   Las variables se definen en .main-pane para que afecten a TODO su contenido:
+   título, cuerpo, tarjetas de paginación, footer, etc. Se usan valores hex
+   directos para evitar referencias circulares entre variables. */
 .main-pane:has([data-page-theme='terracota']) {
-	background-color: var(--c-navy);
+	background-color: #B25F28;
+	color: #FDF5E5;
+	/* Tokens propios */
+	--c-navy:              #FDF5E5;
+	--c-text:              #FDF5E5;
+	--c-text-strong:       #FDF5E5;
+	--c-border:            rgba(253, 245, 229, 0.25);
+	--c-border-soft:       rgba(253, 245, 229, 0.18);
+	/* Tokens de Starlight */
+	--sl-color-bg:         #B25F28;
+	--sl-color-text:       #FDF5E5;
+	--sl-color-white:      #FDF5E5;
+	--sl-color-text-accent:#FDF5E5;
+	--sl-color-accent:     #FDF5E5;
+	--sl-color-hairline:        rgba(253, 245, 229, 0.25);
+	--sl-color-hairline-light:  rgba(253, 245, 229, 0.18);
 }
 
-.main-pane:has([data-page-theme='terracota']) [data-page-theme='terracota'],
-.main-pane:has([data-page-theme='terracota']) h1#_top {
-	--c-navy: var(--c-bg);
-	--c-text: var(--c-bg);
-	--c-text-strong: var(--c-bg);
-	--sl-color-text-accent: var(--c-bg);
-	--sl-color-accent: var(--c-bg);
-	color: var(--c-bg);
-}
-
-.main-pane:has([data-page-theme='terracota']) .sl-markdown-content a {
-	color: var(--c-bg);
+.main-pane:has([data-page-theme='terracota']) a {
+	color: #FDF5E5;
 	text-decoration-color: rgba(253, 245, 229, 0.5);
 }
 
-.main-pane:has([data-page-theme='terracota']) .sl-markdown-content a:hover {
-	text-decoration-color: var(--c-bg);
+.main-pane:has([data-page-theme='terracota']) a:hover {
+	text-decoration-color: #FDF5E5;
 }
 
 .main-pane:has([data-page-theme='terracota']) .tag-chip {
 	background-color: rgba(253, 245, 229, 0.18);
-	color: var(--c-bg);
+	color: #FDF5E5;
 }
 
 .main-pane:has([data-page-theme='terracota']) .tag-chip:hover {
