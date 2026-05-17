@@ -88,6 +88,12 @@ const { sidebar, toc } = Astro.locals.starlightRoute;
 		transition: opacity 0.15s, width 0.15s;
 	}
 
+	@media (max-width: 49.999rem) {
+		.collapse-btn {
+			display: none;
+		}
+	}
+
 	.collapse-btn {
 		flex-shrink: 0;
 		display: flex;
