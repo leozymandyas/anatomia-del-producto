@@ -8,7 +8,6 @@ export default defineConfig({
 		starlight({
 			title: 'Anatomía del Producto',
 			description: 'Creación de productos digitales en la era de la inteligencia artificial.',
-			defaultTheme: 'light',
 			defaultLocale: 'root',
 			locales: {
 				root: { label: 'Español', lang: 'es' },
