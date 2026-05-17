@@ -50,31 +50,23 @@ const tags = Object.entries(tagCounts).sort(([a], [b]) => a.localeCompare(b, 'es
 		gap: 0.4rem;
 		padding: 0.25rem 0.75rem;
 		border-radius: 4px;
-		background-color: rgba(124, 58, 237, 0.12);
-		color: #5b21b6;
+		background-color: rgba(178, 95, 40, 0.12);
+		color: var(--c-navy);
 		font-size: 0.875rem;
 		font-weight: 500;
 		text-decoration: none;
-		transition: background-color 0.15s;
+		transition: background-color 0.15s, color 0.15s;
 	}
 
 	.tag-chip:hover {
-		background-color: rgba(124, 58, 237, 0.22);
-	}
-
-	:global([data-theme='dark']) .tag-chip {
-		background-color: rgba(167, 139, 250, 0.18);
-		color: #c4b5fd;
-	}
-
-	:global([data-theme='dark']) .tag-chip:hover {
-		background-color: rgba(167, 139, 250, 0.3);
+		background-color: rgba(178, 95, 40, 0.22);
+		color: var(--c-navy-dark);
 	}
 
 	.tag-count {
 		font-size: 0.7rem;
 		font-weight: 700;
-		background-color: rgba(124, 58, 237, 0.2);
+		background-color: rgba(178, 95, 40, 0.20);
 		padding: 0 0.4rem;
 		border-radius: 999px;
 		min-width: 1.2rem;

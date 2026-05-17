@@ -157,24 +157,20 @@
 
 /* ─── Footer siempre al fondo de la pantalla ────────────────────────────────── */
 /*
-  Hace que el contenido crezca para llenar el espacio disponible, empujando el
-  footer al borde inferior aunque el artículo sea corto.
+  .main-pane ocupa al menos toda la altura de la ventana (el header está oculto
+  en desktop, así que --sl-nav-height = 0). display:flex + flex-direction:column
+  convierte sus hijos en una pila vertical. El .site-footer recibe margin-top:auto
+  para que consuma el espacio sobrante y quede pegado al fondo.
 */
 @media (min-width: 50rem) {
-	.main-frame {
-		min-height: 100dvh;
-		display: flex;
-		flex-direction: column;
-	}
-
 	.main-pane {
-		flex: 1;
+		min-height: calc(100dvh - var(--sl-nav-height, 0rem));
 		display: flex;
 		flex-direction: column;
 	}
 
-	.main-pane .sl-container {
-		flex: 1;
+	.main-pane .site-footer {
+		margin-top: auto;
 	}
 }
 

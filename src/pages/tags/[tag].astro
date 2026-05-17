@@ -146,21 +146,17 @@ const { tagLabel, articulos } = Astro.props as {
 		align-items: center;
 		padding: 0.15rem 0.6rem;
 		border-radius: 4px;
-		background-color: rgba(124, 58, 237, 0.12);
-		color: #5b21b6;
+		background-color: rgba(178, 95, 40, 0.12);
+		color: var(--c-navy);
 		font-size: 0.8rem;
 		font-weight: 500;
 		text-decoration: none;
-		transition: background-color 0.15s;
+		transition: background-color 0.15s, color 0.15s;
 	}
 
 	.tag-chip:hover {
-		background-color: rgba(124, 58, 237, 0.22);
-	}
-
-	:global([data-theme='dark']) .tag-chip {
-		background-color: rgba(167, 139, 250, 0.18);
-		color: #c4b5fd;
+		background-color: rgba(178, 95, 40, 0.22);
+		color: var(--c-navy-dark);
 	}
 
 	.back-link {
