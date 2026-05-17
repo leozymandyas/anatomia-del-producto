@@ -1,3 +1,27 @@
+/* ─── Scrollbar ──────────────────────────────────────────────────────────────── */
+/* Firefox */
+* {
+	scrollbar-color: #A89080 #FFE4B5;
+	scrollbar-width: thin;
+}
+
+/* Chrome, Safari, Edge */
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+::-webkit-scrollbar-track {
+	background: #FFE4B5;
+}
+::-webkit-scrollbar-thumb {
+	background-color: #A89080;
+	border-radius: 999px;
+	border: 2px solid #FFE4B5;
+}
+::-webkit-scrollbar-thumb:hover {
+	background-color: #7A6A60;
+}
+
 /* ─── Tipografía ─────────────────────────────────────────────────────────────── */
 body {
 	font-family: 'Lato', sans-serif;
