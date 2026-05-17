@@ -4,6 +4,8 @@ description: El blog sobre cómo se crean productos digitales inteligentes en la
 pageTheme: terracota
 ---
 
+import UltimoArticulo from '../../components/UltimoArticulo.astro';
+
 **Anatomía del Producto** es un blog que disecciona cómo se construyen los mejores productos digitales con técnicas prácticas y el uso de la IA de manera responsable. También es un espacio de reflexión sobre el manejo de la industria del software y el desarrollo de productos digitales.
 
 ## Cómo está organizado este blog
@@ -20,23 +22,32 @@ Si es tu primera visita, empieza por [IA y el futuro de los productos digitales]
 
 Si ya sabes lo que buscas, usa el buscador en el menú lateral o explora por [tags](/tags/).
 
-<a href="/contacto/" class="btn-contacto">Contacto</a>
+<div class="btn-row">
+	<UltimoArticulo />
+	<a href="/contacto/" class="btn-secundario">Contacto</a>
+</div>
 
 <style>{`
-  .btn-contacto {
-    display: inline-block;
-    margin-top: 1.5rem;
-    padding: 0.55rem 1.4rem;
-    border: 1.5px solid rgba(253, 245, 229, 0.7);
-    border-radius: 0.4rem;
-    color: #FDF5E5;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: background-color 0.15s, border-color 0.15s;
-  }
-  .btn-contacto:hover {
-    background-color: rgba(253, 245, 229, 0.15);
-    border-color: #FDF5E5;
-  }
+	.btn-row {
+		display: flex;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+		margin-top: 1.75rem;
+	}
+	.btn-secundario {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.55rem 1.4rem;
+		border: 1.5px solid rgba(253, 245, 229, 0.7);
+		border-radius: 0.4rem;
+		color: #FDF5E5;
+		text-decoration: none;
+		font-weight: 600;
+		font-size: 0.95rem;
+		transition: background-color 0.15s, border-color 0.15s;
+	}
+	.btn-secundario:hover {
+		background-color: rgba(253, 245, 229, 0.15);
+		border-color: #FDF5E5;
+	}
 `}</style>

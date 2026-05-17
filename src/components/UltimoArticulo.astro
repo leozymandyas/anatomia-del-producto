@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+
+const SECCIONES = ['cabeza', 'caja-toracica', 'extremidades'];
+
+const allDocs = await getCollection('docs');
+const ultimo = allDocs
+	.filter((doc) =>
+		SECCIONES.some((s) => doc.id.startsWith(s + '/')) &&
+		doc.data.pubDate
+	)
+	.sort((a, b) =>
+		(b.data.pubDate as Date).getTime() - (a.data.pubDate as Date).getTime()
+	)[0];
+---
+
+{ultimo && (
+	<a href={`/${ultimo.id}/`} class="btn-ultimo">
+		Último artículo →
+	</a>
+)}
+
+<style>
+	.btn-ultimo {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.55rem 1.4rem;
+		border-radius: 0.4rem;
+		background-color: #FDF5E5;
+		color: #B25F28;
+		text-decoration: none;
+		font-weight: 700;
+		font-size: 0.95rem;
+		transition: background-color 0.15s;
+	}
+
+	.btn-ultimo:hover {
+		background-color: #F0E4D0;
+	}
+</style>

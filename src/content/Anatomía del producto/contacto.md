@@ -1,19 +1,19 @@
 ---
 title: Contacto
 description: Canales para conectar con Anatomía del Producto.
+pageTheme: terracota
 ---
 
 Si tienes preguntas, sugerencias de temas o simplemente quieres conversar sobre productos digitales e IA, puedes encontrarme aquí:
 
 ## Redes sociales
 
-- **X / Twitter:** [@anatomia_prod](https://x.com/anatomia_prod)
-- **LinkedIn:** [linkedin.com/in/tu-perfil](https://linkedin.com/in/tu-perfil)
+- **LinkedIn:** [linkedin.com/in/tu-perfil](https://www.linkedin.com/in/leonardo-ruano-hernandez/)
 
 ## Correo electrónico
 
-Para consultas directas: **hola@anatomia-del-producto.com**
+Para consultas directas: **leonardoruanohernandez1@gmail.com**
 
----
 
-*Respondo mensajes dentro de las 48 horas hábiles.*
+
+

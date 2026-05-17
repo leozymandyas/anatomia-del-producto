@@ -9,6 +9,7 @@ export const collections = {
 			extend: z.object({
 				tags: z.array(z.string()).optional().default([]),
 				pageTheme: z.string().optional(),
+				pubDate: z.date().optional(),
 			}),
 		}),
 	}),
