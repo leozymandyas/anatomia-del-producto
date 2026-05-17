@@ -1,3 +1,14 @@
+/* ─── Layout: eliminar header en desktop (estilo Godot) ─────────────────────── */
+@media (min-width: 50rem) {
+	/* El header queda vacío; se oculta y se elimina su altura */
+	.header {
+		display: none;
+	}
+	:root {
+		--sl-nav-height: 0rem;
+	}
+}
+
 /* ─── Scrollbar ──────────────────────────────────────────────────────────────── */
 /* Firefox */
 * {
