@@ -409,3 +409,41 @@ button[data-open-modal] kbd {
 	background-color: rgba(178, 95, 40, 0.22); /* --c-navy al 22% */
 	color: var(--c-navy-dark);
 }
+
+/* ─── Paginación anterior / siguiente ────────────────────────────────────────── */
+/*
+  Starlight renderiza la paginación en @layer starlight.core.
+  Al estar fuera de @layer, estos estilos tienen mayor prioridad.
+*/
+.pagination-links {
+	margin-top: 2rem;
+	gap: 0.6rem;
+}
+
+.pagination-links a {
+	padding: 0.5rem 0.8rem;
+	border-color: var(--c-border);
+	box-shadow: none;
+	color: var(--c-gray-3);
+	font-size: var(--sl-text-sm);
+	gap: 0.35rem;
+	border-radius: 0.4rem;
+}
+
+.pagination-links a:hover {
+	border-color: var(--c-navy);
+	color: var(--c-navy);
+}
+
+.pagination-links .link-title {
+	color: var(--c-navy);
+	font-size: var(--sl-text-sm);
+	line-height: 1.3;
+	font-weight: 600;
+}
+
+.pagination-links svg {
+	width: 1rem;
+	height: 1rem;
+	flex-shrink: 0;
+}
