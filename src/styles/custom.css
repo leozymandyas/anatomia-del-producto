@@ -158,19 +158,13 @@
 /* ─── Footer siempre al fondo de la pantalla ────────────────────────────────── */
 /*
   .main-pane ocupa al menos toda la altura de la ventana (el header está oculto
-  en desktop, así que --sl-nav-height = 0). display:flex + flex-direction:column
-  convierte sus hijos en una pila vertical. El .site-footer recibe margin-top:auto
-  para que consuma el espacio sobrante y quede pegado al fondo.
+  en desktop, así que --sl-nav-height = 0). Esto garantiza que en artículos
+  cortos la página llene el viewport y el footer quede al fondo naturalmente.
+  No se usa margin-top:auto porque .site-footer no es hijo directo del flex container.
 */
 @media (min-width: 50rem) {
 	.main-pane {
 		min-height: calc(100dvh - var(--sl-nav-height, 0rem));
-		display: flex;
-		flex-direction: column;
-	}
-
-	.main-pane .site-footer {
-		margin-top: auto;
 	}
 }
 
