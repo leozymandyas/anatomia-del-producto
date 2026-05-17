@@ -22,7 +22,19 @@ const { sidebar, toc } = Astro.locals.starlightRoute;
 		<span class="brand-name">Anatomía del Producto</span>
 	</a>
 	<button class="collapse-btn" id="sidebar-toggle" aria-label="Colapsar menú">
-		<span class="collapse-icon" aria-hidden="true">‹</span>
+		<svg aria-hidden="true" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg" style="fill-rule:evenodd;clip-rule:evenodd;">
+			<g transform="matrix(1,0,0,1,0,-3)">
+				<g transform="matrix(1,0,0,1,570,-0.077631)">
+					<g transform="matrix(3.087536,0,0,3.087536,-310,263.155263)">
+						<g transform="matrix(1,0,0,1,-66.666667,-66.666667)">
+							<g transform="matrix(0.138889,0,0,0.138889,0,133.333333)">
+								<path d="M120,-240L120,-320L840,-320L840,-240L120,-240ZM120,-440L120,-520L840,-520L840,-440L120,-440ZM120,-640L120,-720L840,-720L840,-640L120,-640Z" style="fill:rgb(178,95,40);fill-rule:nonzero;"/>
+							</g>
+						</g>
+					</g>
+				</g>
+			</g>
+		</svg>
 	</button>
 </div>
 
@@ -117,10 +129,10 @@ const { sidebar, toc } = Astro.locals.starlightRoute;
 			transition: background-color 0.15s, color 0.15s, transform 0.2s;
 		}
 
-		.collapse-icon {
-			font-size: 1.1rem;
-			font-weight: 700;
-			line-height: 1;
+		.collapse-btn svg {
+			width: 100%;
+			height: 100%;
+			display: block;
 		}
 
 		.collapse-btn:hover {
