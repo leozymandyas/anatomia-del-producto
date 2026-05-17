@@ -194,7 +194,7 @@
 
 /* ─── Tipografía ─────────────────────────────────────────────────────────────── */
 body {
-	font-family: 'Epunda Sans', sans-serif;
+	font-family: 'Lato', sans-serif;
 }
 
 h1,
@@ -209,12 +209,12 @@ h6,
 .sl-markdown-content h4,
 .sl-markdown-content h5,
 .sl-markdown-content h6 {
-	font-family: 'Epunda Slab', serif;
+	font-family: 'PT Serif', serif;
 }
 
 /* Título del sitio en el sidebar */
 .site-title {
-	font-family: 'IM Fell French Canon', serif;
+	font-family: 'Alegreya', serif;
 	color: var(--c-navy);
 }
 
