@@ -1,4 +1,19 @@
 ---
-// Header vacío: el título y la navegación están en el sidebar (estilo Godot).
-// En móvil este espacio lo ocupa el botón de menú (MobileMenuToggle).
+import SiteTitle from 'virtual:starlight/components/SiteTitle';
 ---
+
+<!-- En móvil muestra el título. En desktop el header está oculto via CSS
+     y el branding vive en el sidebar (estilo Godot). -->
+<div class="md:sl-hidden mobile-header-title">
+	<SiteTitle />
+</div>
+
+<style>
+	@layer starlight.core {
+		.mobile-header-title {
+			display: flex;
+			align-items: center;
+			height: 100%;
+		}
+	}
+</style>
