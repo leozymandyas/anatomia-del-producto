@@ -26,6 +26,10 @@ export default defineConfig({
 					tag: 'link',
 					attrs: { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg?v=2' },
 				},
+				{
+					tag: 'script',
+					content: 'document.title = "Anatomía del Producto";',
+				},
 			],
 			favicon: '/favicon.svg',
 			logo: { src: './src/assets/logo.svg', alt: 'Anatomía del Producto', replacesTitle: false },

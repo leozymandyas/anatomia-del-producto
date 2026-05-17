@@ -23,17 +23,17 @@ Los colores están definidos como variables CSS en `src/styles/custom.css`, en e
 | Variable | Valor | Rol |
 |---|---|---|
 | `--c-bg` | `#FDF5E5` | Fondo de página, sidebar, nav, modal de búsqueda |
-| `--c-text` | `#2E3D30` | Cuerpo de texto (párrafos, listas) |
-| `--c-text-strong` | `#1E2E20` | Negritas dentro del contenido |
-| `--c-navy` | `#7B9A80` | Títulos, acento principal, tags, sidebar, links activos |
-| `--c-navy-dark` | `#4A6B50` | Hover sobre elementos de acento |
-| `--c-navy-tint` | `#D4E4D8` | Fondo de acento muy suave |
-| `--c-gray-1..7` | `#1E2E20` → `#E8F0EA` | Escala verde-grisácea (texto secundario, bordes) |
-| `--c-border` | `#B0C8B8` | Bordes estándar |
-| `--c-border-soft` | `#C4D8CA` | Bordes interiores del sidebar |
-| `--c-border-dark` | `#96B0A0` | Bordes con más contraste |
-| `--c-scroll-thumb` | `#7B9A80` | Thumb de la scrollbar |
-| `--c-scroll-track` | `#E8F0EA` | Track de la scrollbar |
+| `--c-text` | `#3D2010` | Cuerpo de texto (párrafos, listas) |
+| `--c-text-strong` | `#2A1508` | Negritas dentro del contenido |
+| `--c-navy` | `#B25F28` | Títulos, acento principal, tags, sidebar, links activos |
+| `--c-navy-dark` | `#7A3F18` | Hover sobre elementos de acento |
+| `--c-navy-tint` | `#F2DDD0` | Fondo de acento muy suave |
+| `--c-gray-1..7` | `#2A1508` → `#F0E8DC` | Escala marrón-anaranjada (texto secundario, bordes) |
+| `--c-border` | `#D4B090` | Bordes estándar |
+| `--c-border-soft` | `#E0C8A8` | Bordes interiores del sidebar |
+| `--c-border-dark` | `#C09870` | Bordes con más contraste |
+| `--c-scroll-thumb` | `#B28060` | Thumb de la scrollbar |
+| `--c-scroll-track` | `#F0E8DC` | Track de la scrollbar |
 
 ### Cómo cambiar la paleta completa
 
