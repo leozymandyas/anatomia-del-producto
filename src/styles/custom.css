@@ -60,7 +60,7 @@
 /* ─── Scrollbar ──────────────────────────────────────────────────────────────── */
 /* Firefox */
 * {
-	scrollbar-color: #A89080 #FFE4B5;
+	scrollbar-color: #7A90B0 #E8EDF5;
 	scrollbar-width: thin;
 }
 
@@ -71,17 +71,17 @@
 }
 
 ::-webkit-scrollbar-track {
-	background: #FFE4B5;
+	background: #E8EDF5;
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: #A89080;
+	background-color: #7A90B0;
 	border-radius: 999px;
-	border: 2px solid #FFE4B5;
+	border: 2px solid #E8EDF5;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background-color: #7A6A60;
+	background-color: #4A6080;
 }
 
 /* ─── Tipografía ─────────────────────────────────────────────────────────────── */
@@ -91,7 +91,7 @@ body {
 
 .site-title {
 	font-family: 'Alegreya', serif;
-	color: #C65D00;
+	color: #2A3D63;
 }
 
 h1,
@@ -116,57 +116,57 @@ h6,
 
 /* Título del artículo (h1 generado por Starlight fuera de .sl-markdown-content) */
 h1#_top {
-	color: #87734A;
+	color: #2A3D63;
 }
 
 /* Encabezados dentro del contenido markdown */
 .sl-markdown-content :is(h2, h3, h4, h5, h6) {
-	color: #87734A;
+	color: #2A3D63;
 }
 
 .sl-markdown-content strong {
-	color: #5B4524;
+	color: #1A2A45;
 }
 
-/* ─── Paleta cálida (fuerza modo claro siempre) ─────────────────────────────── */
+/* ─── Paleta azul-crema (fuerza modo claro siempre) ─────────────────────────── */
 :root,
 :root[data-theme='light'],
 :root[data-theme='dark'] {
 	/* Fondos */
-	--sl-color-bg: #E5DFC5;
-	--sl-color-bg-nav: #E5DFC5;
-	--sl-color-bg-sidebar: #E5DFC5;
-	--sl-color-black: #E5DFC5;
+	--sl-color-bg: #FDF5E5;
+	--sl-color-bg-nav: #FDF5E5;
+	--sl-color-bg-sidebar: #FDF5E5;
+	--sl-color-black: #FDF5E5;
 
 	/* Texto */
-	--sl-color-text: #4A2F1A;
-	--sl-color-text-accent: #C65D00;
-	--sl-color-text-invert: #F2E8D8;
-	--sl-color-white: #3A3230;
+	--sl-color-text: #2D3A52;
+	--sl-color-text-accent: #2A3D63;
+	--sl-color-text-invert: #EEF2F8;
+	--sl-color-white: #1A2A45;
 
 	/* Acento */
-	--sl-color-accent: #6A5142;
-	--sl-color-accent-low: #EAD9C8;
-	--sl-color-accent-high: #3D2E24;
+	--sl-color-accent: #2A3D63;
+	--sl-color-accent-low: #D6E0F0;
+	--sl-color-accent-high: #1A2A45;
 
-	/* Escala de grises cálidos */
-	--sl-color-gray-1: #3A3230;
-	--sl-color-gray-2: #4A403B;
-	--sl-color-gray-3: #7A6A60;
-	--sl-color-gray-4: #A89080;
-	--sl-color-gray-5: #C8B5A5;
-	--sl-color-gray-6: #DDD0C0;
-	--sl-color-gray-7: #EDE4D8;
+	/* Escala de grises azulados */
+	--sl-color-gray-1: #1E2A3A;
+	--sl-color-gray-2: #2D3A52;
+	--sl-color-gray-3: #4A6080;
+	--sl-color-gray-4: #7A90B0;
+	--sl-color-gray-5: #A8BACE;
+	--sl-color-gray-6: #CDD8E8;
+	--sl-color-gray-7: #E8EDF5;
 
 	/* Bordes */
-	--sl-color-hairline: #C4AF98;
-	--sl-color-hairline-light: #CEC0B0;
-	--sl-color-hairline-shade: #B8A48C;
+	--sl-color-hairline: #B0C0D8;
+	--sl-color-hairline-light: #C4D0E4;
+	--sl-color-hairline-shade: #9AAEC8;
 }
 
 /* Etiqueta de grupos en sidebar (Cabeza, Caja torácica, etc.) */
 .group-label .large {
-	color: #523C2E;
+	color: #2A3D63;
 }
 
 /* ─── Layout: ocultar panel TOC derecho, crear espacios laterales ────────────── */
@@ -202,8 +202,8 @@ h1#_top {
 	align-items: center;
 	padding: 0.15rem 0.6rem;
 	border-radius: 4px;
-	background-color: rgba(106, 81, 66, 0.12);
-	color: #523C2E;
+	background-color: rgba(42, 61, 99, 0.1);
+	color: #2A3D63;
 	font-size: 0.8rem;
 	font-weight: 500;
 	text-decoration: none;
@@ -213,8 +213,8 @@ h1#_top {
 }
 
 .tag-chip:hover {
-	background-color: rgba(106, 81, 66, 0.22);
-	color: #3D2E24;
+	background-color: rgba(42, 61, 99, 0.2);
+	color: #1A2A45;
 }
 
 /* ─── Separador en sidebar antes de "Todos los artículos" ──────────────────── */
