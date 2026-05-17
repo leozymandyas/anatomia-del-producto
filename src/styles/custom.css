@@ -308,7 +308,18 @@ button[data-open-modal] kbd {
 	--c-navy: var(--c-bg);
 	--c-text: var(--c-bg);
 	--c-text-strong: var(--c-bg);
+	--sl-color-text-accent: var(--c-bg);
+	--sl-color-accent: var(--c-bg);
 	color: var(--c-bg);
+}
+
+.main-pane:has([data-page-theme='terracota']) .sl-markdown-content a {
+	color: var(--c-bg);
+	text-decoration-color: rgba(253, 245, 229, 0.5);
+}
+
+.main-pane:has([data-page-theme='terracota']) .sl-markdown-content a:hover {
+	text-decoration-color: var(--c-bg);
 }
 
 .main-pane:has([data-page-theme='terracota']) .tag-chip {
