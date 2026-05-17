@@ -1,11 +1,56 @@
 /* ─── Layout: eliminar header en desktop (estilo Godot) ─────────────────────── */
 @media (min-width: 50rem) {
-	/* El header queda vacío; se oculta y se elimina su altura */
 	.header {
 		display: none;
 	}
 	:root {
 		--sl-nav-height: 0rem;
+	}
+}
+
+/* ─── Sidebar colapsable (solo desktop) ──────────────────────────────────────── */
+@media (min-width: 50rem) {
+	/* Animar el ancho del sidebar */
+	.sidebar-pane {
+		transition: width 0.2s ease-in-out;
+	}
+	/* Animar el padding del contenido principal */
+	.main-frame {
+		transition: padding-inline-start 0.2s ease-in-out,
+		            padding-inline-end 0.2s ease-in-out;
+	}
+
+	/* Estado colapsado */
+	:root[data-sidebar-collapsed] {
+		--sl-sidebar-width: 3.75rem;
+	}
+
+	/* Centrar contenido del sidebar en colapsado */
+	[data-sidebar-collapsed] .sidebar-content {
+		padding-inline: 0.4rem;
+		align-items: center;
+	}
+
+	/* Ocultar elementos que no caben en el sidebar colapsado */
+	[data-sidebar-collapsed] .brand-name,
+	[data-sidebar-collapsed] .sidebar-search-wrapper,
+	[data-sidebar-collapsed] .top-level {
+		display: none;
+	}
+
+	/* Brand centrado en colapsado */
+	[data-sidebar-collapsed] .sidebar-brand {
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 0.6rem;
+		border-bottom: none;
+		padding-bottom: 0.5rem;
+	}
+
+	/* Rotar la flecha cuando está colapsado */
+	[data-sidebar-collapsed] .collapse-btn {
+		transform: rotate(180deg);
 	}
 }
 
