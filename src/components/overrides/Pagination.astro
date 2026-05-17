@@ -1,0 +1,67 @@
+---
+const { pagination } = Astro.locals.starlightRoute;
+const { prev, next } = pagination;
+---
+
+{(prev || next) && (
+	<nav class="pagination-compact" aria-label="Navegación entre artículos">
+		{prev ? (
+			<a href={prev.href} class="pg-link pg-prev" rel="prev">
+				<span class="pg-arrow">←</span>
+				<span class="pg-label">{prev.label}</span>
+			</a>
+		) : <span />}
+		{next ? (
+			<a href={next.href} class="pg-link pg-next" rel="next">
+				<span class="pg-label">{next.label}</span>
+				<span class="pg-arrow">→</span>
+			</a>
+		) : <span />}
+	</nav>
+)}
+
+<style>
+	.pagination-compact {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem;
+		margin-top: 2rem;
+		padding-top: 0.75rem;
+		border-top: 1px solid var(--sl-color-hairline);
+	}
+
+	.pg-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		font-size: var(--sl-text-sm);
+		color: var(--c-navy);
+		text-decoration: none;
+		font-weight: 500;
+		transition: color 0.15s;
+		max-width: 48%;
+	}
+
+	.pg-link:hover {
+		color: var(--c-navy-dark);
+		text-decoration: underline;
+	}
+
+	.pg-label {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+
+	.pg-arrow {
+		flex-shrink: 0;
+		color: var(--c-gray-4);
+	}
+
+	.pg-next {
+		margin-left: auto;
+		text-align: right;
+		flex-direction: row-reverse;
+	}
+</style>

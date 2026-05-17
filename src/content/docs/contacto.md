@@ -13,7 +13,3 @@ Si tienes preguntas, sugerencias de temas o simplemente quieres conversar sobre 
 ## Correo electrónico
 
 Para consultas directas: **leonardoruanohernandez1@gmail.com**
-
-
-
-
