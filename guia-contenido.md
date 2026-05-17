@@ -55,6 +55,43 @@ Más contenido...
 | `description` | Recomendado | Descripción corta para SEO y tarjetas de vista previa. |
 | `tags` | No | Lista de etiquetas. Genera chips y páginas `/tags/<tag>/`. |
 
+### Tema de color de la página (`pageTheme`)
+
+Puedes cambiar los colores del área de contenido de una página sin afectar el sidebar ni el menú. El sidebar, el header y la navegación conservan siempre sus colores normales.
+
+```yaml
+---
+title: Inicio
+pageTheme: terracota
+---
+```
+
+| Valor | Efecto |
+|---|---|
+| `terracota` | Fondo terracota, texto crema (colores invertidos de la paleta principal) |
+| *(sin valor)* | Colores normales del sitio |
+
+**Cómo crear un tema nuevo:**
+
+1. Abre `src/styles/custom.css` y busca la sección `/* Temas de página */`
+2. Duplica el bloque `terracota` y cambia el nombre y los colores:
+
+```css
+/* Tema: marino — ejemplo */
+.main-pane:has([data-page-theme='marino']) {
+  background-color: #1A2A45;
+}
+.main-pane:has([data-page-theme='marino']) [data-page-theme='marino'],
+.main-pane:has([data-page-theme='marino']) h1#_top {
+  --c-navy: #FDF5E5;
+  --c-text: #FDF5E5;
+  --c-text-strong: #FDF5E5;
+  color: #FDF5E5;
+}
+```
+
+3. Usa `pageTheme: marino` en el frontmatter del artículo.
+
 ### Sobre los tags
 
 - Se escriben como lista: `tags: [producto, IA]` o `tags: ["Producto Digital", "IA"]`
@@ -186,6 +223,63 @@ Contenido del artículo...
 ```
 
 Guarda el archivo y la sección aparece en el sidebar de inmediato (en desarrollo local).
+
+---
+
+## Agregar subsecciones (Cabeza > Ojos > Artículo)
+
+Puedes anidar un nivel más creando subcarpetas dentro de una sección. No hace falta tocar `astro.config.mjs` si ya usas `autogenerate` — Starlight convierte las subcarpetas en grupos automáticamente.
+
+### Estructura de carpetas
+
+```
+src/content/docs/
+└── cabeza/
+    ├── ojos/
+    │   ├── ia-y-vision.md
+    │   └── reconocimiento-de-patrones.md
+    └── oidos/
+        └── procesamiento-de-audio.md
+```
+
+Resultado en el sidebar:
+```
+▼ Cabeza
+    ▼ Ojos
+        IA y visión
+        Reconocimiento de patrones
+    ▼ Oídos
+        Procesamiento de audio
+```
+
+El label del grupo viene del nombre de la carpeta (capitalizado automáticamente).
+
+### Si quieres un label personalizado para la subsección
+
+Reemplaza el `autogenerate` de la sección en `astro.config.mjs` con una lista manual:
+
+```js
+{
+  label: 'Cabeza',
+  items: [
+    {
+      label: 'Visión e imágenes',        // label personalizado
+      items: [{ autogenerate: { directory: 'cabeza/ojos' } }],
+    },
+    {
+      label: 'Sonido',
+      items: [{ autogenerate: { directory: 'cabeza/oidos' } }],
+    },
+  ],
+},
+```
+
+### Rutas resultantes
+
+| Archivo | URL |
+|---|---|
+| `cabeza/ojos/ia-y-vision.md` | `/cabeza/ojos/ia-y-vision/` |
+| `cabeza/oidos/procesamiento.md` | `/cabeza/oidos/procesamiento/` |
 
 ---
 

@@ -158,10 +158,8 @@
 		order: unset;
 	}
 
-	[data-has-sidebar] .main-frame {
-		padding-inline-end: var(--sl-sidebar-width);
-	}
-
+	/* Sin padding-inline-end: el sl-container se centra solo en el espacio disponible.
+	   Cuando el sidebar colapsa, el espacio crece y el contenido se recentra. */
 	.main-pane .sl-container {
 		margin-inline: auto;
 	}
@@ -278,6 +276,36 @@ h1#_top {
 /* Ocultar el hint "Ctrl K" en el botón de búsqueda */
 button[data-open-modal] kbd {
 	display: none;
+}
+
+/* ─── Temas de página ────────────────────────────────────────────────────────── */
+/*
+  Uso: añadir `pageTheme: terracota` (u otro nombre) al frontmatter del artículo.
+  El selector :has() detecta el atributo en el contenido y aplica estilos al área
+  de la página, sin tocar el sidebar ni el header.
+  Para agregar un tema nuevo: duplica un bloque y cambia el nombre y los colores.
+*/
+
+/* Tema: terracota — fondo terracota, texto crema */
+.main-pane:has([data-page-theme='terracota']) {
+	background-color: var(--c-navy);
+}
+
+.main-pane:has([data-page-theme='terracota']) [data-page-theme='terracota'],
+.main-pane:has([data-page-theme='terracota']) h1#_top {
+	--c-navy: var(--c-bg);
+	--c-text: var(--c-bg);
+	--c-text-strong: var(--c-bg);
+	color: var(--c-bg);
+}
+
+.main-pane:has([data-page-theme='terracota']) .tag-chip {
+	background-color: rgba(253, 245, 229, 0.18);
+	color: var(--c-bg);
+}
+
+.main-pane:has([data-page-theme='terracota']) .tag-chip:hover {
+	background-color: rgba(253, 245, 229, 0.32);
 }
 
 /* ─── Tags de artículos ──────────────────────────────────────────────────────── */

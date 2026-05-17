@@ -2,14 +2,16 @@
 import '@astrojs/starlight/style/markdown.css';
 
 const entry = Astro.locals.starlightRoute.entry;
-const tags = ((entry.data as Record<string, unknown>).tags ?? []) as string[];
+const data = entry.data as Record<string, unknown>;
+const tags = (data.tags ?? []) as string[];
+const pageTheme = (data.pageTheme ?? '') as string;
 
 function slugifyTag(tag: string) {
 	return tag.toLowerCase().replace(/\s+/g, '-');
 }
 ---
 
-<div class="sl-markdown-content">
+<div class="sl-markdown-content" data-page-theme={pageTheme || undefined}>
 	{
 		tags.length > 0 && (
 			<div class="article-tags-header">
