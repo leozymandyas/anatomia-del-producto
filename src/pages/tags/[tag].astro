@@ -1,0 +1,175 @@
+---
+import { getCollection } from 'astro:content';
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+
+const SECCIONES = ['cabeza', 'caja-toracica', 'extremidades'];
+
+function slugifyTag(tag: string) {
+	return tag.toLowerCase().replace(/\s+/g, '-');
+}
+
+interface ArticuloItem {
+	id: string;
+	title: string;
+	description: string | undefined;
+	tags: string[];
+}
+
+export async function getStaticPaths() {
+	const SECCIONES = ['cabeza', 'caja-toracica', 'extremidades'];
+
+	function slugifyTag(tag: string) {
+		return tag.toLowerCase().replace(/\s+/g, '-');
+	}
+
+	const allDocs = await getCollection('docs');
+	const articulos = allDocs.filter((doc) =>
+		SECCIONES.some((s) => doc.id.startsWith(s + '/'))
+	);
+
+	const tagMap: Record<string, ArticuloItem[]> = {};
+	for (const doc of articulos) {
+		const tags = (doc.data.tags ?? []) as string[];
+		for (const tag of tags) {
+			const slug = slugifyTag(tag);
+			if (!tagMap[slug]) tagMap[slug] = [];
+			tagMap[slug].push({
+				id: doc.id,
+				title: doc.data.title,
+				description: doc.data.description,
+				tags,
+			});
+		}
+	}
+
+	return Object.entries(tagMap).map(([slug, items]) => ({
+		params: { tag: slug },
+		props: {
+			tagLabel: items[0].tags.find((t) => slugifyTag(t) === slug) ?? slug,
+			articulos: items.sort((a, b) => a.title.localeCompare(b.title, 'es')),
+		},
+	}));
+}
+
+const { tagLabel, articulos } = Astro.props as {
+	tagLabel: string;
+	articulos: ArticuloItem[];
+};
+---
+
+<StarlightPage
+	frontmatter={{
+		title: `Tag: ${tagLabel}`,
+		description: `Artículos sobre ${tagLabel} en Anatomía del Producto.`,
+	}}
+>
+	<p>
+		{articulos.length} artículo{articulos.length !== 1 ? 's' : ''} con el tag <strong>{tagLabel}</strong>.
+	</p>
+
+	<ul class="article-list">
+		{articulos.map((art) => (
+			<li>
+				<a href={`/${art.id}/`} class="article-link">
+					<span class="article-title">{art.title}</span>
+					{art.description && (
+						<span class="article-description">{art.description}</span>
+					)}
+				</a>
+				{art.tags.length > 0 && (
+					<div class="article-tags">
+						{art.tags.map((tag) => (
+							<a href={`/tags/${slugifyTag(tag)}/`} class="tag-chip">{tag}</a>
+						))}
+					</div>
+				)}
+			</li>
+		))}
+	</ul>
+
+	<a href="/tags/" class="back-link">← Ver todos los tags</a>
+</StarlightPage>
+
+<style>
+	.article-list {
+		list-style: none;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		margin-block: 1.5rem;
+	}
+
+	.article-list li {
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.5rem;
+		padding: 1rem 1.25rem;
+		transition: border-color 0.2s;
+	}
+
+	.article-list li:hover {
+		border-color: var(--sl-color-accent);
+	}
+
+	.article-link {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		text-decoration: none;
+		color: var(--sl-color-text);
+	}
+
+	.article-title {
+		font-size: 1.05rem;
+		font-weight: 600;
+		color: var(--sl-color-text-accent);
+	}
+
+	.article-link:hover .article-title {
+		color: var(--sl-color-accent);
+	}
+
+	.article-description {
+		font-size: 0.875rem;
+		color: var(--sl-color-gray-2);
+	}
+
+	.article-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem;
+		margin-top: 0.6rem;
+	}
+
+	.tag-chip {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.15rem 0.6rem;
+		border-radius: 4px;
+		background-color: rgba(124, 58, 237, 0.12);
+		color: #5b21b6;
+		font-size: 0.8rem;
+		font-weight: 500;
+		text-decoration: none;
+		transition: background-color 0.15s;
+	}
+
+	.tag-chip:hover {
+		background-color: rgba(124, 58, 237, 0.22);
+	}
+
+	:global([data-theme='dark']) .tag-chip {
+		background-color: rgba(167, 139, 250, 0.18);
+		color: #c4b5fd;
+	}
+
+	.back-link {
+		font-size: 0.875rem;
+		color: var(--sl-color-accent);
+		text-decoration: none;
+	}
+
+	.back-link:hover {
+		text-decoration: underline;
+	}
+</style>

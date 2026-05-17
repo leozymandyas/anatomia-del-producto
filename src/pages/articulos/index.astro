@@ -1,0 +1,149 @@
+---
+import { getCollection } from 'astro:content';
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+
+const SECCIONES = ['cabeza', 'caja-toracica', 'extremidades'];
+
+const allDocs = await getCollection('docs');
+
+interface ArticuloItem {
+	id: string;
+	title: string;
+	description: string | undefined;
+	seccion: string;
+	tags: string[];
+}
+
+function slugifyTag(tag: string) {
+	return tag.toLowerCase().replace(/\s+/g, '-');
+}
+
+function seccionLabel(id: string) {
+	if (id.startsWith('cabeza/')) return 'Cabeza';
+	if (id.startsWith('caja-toracica/')) return 'Caja torácica';
+	if (id.startsWith('extremidades/')) return 'Extremidades';
+	return '';
+}
+
+const articulos: ArticuloItem[] = allDocs
+	.filter((doc) => SECCIONES.some((s) => doc.id.startsWith(s + '/')))
+	.sort((a, b) => a.data.title.localeCompare(b.data.title, 'es'))
+	.map((doc) => ({
+		id: doc.id,
+		title: doc.data.title,
+		description: doc.data.description,
+		seccion: seccionLabel(doc.id),
+		tags: (doc.data.tags ?? []) as string[],
+	}));
+---
+
+<StarlightPage frontmatter={{ title: 'Todos los artículos', description: 'Índice completo de artículos de Anatomía del Producto.' }}>
+	<p>{articulos.length} artículos publicados.</p>
+
+	<ul class="article-list">
+		{articulos.map((art) => (
+			<li>
+				<a href={`/${art.id}/`} class="article-link">
+					<div class="article-meta">
+						<span class="article-seccion">{art.seccion}</span>
+					</div>
+					<span class="article-title">{art.title}</span>
+					{art.description && (
+						<span class="article-description">{art.description}</span>
+					)}
+				</a>
+				{art.tags.length > 0 && (
+					<div class="article-tags">
+						{art.tags.map((tag) => (
+							<a href={`/tags/${slugifyTag(tag)}/`} class="tag-chip">{tag}</a>
+						))}
+					</div>
+				)}
+			</li>
+		))}
+	</ul>
+</StarlightPage>
+
+<style>
+	.article-list {
+		list-style: none;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		margin-block: 1.5rem;
+	}
+
+	.article-list li {
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.5rem;
+		padding: 1rem 1.25rem;
+		transition: border-color 0.2s;
+	}
+
+	.article-list li:hover {
+		border-color: var(--sl-color-accent);
+	}
+
+	.article-link {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		text-decoration: none;
+		color: var(--sl-color-text);
+	}
+
+	.article-meta {
+		display: flex;
+		gap: 0.5rem;
+		align-items: center;
+	}
+
+	.article-seccion {
+		font-size: 0.75rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: var(--sl-color-accent);
+	}
+
+	.article-title {
+		font-size: 1.05rem;
+		font-weight: 600;
+		color: var(--sl-color-text-accent);
+	}
+
+	.article-link:hover .article-title {
+		color: var(--sl-color-accent);
+	}
+
+	.article-description {
+		font-size: 0.875rem;
+		color: var(--sl-color-gray-2);
+		margin-top: 0.1rem;
+	}
+
+	.article-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem;
+		margin-top: 0.6rem;
+	}
+
+	.tag-chip {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.15rem 0.6rem;
+		border-radius: 4px;
+		background-color: rgba(124, 58, 237, 0.12);
+		color: #5b21b6;
+		font-size: 0.8rem;
+		font-weight: 500;
+		text-decoration: none;
+		transition: background-color 0.15s;
+	}
+
+	.tag-chip:hover {
+		background-color: rgba(124, 58, 237, 0.22);
+	}
+</style>

@@ -1,0 +1,25 @@
+---
+import '@astrojs/starlight/style/markdown.css';
+
+const entry = Astro.locals.starlightRoute.entry;
+const tags = ((entry.data as Record<string, unknown>).tags ?? []) as string[];
+
+function slugifyTag(tag: string) {
+	return tag.toLowerCase().replace(/\s+/g, '-');
+}
+---
+
+<div class="sl-markdown-content">
+	{
+		tags.length > 0 && (
+			<div class="article-tags-header">
+				{tags.map((tag) => (
+					<a href={`/tags/${slugifyTag(tag)}/`} class="tag-chip">
+						{tag}
+					</a>
+				))}
+			</div>
+		)
+	}
+	<slot />
+</div>

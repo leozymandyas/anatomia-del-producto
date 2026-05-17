@@ -1,0 +1,83 @@
+---
+import { getCollection } from 'astro:content';
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+
+const SECCIONES = ['cabeza', 'caja-toracica', 'extremidades'];
+
+const allDocs = await getCollection('docs');
+const articulos = allDocs.filter((doc) =>
+	SECCIONES.some((s) => doc.id.startsWith(s + '/'))
+);
+
+const tagCounts: Record<string, number> = {};
+for (const doc of articulos) {
+	const tags = ((doc.data as Record<string, unknown>).tags ?? []) as string[];
+	for (const tag of tags) {
+		tagCounts[tag] = (tagCounts[tag] ?? 0) + 1;
+	}
+}
+
+function slugifyTag(tag: string) {
+	return tag.toLowerCase().replace(/\s+/g, '-');
+}
+
+const tags = Object.entries(tagCounts).sort(([a], [b]) => a.localeCompare(b, 'es'));
+---
+
+<StarlightPage frontmatter={{ title: 'Tags', description: 'Artículos organizados por tema.' }}>
+	<p>Explora los artículos agrupados por tema.</p>
+	<div class="tag-list">
+		{tags.map(([tag, count]) => (
+			<a href={`/tags/${slugifyTag(tag)}/`} class="tag-chip">
+				{tag}
+				<span class="tag-count">{count}</span>
+			</a>
+		))}
+	</div>
+</StarlightPage>
+
+<style>
+	.tag-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+		margin-block-start: 1.5rem;
+	}
+
+	.tag-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.25rem 0.75rem;
+		border-radius: 4px;
+		background-color: rgba(124, 58, 237, 0.12);
+		color: #5b21b6;
+		font-size: 0.875rem;
+		font-weight: 500;
+		text-decoration: none;
+		transition: background-color 0.15s;
+	}
+
+	.tag-chip:hover {
+		background-color: rgba(124, 58, 237, 0.22);
+	}
+
+	:global([data-theme='dark']) .tag-chip {
+		background-color: rgba(167, 139, 250, 0.18);
+		color: #c4b5fd;
+	}
+
+	:global([data-theme='dark']) .tag-chip:hover {
+		background-color: rgba(167, 139, 250, 0.3);
+	}
+
+	.tag-count {
+		font-size: 0.7rem;
+		font-weight: 700;
+		background-color: rgba(124, 58, 237, 0.2);
+		padding: 0 0.4rem;
+		border-radius: 999px;
+		min-width: 1.2rem;
+		text-align: center;
+	}
+</style>

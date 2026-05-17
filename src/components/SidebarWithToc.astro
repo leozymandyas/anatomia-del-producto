@@ -1,0 +1,282 @@
+---
+import SidebarRestorePoint from '@astrojs/starlight/components/SidebarRestorePoint.astro';
+
+type TocEntry = { depth: number; slug: string; text: string; children: TocEntry[] };
+type TocData = { minHeadingLevel: number; maxHeadingLevel: number; items: TocEntry[] };
+
+type LinkEntry = {
+	type: 'link';
+	href: string;
+	label: string;
+	isCurrent: boolean;
+	attrs: { class?: string; [key: string]: unknown };
+	badge: unknown;
+};
+type GroupEntry = {
+	type: 'group';
+	label: string;
+	entries: SidebarEntry[];
+	collapsed: boolean;
+	badge: unknown;
+};
+type SidebarEntry = LinkEntry | GroupEntry;
+
+interface Props {
+	sublist: SidebarEntry[];
+	nested?: boolean;
+	toc?: TocData | undefined;
+}
+
+const { sublist, nested, toc } = Astro.props;
+
+function flattenLinks(items: SidebarEntry[]): LinkEntry[] {
+	return items.flatMap((i) => (i.type === 'group' ? flattenLinks(i.entries) : [i]));
+}
+
+// TOC items to show inline under the active page (skip the _top / page title item)
+const tocItems = toc ? toc.items.filter((item) => item.slug !== '_top') : [];
+---
+
+<ul class:list={{ 'top-level': !nested }}>
+	{
+		sublist.map((entry) => (
+			<li>
+				{entry.type === 'link' ? (
+					<>
+						<a
+							href={entry.href}
+							aria-current={entry.isCurrent ? 'page' : undefined}
+							class:list={[{ large: !nested }, entry.attrs.class]}
+							{...(entry.attrs as Record<string, unknown>)}
+						>
+							<span>{entry.label}</span>
+						</a>
+						{entry.isCurrent && tocItems.length > 0 && (
+							<details class="toc-details" open>
+								<summary class="toc-toggle">
+									<span>Anatomía de la página</span>
+									<svg
+										class="toc-caret"
+										xmlns="http://www.w3.org/2000/svg"
+										width="14"
+										height="14"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2.5"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<polyline points="9 18 15 12 9 6" />
+									</svg>
+								</summary>
+								<starlight-toc
+									data-min-h={String(toc!.minHeadingLevel)}
+									data-max-h={String(toc!.maxHeadingLevel)}
+								>
+									<ul class="toc-items">
+										{tocItems.map((item) => (
+											<li>
+												<a href={`#${item.slug}`} class="toc-link">
+													{item.text}
+												</a>
+												{item.children.length > 0 && (
+													<ul>
+														{item.children.map((child) => (
+															<li>
+																<a href={`#${child.slug}`} class="toc-link">
+																	{child.text}
+																</a>
+															</li>
+														))}
+													</ul>
+												)}
+											</li>
+										))}
+									</ul>
+								</starlight-toc>
+							</details>
+						)}
+					</>
+				) : (
+					<details
+						open={flattenLinks(entry.entries).some((i) => i.isCurrent) || !entry.collapsed}
+					>
+						<summary>
+							<span class="group-label">
+								<span class="large">{entry.label}</span>
+							</span>
+							<svg
+								class="caret"
+								xmlns="http://www.w3.org/2000/svg"
+								width="20"
+								height="20"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2.5"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								aria-hidden="true"
+							>
+								<polyline points="9 18 15 12 9 6" />
+							</svg>
+						</summary>
+						<SidebarRestorePoint />
+						<Astro.self sublist={entry.entries} nested toc={toc} />
+					</details>
+				)}
+			</li>
+		))
+	}
+</ul>
+
+<style>
+	ul {
+		--sl-sidebar-item-padding-inline: 0.5rem;
+		list-style: none;
+		padding: 0;
+	}
+
+	li {
+		overflow-wrap: anywhere;
+	}
+
+	ul ul li {
+		margin-inline-start: var(--sl-sidebar-item-padding-inline);
+		border-inline-start: 1px solid var(--sl-color-hairline-light);
+		padding-inline-start: var(--sl-sidebar-item-padding-inline);
+	}
+
+	.large {
+		font-size: var(--sl-text-lg);
+		font-weight: 600;
+		color: var(--sl-color-white);
+	}
+
+	.top-level > li + li {
+		margin-top: 0.75rem;
+	}
+
+	summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0.2em var(--sl-sidebar-item-padding-inline);
+		line-height: 1.4;
+		cursor: pointer;
+		user-select: none;
+	}
+	summary::marker,
+	summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.caret {
+		transition: transform 0.2s ease-in-out;
+		flex-shrink: 0;
+		color: var(--sl-color-gray-3);
+	}
+	[open] > summary .caret {
+		transform: rotateZ(90deg);
+	}
+
+	a {
+		display: block;
+		border-radius: 0.25rem;
+		text-decoration: none;
+		color: var(--sl-color-gray-2);
+		padding: 0.3em var(--sl-sidebar-item-padding-inline);
+		line-height: 1.4;
+	}
+
+	a:hover,
+	a:focus {
+		color: var(--sl-color-white);
+	}
+
+	[aria-current='page'],
+	[aria-current='page']:hover,
+	[aria-current='page']:focus {
+		font-weight: 600;
+		color: var(--sl-color-text-invert);
+		background-color: var(--sl-color-text-accent);
+	}
+
+	@media (min-width: 50rem) {
+		.top-level > li + li {
+			margin-top: 0.5rem;
+		}
+		.large {
+			font-size: var(--sl-text-base);
+		}
+		a {
+			font-size: var(--sl-text-sm);
+		}
+	}
+
+	/* ── Inline TOC collapsible under the active page link ── */
+	.toc-details {
+		margin-top: 0.2rem;
+	}
+
+	.toc-toggle {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0.2em var(--sl-sidebar-item-padding-inline);
+		font-size: 0.7rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.07em;
+		color: var(--sl-color-gray-3);
+		cursor: pointer;
+		user-select: none;
+		list-style: none;
+	}
+	.toc-toggle::marker,
+	.toc-toggle::-webkit-details-marker {
+		display: none;
+	}
+
+	.toc-caret {
+		transition: transform 0.2s ease-in-out;
+		flex-shrink: 0;
+		color: var(--sl-color-gray-3);
+	}
+	.toc-details[open] .toc-caret {
+		transform: rotateZ(90deg);
+	}
+
+	starlight-toc {
+		display: block;
+	}
+
+	.toc-items {
+		margin-block: 0.1rem;
+	}
+
+	/* Override the inherited `a` styles for TOC links */
+	.toc-link {
+		color: var(--sl-color-gray-3);
+		font-size: 0.78rem;
+		padding-block: 0.15em;
+		font-weight: 400;
+		border-radius: 0;
+	}
+
+	.toc-link:hover,
+	.toc-link:focus {
+		color: var(--sl-color-gray-1);
+		background: none;
+	}
+
+	.toc-link[aria-current='true'],
+	.toc-link[aria-current='true']:hover,
+	.toc-link[aria-current='true']:focus {
+		color: var(--sl-color-accent);
+		font-weight: 500;
+		background: none;
+	}
+</style>

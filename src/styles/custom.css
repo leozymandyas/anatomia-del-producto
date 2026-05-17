@@ -1,0 +1,153 @@
+/* ─── Tipografía ─────────────────────────────────────────────────────────────── */
+body {
+	font-family: 'Lato', sans-serif;
+}
+
+.site-title {
+	font-family: 'Alegreya', serif;
+}
+
+h1, h2, h3, h4, h5, h6,
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3,
+.sl-markdown-content h4,
+.sl-markdown-content h5,
+.sl-markdown-content h6 {
+	font-family: 'PT Serif', serif;
+}
+
+/* Título del artículo (h1 generado por Starlight fuera de .sl-markdown-content) */
+h1#_top {
+	color: var(--sl-color-accent);
+}
+
+/* Encabezados dentro del contenido markdown */
+.sl-markdown-content :is(h2, h3, h4, h5, h6) {
+	color: var(--sl-color-accent);
+}
+
+.sl-markdown-content strong {
+	color: #9333ea;
+}
+
+:root[data-theme='dark'] .sl-markdown-content strong {
+	color: #c084fc;
+}
+
+/* ─── Paleta morada ─────────────────────────────────────────────────────────── */
+:root {
+	--sl-color-accent-low: #ede9fe;
+	--sl-color-accent: #7c3aed;
+	--sl-color-accent-high: #4c1d95;
+}
+
+:root[data-theme='dark'] {
+	--sl-color-accent-low: #2e1065;
+	--sl-color-accent: #a78bfa;
+	--sl-color-accent-high: #ddd6fe;
+}
+
+/* ─── Layout: ocultar panel TOC derecho, crear espacios laterales ────────────── */
+@media (min-width: 72rem) {
+	/* Quitar el panel derecho (TOC va integrado en el sidebar izquierdo) */
+	.right-sidebar-container {
+		display: none;
+	}
+
+	/* Revertir el ancho reducido que Starlight aplica cuando hay TOC derecho */
+	[data-has-sidebar][data-has-toc] .main-pane {
+		width: 100%;
+		order: unset;
+	}
+
+	/* Espacio lateral derecho visible: igual al ancho del sidebar izquierdo,
+	   creando márgenes simétricos y la sensación de contenido "contenido". */
+	[data-has-sidebar] .main-frame {
+		padding-inline-end: var(--sl-sidebar-width);
+	}
+
+	/* Centrar el contenido dentro del área disponible */
+	.main-pane .sl-container {
+		margin-inline: auto;
+	}
+}
+
+/* ─── Tags estilo Notion multi-select ───────────────────────────────────────── */
+.article-tags-header {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+	margin-bottom: 1.75rem;
+}
+
+.tag-chip {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.15rem 0.6rem;
+	border-radius: 4px;
+	background-color: rgba(124, 58, 237, 0.12);
+	color: #5b21b6;
+	font-size: 0.8rem;
+	font-weight: 500;
+	text-decoration: none;
+	white-space: nowrap;
+	transition: background-color 0.15s;
+	line-height: 1.6;
+}
+
+.tag-chip:hover {
+	background-color: rgba(124, 58, 237, 0.22);
+}
+
+:root[data-theme='dark'] .tag-chip {
+	background-color: rgba(167, 139, 250, 0.18);
+	color: #c4b5fd;
+}
+
+:root[data-theme='dark'] .tag-chip:hover {
+	background-color: rgba(167, 139, 250, 0.3);
+}
+
+/* ─── Separador en sidebar antes de "Todos los artículos" ──────────────────── */
+.sidebar a.sidebar-sep-link {
+	margin-top: 0.75rem;
+	padding-top: 0.75rem;
+	border-top: 1px solid var(--sl-color-hairline);
+	display: block;
+}
+
+/* ─── Buscador en sidebar ───────────────────────────────────────────────────── */
+.sidebar-search-wrapper {
+	padding: 0.5rem 0 0.25rem;
+}
+
+.sidebar-search-wrapper button[data-open-modal] {
+	width: 100%;
+	border-radius: 0.5rem;
+}
+
+/* ─── Header: enlace Contacto ───────────────────────────────────────────────── */
+.header-contact-link {
+	display: none;
+	align-items: center;
+	font-size: var(--sl-text-sm);
+	font-weight: 500;
+	color: var(--sl-color-text);
+	text-decoration: none;
+	padding: 0.25rem 0.5rem;
+	border-radius: 0.375rem;
+	transition: color 0.2s, background-color 0.2s;
+	white-space: nowrap;
+}
+
+.header-contact-link:hover {
+	color: var(--sl-color-accent);
+	background-color: var(--sl-color-accent-low);
+}
+
+@media (min-width: 50rem) {
+	.header-contact-link {
+		display: flex;
+	}
+}

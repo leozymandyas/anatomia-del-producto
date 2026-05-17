@@ -1,0 +1,20 @@
+---
+import MobileMenuFooter from 'virtual:starlight/components/MobileMenuFooter';
+import Search from 'virtual:starlight/components/Search';
+import SidebarPersister from '@astrojs/starlight/components/SidebarPersister.astro';
+import SidebarWithToc from '../SidebarWithToc.astro';
+
+const { sidebar, toc } = Astro.locals.starlightRoute;
+---
+
+<div class="sidebar-search-wrapper">
+	<Search />
+</div>
+
+<SidebarPersister>
+	<SidebarWithToc sublist={sidebar} toc={toc} />
+</SidebarPersister>
+
+<div class="md:sl-hidden">
+	<MobileMenuFooter />
+</div>

@@ -1,0 +1,13 @@
+---
+import MobileTableOfContents from 'virtual:starlight/components/MobileTableOfContents';
+---
+
+{/* TOC en escritorio va integrado en el sidebar izquierdo (ver Sidebar.astro).
+    Aquí solo mantenemos el TOC colapsable de móvil. */}
+{
+	Astro.locals.starlightRoute.toc && (
+		<div class="lg:sl-hidden">
+			<MobileTableOfContents />
+		</div>
+	)
+}
