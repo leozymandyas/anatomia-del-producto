@@ -47,13 +47,80 @@ Los colores están definidos como variables CSS en `src/styles/custom.css`, en e
 
 Las fuentes vienen de Google Fonts y se cargan en `astro.config.mjs` (sección `head`).
 
-| Fuente | Rol |
-|---|---|
-| **Lato** | Cuerpo de texto (párrafos, UI) |
-| **PT Serif** | Todos los encabezados h1–h6 |
-| **Alegreya** | Título del sitio en el sidebar |
+| Fuente | Rol | Pesos cargados |
+|---|---|---|
+| **Epunda Sans** | Cuerpo de texto (párrafos, UI, sidebar) | 300, 400, 700 |
+| **Epunda Slab** | Todos los encabezados h1–h6 | 400, 700 normal + 400 italic |
+| **IM Fell French Canon** | Nombre del sitio en sidebar | 400 normal + italic (solo tiene 400) |
 
-Para cambiar una fuente: reemplaza la URL en el `<link>` de Google Fonts en `astro.config.mjs` y actualiza el `font-family` en `custom.css`.
+### Cómo cambiar una fuente (paso a paso)
+
+**Paso 1 — Elige la fuente en Google Fonts**
+1. Ve a [fonts.google.com](https://fonts.google.com)
+2. Busca la fuente y haz clic en ella
+3. Selecciona los pesos que quieres (ej: 400, 700) con el botón "Get font"
+4. Haz clic en **"Get embed code"** → pestaña **@import** o **\<link\>**
+5. Copia la URL que aparece en el `href` del `<link>`
+
+**Paso 2 — Actualiza la URL en `astro.config.mjs`**
+
+Busca el bloque de Google Fonts en la sección `head` y reemplaza el `href`:
+
+```js
+{
+  tag: 'link',
+  attrs: {
+    rel: 'stylesheet',
+    href: 'https://fonts.googleapis.com/css2?family=Nueva+Fuente:wght@400;700&display=swap',
+  },
+},
+```
+
+Si cargas múltiples fuentes en la misma URL (recomendado para evitar peticiones extra), sepáralas con `&family=`:
+
+```
+?family=Fuente+Uno:wght@400;700&family=Fuente+Dos:ital,wght@0,400;1,400&display=swap
+```
+
+**Paso 3 — Actualiza `font-family` en `custom.css`**
+
+Según qué rol quieras cambiar, edita el selector correspondiente:
+
+```css
+/* Cuerpo de texto */
+body {
+  font-family: 'Nueva Fuente Sans', sans-serif;
+}
+
+/* Encabezados h1–h6 */
+h1, h2, h3, h4, h5, h6,
+.sl-markdown-content h1, ... {
+  font-family: 'Nueva Fuente Slab', serif;
+}
+
+/* Nombre del sitio en sidebar */
+.site-title {
+  font-family: 'Nueva Fuente Display', serif;
+}
+```
+
+**Paso 4 — Actualiza `Sidebar.astro` si cambias el nombre del sitio**
+
+El nombre "Anatomía del Producto" en el sidebar usa su propio `font-family` en
+`src/components/overrides/Sidebar.astro`, selector `.brand-link`. Cámbialo también.
+
+> **Importante:** si la nueva fuente solo tiene peso 400 (como IM Fell French Canon),
+> asegúrate de que el selector CSS no tenga `font-weight: 700` o el navegador
+> intentará sintetizar la negrita y puede verse mal.
+
+**Paso 5 — Verifica localmente**
+
+```bash
+npm run dev
+```
+
+Abre el navegador en `localhost:4321`, navega por el sitio y comprueba que la fuente
+carga correctamente en todos los contextos (desktop, móvil, sidebar).
 
 ---
 
