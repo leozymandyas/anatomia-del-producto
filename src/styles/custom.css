@@ -221,6 +221,19 @@
 	background-color: var(--c-scroll-thumb-hover);
 }
 
+/* ─── Fix Firefox "sinopsis" en elementos <details> ─────────────────────────── */
+/*
+  Firefox en español muestra "sinopsis" como texto nativo del <details> cuando
+  el <summary> tiene display:list-item. Cambiar a display:block lo suprime.
+*/
+summary {
+	display: block;
+}
+summary::-webkit-details-marker,
+summary::marker {
+	display: none;
+}
+
 /* ─── Tipografía ─────────────────────────────────────────────────────────────── */
 body {
 	font-family: 'Lato', sans-serif;
