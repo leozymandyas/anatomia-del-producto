@@ -6,34 +6,102 @@ pageTheme: terracota
 
 import UltimoArticulo from '../../components/UltimoArticulo.astro';
 
-**Anatomía del Producto** es un blog que disecciona cómo se construyen los mejores productos digitales con técnicas prácticas y el uso de la IA de manera responsable. También es un espacio de reflexión sobre el manejo de la industria del software y el desarrollo de productos digitales.
+{/* === Imagen principal — agregar aquí === */}
+{/* ![Descripción](../../assets/nombre-imagen.png) */}
 
-## Cómo está organizado este blog
+<p class="home-intro">Un blog que disecciona cómo se construyen los mejores productos digitales en la era de la IA — con técnicas prácticas y criterio editorial.</p>
 
-El contenido sigue la metáfora de un cuerpo humano: cada sección representa una capa distinta del proceso de crear un producto.
+<div class="home-sections">
+	<a href="/cabeza/ia-y-el-futuro-de-los-productos-digitales/" class="home-card">
+		<strong>Cabeza</strong>
+		<span>Estrategia, visión y toma de decisiones.</span>
+	</a>
+	<a href="/caja-toracica/" class="home-card">
+		<strong>Caja torácica</strong>
+		<span>Validación, desarrollo y ejecución.</span>
+	</a>
+	<a href="/extremidades/" class="home-card">
+		<strong>Extremidades</strong>
+		<span>Herramientas, integraciones y extensiones.</span>
+	</a>
+</div>
 
-- **Cabeza** — Estrategia, visión y toma de decisiones. El pensamiento que guía al producto.
-- **Caja torácica** — El núcleo: validación, desarrollo y ejecución. Lo que mantiene al producto vivo.
-- **Extremidades** — Herramientas, integraciones y extensiones. Lo que le da al producto alcance y capacidad.
+<p class="home-start">Primera visita — empieza por <a href="/cabeza/ia-y-el-futuro-de-los-productos-digitales/">IA y el futuro de los productos digitales</a>. Si ya sabes lo que buscas, usa el <a href="/tags/">índice de tags</a>.</p>
 
-## Por dónde empezar
-
-Si es tu primera visita, empieza por [IA y el futuro de los productos digitales](/cabeza/ia-y-el-futuro-de-los-productos-digitales/) en la sección **Cabeza**.
-
-Si ya sabes lo que buscas, usa el buscador en el menú lateral o explora por [tags](/tags/).
-
-<div class="btn-row">
+<div class="home-cta">
 	<UltimoArticulo />
 	<a href="/contacto/" class="btn-secundario">Contacto</a>
 </div>
 
 <style>{`
-	.btn-row {
+	.home-intro {
+		font-size: 1.175rem;
+		line-height: 1.65;
+		margin-bottom: 2rem;
+		opacity: 0.95;
+	}
+
+	.home-sections {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+		gap: 0.75rem;
+		margin-bottom: 1.75rem;
+	}
+
+	.home-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
+		padding: 1rem 1.1rem;
+		background-color: rgba(253, 245, 229, 0.1);
+		border: 1px solid rgba(253, 245, 229, 0.22);
+		border-radius: 0.5rem;
+		text-decoration: none;
+		color: #FDF5E5;
+		transition: background-color 0.15s, border-color 0.15s;
+	}
+
+	.home-card:hover {
+		background-color: rgba(253, 245, 229, 0.18);
+		border-color: rgba(253, 245, 229, 0.45);
+		text-decoration: none;
+	}
+
+	.home-card strong {
+		font-family: 'PT Serif', serif;
+		font-size: 1rem;
+		font-weight: 700;
+		color: #FDF5E5;
+	}
+
+	.home-card span {
+		font-size: 0.85rem;
+		opacity: 0.75;
+		line-height: 1.4;
+	}
+
+	.home-start {
+		font-size: 0.9rem;
+		opacity: 0.72;
+		margin-bottom: 2rem;
+		line-height: 1.55;
+	}
+
+	.home-start a {
+		color: #FDF5E5;
+		text-decoration-color: rgba(253, 245, 229, 0.5);
+	}
+
+	.home-start a:hover {
+		text-decoration-color: #FDF5E5;
+	}
+
+	.home-cta {
 		display: flex;
 		gap: 0.75rem;
 		flex-wrap: wrap;
-		margin-top: 1.75rem;
 	}
+
 	.btn-secundario {
 		display: inline-flex;
 		align-items: center;
@@ -46,8 +114,10 @@ Si ya sabes lo que buscas, usa el buscador en el menú lateral o explora por [ta
 		font-size: 0.95rem;
 		transition: background-color 0.15s, border-color 0.15s;
 	}
+
 	.btn-secundario:hover {
 		background-color: rgba(253, 245, 229, 0.15);
 		border-color: #FDF5E5;
+		text-decoration: none;
 	}
 `}</style>

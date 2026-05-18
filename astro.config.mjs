@@ -55,6 +55,7 @@ export default defineConfig({
 			logo: { src: './src/assets/logo.svg', alt: 'Anatomía del Producto', replacesTitle: false },
 			customCss: ['./src/styles/custom.css'],
 			components: {
+				Head: './src/components/overrides/Head.astro',
 				Header: './src/components/overrides/Header.astro',
 				Sidebar: './src/components/overrides/Sidebar.astro',
 				PageSidebar: './src/components/overrides/PageSidebar.astro',
