@@ -14,6 +14,14 @@ function slugifyTag(tag: string) {
 }
 ---
 
+<script is:inline define:vars={{ pageTheme }}>
+	if (pageTheme) {
+		document.documentElement.setAttribute('data-page-theme', pageTheme);
+	} else {
+		document.documentElement.removeAttribute('data-page-theme');
+	}
+</script>
+
 <div class="sl-markdown-content" data-page-theme={pageTheme || undefined}>
 	{tags.length > 0 && (
 		<div class="article-tags-header">
