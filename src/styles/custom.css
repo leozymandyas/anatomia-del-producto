@@ -376,6 +376,54 @@ button[data-open-modal] kbd {
 	color: #7A3F18;
 }
 
+/* Tema: salvia — fondo verde salvia (#BBD7BF), texto verde oscuro (#2A3C2E) */
+.main-pane:has([data-page-theme='salvia']) {
+	background-color: #BBD7BF;
+	color: #2A3C2E;
+	/* Tokens propios */
+	--c-navy:              #2D6A4F;
+	--c-text:              #2A3C2E;
+	--c-text-strong:       #1A2E22;
+	--c-border:            rgba(42, 60, 46, 0.25);
+	--c-border-soft:       rgba(42, 60, 46, 0.18);
+	/* Tokens de Starlight */
+	--sl-color-bg:         #BBD7BF;
+	--sl-color-text:       #2A3C2E;
+	--sl-color-white:      #2A3C2E;
+	--sl-color-text-accent:#2D6A4F;
+	--sl-color-accent:     #2D6A4F;
+	--sl-color-hairline:        rgba(42, 60, 46, 0.25);
+	--sl-color-hairline-light:  rgba(42, 60, 46, 0.18);
+}
+
+.main-pane:has([data-page-theme='salvia']) a {
+	color: #2D6A4F;
+	text-decoration-color: rgba(45, 106, 79, 0.5);
+}
+
+.main-pane:has([data-page-theme='salvia']) a:hover {
+	text-decoration-color: #2D6A4F;
+}
+
+.main-pane:has([data-page-theme='salvia']) .tag-chip {
+	background-color: rgba(42, 60, 46, 0.15);
+	color: #2D6A4F;
+}
+
+.main-pane:has([data-page-theme='salvia']) .tag-chip:hover {
+	background-color: rgba(42, 60, 46, 0.28);
+}
+
+/* El botón "Último artículo" usa el fondo del tema como color de texto */
+.main-pane:has([data-page-theme='salvia']) a.btn-ultimo {
+	color: #BBD7BF;
+	text-decoration: none;
+}
+
+.main-pane:has([data-page-theme='salvia']) a.btn-ultimo:hover {
+	color: #A8C9AC;
+}
+
 /* ─── Tags de artículos ──────────────────────────────────────────────────────── */
 .article-tags-header {
 	display: flex;

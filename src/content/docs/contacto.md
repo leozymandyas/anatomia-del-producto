@@ -1,7 +1,7 @@
 ---
 title: Contacto
 description: Canales para conectar con Anatomía del Producto.
-pageTheme: terracota
+pageTheme: salvia
 ---
 
 Si tienes preguntas, sugerencias de temas o simplemente quieres conversar sobre productos digitales e IA, puedes encontrarme aquí:
