@@ -376,19 +376,17 @@ button[data-open-modal] kbd {
 	color: #7A3F18;
 }
 
-/* Tema: salvia — fondo verde salvia claro (#D0E8C5), texto y acento de la paleta base */
-.main-pane:has([data-page-theme='salvia']) {
-	background-color: #D0E8C5;
+/* Tema: arena — fondo arena cálido (#EDD9A3), texto y acento de la paleta base */
+.main-pane:has([data-page-theme='arena']) {
+	background-color: #EDD9A3;
 	color: #3D2010;
-	/* Tokens propios — acento terracota sobre verde */
 	--c-navy:              #B25F28;
 	--c-navy-dark:         #7A3F18;
 	--c-text:              #3D2010;
 	--c-text-strong:       #2A1508;
 	--c-border:            rgba(178, 95, 40, 0.22);
 	--c-border-soft:       rgba(178, 95, 40, 0.14);
-	/* Tokens de Starlight */
-	--sl-color-bg:         #D0E8C5;
+	--sl-color-bg:         #EDD9A3;
 	--sl-color-text:       #3D2010;
 	--sl-color-white:      #3D2010;
 	--sl-color-text-accent:#B25F28;
@@ -397,31 +395,30 @@ button[data-open-modal] kbd {
 	--sl-color-hairline-light:  rgba(178, 95, 40, 0.14);
 }
 
-.main-pane:has([data-page-theme='salvia']) a {
+.main-pane:has([data-page-theme='arena']) a {
 	color: #B25F28;
 	text-decoration-color: rgba(178, 95, 40, 0.45);
 }
 
-.main-pane:has([data-page-theme='salvia']) a:hover {
+.main-pane:has([data-page-theme='arena']) a:hover {
 	text-decoration-color: #B25F28;
 }
 
-.main-pane:has([data-page-theme='salvia']) .tag-chip {
+.main-pane:has([data-page-theme='arena']) .tag-chip {
 	background-color: rgba(178, 95, 40, 0.12);
 	color: #7A3F18;
 }
 
-.main-pane:has([data-page-theme='salvia']) .tag-chip:hover {
+.main-pane:has([data-page-theme='arena']) .tag-chip:hover {
 	background-color: rgba(178, 95, 40, 0.22);
 }
 
-/* El botón "Último artículo" mantiene terracota sobre verde */
-.main-pane:has([data-page-theme='salvia']) a.btn-ultimo {
+.main-pane:has([data-page-theme='arena']) a.btn-ultimo {
 	color: #B25F28;
 	text-decoration: none;
 }
 
-.main-pane:has([data-page-theme='salvia']) a.btn-ultimo:hover {
+.main-pane:has([data-page-theme='arena']) a.btn-ultimo:hover {
 	color: #7A3F18;
 }
 
