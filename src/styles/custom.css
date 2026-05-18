@@ -376,9 +376,9 @@ button[data-open-modal] kbd {
 	color: #7A3F18;
 }
 
-/* Tema: arena — fondo arena cálido (#EDD9A3), texto y acento de la paleta base */
+/* Tema: arena — fondo arena cálido (#ECE2CD), texto y acento de la paleta base */
 .main-pane:has([data-page-theme='arena']) {
-	background-color: #EDD9A3;
+	background-color: #ECE2CD;
 	color: #3D2010;
 	--c-navy:              #B25F28;
 	--c-navy-dark:         #7A3F18;
@@ -386,7 +386,7 @@ button[data-open-modal] kbd {
 	--c-text-strong:       #2A1508;
 	--c-border:            rgba(178, 95, 40, 0.22);
 	--c-border-soft:       rgba(178, 95, 40, 0.14);
-	--sl-color-bg:         #EDD9A3;
+	--sl-color-bg:         #ECE2CD;
 	--sl-color-text:       #3D2010;
 	--sl-color-white:      #3D2010;
 	--sl-color-text-accent:#B25F28;
