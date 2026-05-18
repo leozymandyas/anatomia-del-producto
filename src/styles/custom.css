@@ -318,73 +318,62 @@ button[data-open-modal] kbd {
 
 /* ─── Temas de página ────────────────────────────────────────────────────────── */
 /*
-  Sistema de temas de dos niveles:
-
-  NIVEL 1 — html[data-page-theme='X'] (mayor cobertura):
-    Sobreescribe las variables --c-* en el documento completo. Todo elemento que
-    use esas variables hereda el cambio automáticamente: encabezados, nombre del
-    sitio, logo, etiquetas del menú, links activos, tags, scrollbars, paginación.
-
-  NIVEL 2 — .main-pane:has([data-page-theme='X']) (exclusivo del contenido):
-    Para estilos que solo deben afectar el área de contenido: fondo de página,
-    color del cuerpo de texto, links del artículo.
-
-  El script en MarkdownContent.astro propaga pageTheme al <html> automáticamente.
-
-  PLANTILLA para un tema nuevo:
-
-  html[data-page-theme='nombre'] {
-      --c-navy:      #HEXCOLOR;   ← acento: encabezados, links activos, brand, menú
-      --c-navy-dark: #HEXCOLOR;   ← hover del acento
-      --c-navy-tint: #HEXCOLOR;   ← fondos suaves (chips, etc.)
-      --c-bg:        #HEXCOLOR;   ← fondo general (descomentar si cambia)
-      --c-text:      #HEXCOLOR;   ← texto del cuerpo (descomentar si cambia)
-      scrollbar-color: rgba(r,g,b, 0.4) transparent;
-  }
-  html[data-page-theme='nombre'] ::-webkit-scrollbar-thumb {
-      background-color: rgba(r,g,b, 0.4);
-  }
-  html[data-page-theme='nombre'] .brand-logo {
-      filter: brightness(0) saturate(100%) invert(X%) sepia(Y%) saturate(Z%) hue-rotate(Adeg) brightness(B%);
-  }
-  .main-pane:has([data-page-theme='nombre']) {
-      background-color: var(--c-bg);
-      color: var(--c-text);
-  }
+  Uso: añadir `pageTheme: terracota` (u otro nombre) al frontmatter del artículo.
+  El selector :has() detecta el atributo en el contenido y aplica estilos al área
+  de la página, sin tocar el sidebar ni el header.
+  Para agregar un tema nuevo: duplica un bloque y cambia el nombre y los colores.
 */
 
-/* ── Tema: terracota ──────────────────────────────────────────────────────────── */
-/*
-  Sobreescribe --c-navy a teal oscuro (#326960). Esto propaga el cambio a:
-  encabezados h1-h6, nombre del sitio (.brand-link), etiquetas del menú
-  (.group-label), link activo, tags, paginación activa y scrollbars.
-  El fondo queda en el valor por defecto (#FDF5E5).
-*/
-html[data-page-theme='terracota'] {
-	--c-navy:      #326960;
-	--c-navy-dark: #234d4a;
-	--c-navy-tint: #c8e0dd;
-	scrollbar-color: rgba(50, 105, 96, 0.4) transparent;
-}
-
-/* Scrollbar webkit (Chrome, Safari, Edge) */
-html[data-page-theme='terracota'] ::-webkit-scrollbar-thumb {
-	background-color: rgba(50, 105, 96, 0.4);
-	border-radius: 4px;
-}
-
-html[data-page-theme='terracota'] ::-webkit-scrollbar-thumb:hover {
-	background-color: rgba(50, 105, 96, 0.65);
-}
-
-/* Logo: el SVG tiene fill hardcodeado; filtro para aproximar el color del tema */
-html[data-page-theme='terracota'] .brand-logo {
-	filter: brightness(0) saturate(100%) invert(32%) sepia(28%) saturate(600%) hue-rotate(140deg) brightness(90%);
-}
-
-/* Área de contenido — sin cambio de fondo actualmente */
+/* Tema: terracota — fondo terracota (#B25F28), texto crema (#FDF5E5)
+   Las variables se definen en .main-pane para que afecten a TODO su contenido:
+   título, cuerpo, tarjetas de paginación, footer, etc. Se usan valores hex
+   directos para evitar referencias circulares entre variables. */
 .main-pane:has([data-page-theme='terracota']) {
-	/* background-color: var(--c-bg); */
+	background-color: #B25F28;
+	color: #FDF5E5;
+	/* Tokens propios */
+	--c-navy:              #FDF5E5;
+	--c-text:              #FDF5E5;
+	--c-text-strong:       #FDF5E5;
+	--c-border:            rgba(253, 245, 229, 0.25);
+	--c-border-soft:       rgba(253, 245, 229, 0.18);
+	/* Tokens de Starlight */
+	--sl-color-bg:         #B25F28;
+	--sl-color-text:       #FDF5E5;
+	--sl-color-white:      #FDF5E5;
+	--sl-color-text-accent:#FDF5E5;
+	--sl-color-accent:     #FDF5E5;
+	--sl-color-hairline:        rgba(253, 245, 229, 0.25);
+	--sl-color-hairline-light:  rgba(253, 245, 229, 0.18);
+}
+
+.main-pane:has([data-page-theme='terracota']) a {
+	color: #FDF5E5;
+	text-decoration-color: rgba(253, 245, 229, 0.5);
+}
+
+.main-pane:has([data-page-theme='terracota']) a:hover {
+	text-decoration-color: #FDF5E5;
+}
+
+.main-pane:has([data-page-theme='terracota']) .tag-chip {
+	background-color: rgba(253, 245, 229, 0.18);
+	color: #FDF5E5;
+}
+
+.main-pane:has([data-page-theme='terracota']) .tag-chip:hover {
+	background-color: rgba(253, 245, 229, 0.32);
+}
+
+/* El botón "Último artículo" es crema sobre terracota — el link override
+   del tema lo haría invisible; esta regla restaura el color correcto. */
+.main-pane:has([data-page-theme='terracota']) a.btn-ultimo {
+	color: #B25F28;
+	text-decoration: none;
+}
+
+.main-pane:has([data-page-theme='terracota']) a.btn-ultimo:hover {
+	color: #7A3F18;
 }
 
 /* ─── Tags de artículos ──────────────────────────────────────────────────────── */
