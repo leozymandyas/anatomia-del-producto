@@ -324,98 +324,26 @@ button[data-open-modal] kbd {
   Para agregar un tema nuevo: duplica un bloque y cambia el nombre y los colores.
 */
 
-/* Tema: terracota — fondo terracota (#B25F28), texto crema (#FDF5E5)
-   Las variables se definen en .main-pane para que afecten a TODO su contenido:
-   título, cuerpo, tarjetas de paginación, footer, etc. Se usan valores hex
-   directos para evitar referencias circulares entre variables. */
-.main-pane:has([data-page-theme='terracota']) {
-	background-color: #B25F28;
-	color: #FDF5E5;
-	/* Tokens propios */
-	--c-navy:              #FDF5E5;
-	--c-text:              #FDF5E5;
-	--c-text-strong:       #FDF5E5;
-	--c-border:            rgba(253, 245, 229, 0.25);
-	--c-border-soft:       rgba(253, 245, 229, 0.18);
-	/* Tokens de Starlight */
-	--sl-color-bg:         #B25F28;
-	--sl-color-text:       #FDF5E5;
-	--sl-color-white:      #FDF5E5;
-	--sl-color-text-accent:#FDF5E5;
-	--sl-color-accent:     #FDF5E5;
-	--sl-color-hairline:        rgba(253, 245, 229, 0.25);
-	--sl-color-hairline-light:  rgba(253, 245, 229, 0.18);
+/* Tema: terracota — fondo por defecto, encabezados y menú en verde azulado (#326960) */
+.main-pane:has([data-page-theme='terracota']) h1,
+.main-pane:has([data-page-theme='terracota']) h2,
+.main-pane:has([data-page-theme='terracota']) h3,
+.main-pane:has([data-page-theme='terracota']) h4,
+.main-pane:has([data-page-theme='terracota']) h5,
+.main-pane:has([data-page-theme='terracota']) h6,
+.main-pane:has([data-page-theme='terracota']) .sl-markdown-content h1,
+.main-pane:has([data-page-theme='terracota']) .sl-markdown-content h2,
+.main-pane:has([data-page-theme='terracota']) .sl-markdown-content h3 {
+	color: #326960;
 }
 
-.main-pane:has([data-page-theme='terracota']) a {
-	color: #FDF5E5;
-	text-decoration-color: rgba(253, 245, 229, 0.5);
-}
-
-.main-pane:has([data-page-theme='terracota']) a:hover {
-	text-decoration-color: #FDF5E5;
-}
-
-.main-pane:has([data-page-theme='terracota']) .tag-chip {
-	background-color: rgba(253, 245, 229, 0.18);
-	color: #FDF5E5;
-}
-
-.main-pane:has([data-page-theme='terracota']) .tag-chip:hover {
-	background-color: rgba(253, 245, 229, 0.32);
-}
-
-/* El botón "Último artículo" es crema sobre terracota — el link override
-   del tema lo haría invisible; esta regla restaura el color correcto. */
-.main-pane:has([data-page-theme='terracota']) a.btn-ultimo {
-	color: #B25F28;
-	text-decoration: none;
-}
-
-.main-pane:has([data-page-theme='terracota']) a.btn-ultimo:hover {
-	color: #7A3F18;
-}
-
-/* Sidebar cuando la página activa tiene tema terracota */
-html[data-page-theme='terracota'] .sidebar-pane {
-	background-color: #7A3F18;
-	--c-bg:            #7A3F18;
-	--c-navy:          #FDF5E5;
-	--c-gray-3:        rgba(253, 245, 229, 0.72);
-	--sl-color-hairline:       rgba(253, 245, 229, 0.18);
-	--sl-color-hairline-light: rgba(253, 245, 229, 0.12);
-}
-
-html[data-page-theme='terracota'] .sidebar-brand {
-	background-color: #7A3F18;
-	border-bottom-color: rgba(253, 245, 229, 0.18);
-}
-
-html[data-page-theme='terracota'] .sidebar-pane a:not([aria-current='page']) {
-	color: rgba(253, 245, 229, 0.72);
-}
-
-html[data-page-theme='terracota'] .sidebar-pane a:hover:not([aria-current='page']),
-html[data-page-theme='terracota'] .sidebar-pane a:focus:not([aria-current='page']) {
-	color: #FDF5E5;
+/* Sidebar — textos principales del menú en #326960 */
+html[data-page-theme='terracota'] .group-label .large {
+	color: #326960;
 }
 
 html[data-page-theme='terracota'] .sidebar-pane a[aria-current='page'] {
-	color: #FDF5E5;
-}
-
-html[data-page-theme='terracota'] .group-label .large {
-	color: rgba(253, 245, 229, 0.55);
-}
-
-html[data-page-theme='terracota'] .sidebar-footer-text {
-	color: rgba(253, 245, 229, 0.45);
-}
-
-html[data-page-theme='terracota'] .sidebar-search-wrapper button[data-open-modal] {
-	border-color: rgba(253, 245, 229, 0.25);
-	color: rgba(253, 245, 229, 0.65);
-	background-color: rgba(253, 245, 229, 0.08);
+	color: #326960;
 }
 
 /* ─── Tags de artículos ──────────────────────────────────────────────────────── */
