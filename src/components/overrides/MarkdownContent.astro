@@ -9,15 +9,15 @@ const tags = (data.tags ?? []) as string[];
 const pageTheme = (data.pageTheme ?? '') as string;
 const relatedArticles = (data.relatedArticles ?? []) as string[];
 
-// La portada no muestra paginación anterior/siguiente (es una landing).
-const isHome = (Astro.locals.starlightRoute.slug ?? '') === '';
+// Las portadas (landing) no muestran paginación anterior/siguiente.
+const isLanding = !!data.landing;
 
 function slugifyTag(tag: string) {
 	return tag.toLowerCase().replace(/\s+/g, '-');
 }
 ---
 
-<div class="sl-markdown-content" data-page-theme={pageTheme || undefined}>
+<div class="sl-markdown-content" data-page-theme={pageTheme || undefined} data-landing={isLanding ? '' : undefined}>
 	{tags.length > 0 && (
 		<div class="article-tags-header">
 			{tags.map((tag) => (
@@ -27,5 +27,5 @@ function slugifyTag(tag: string) {
 	)}
 	<slot />
 	<RelatedArticles ids={relatedArticles} />
-	{!isHome && <Pagination />}
+	{!isLanding && <Pagination />}
 </div>

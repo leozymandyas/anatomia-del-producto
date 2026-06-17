@@ -610,3 +610,152 @@ mobile-starlight-toc .display-current {
 	height: 1rem;
 	flex-shrink: 0;
 }
+
+/* ─── Landing: hero de portada y contacto ───────────────────────────────────── */
+/*
+  Clases compartidas por la portada (index) y Contacto. Ambas usan
+  `template: splash` en el frontmatter para quitar el TOC y el título
+  automático y sentirse como una introducción, no como un artículo.
+*/
+/* En portadas, el panel del título queda vacío (PageTitle no renderiza nada).
+   Lo ocultamos para que el hero empiece justo bajo el header/sidebar. */
+.main-pane:has(.sl-markdown-content[data-landing]) .content-panel:first-child {
+	display: none;
+}
+
+/* Sin la línea divisoria que separaba título de contenido. */
+.content-panel:has(.sl-markdown-content[data-landing]) {
+	border-top: none;
+}
+
+.hero {
+	text-align: center;
+	background:
+		radial-gradient(125% 90% at 50% -15%, var(--c-navy-tint) 0%, rgba(245, 229, 219, 0) 62%),
+		var(--c-surface);
+	border: 1px solid var(--c-border);
+	border-radius: var(--radius-lg);
+	padding: 3.75rem 1.75rem 3.25rem;
+	box-shadow: var(--shadow-sm);
+	margin-bottom: 3rem;
+}
+
+.hero--sm {
+	padding: 3.25rem 1.75rem 2.75rem;
+	margin-bottom: 2.5rem;
+}
+
+.hero-logo {
+	width: 66px;
+	height: 66px;
+	margin: 0 auto 1.5rem;
+	display: block;
+}
+
+.hero-eyebrow {
+	font-family: 'Inter', sans-serif;
+	font-size: 0.74rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.16em;
+	color: var(--c-navy);
+	margin: 0 0 1rem;
+}
+
+.hero-title,
+.sl-markdown-content .hero-title {
+	font-family: 'Fraunces', Georgia, serif;
+	font-weight: 600;
+	font-size: clamp(2.1rem, 4.6vw, 3.1rem);
+	line-height: 1.08;
+	letter-spacing: -0.02em;
+	color: var(--c-text-strong);
+	max-width: 18ch;
+	margin: 0 auto 1.1rem;
+}
+
+.hero-lead {
+	font-size: 1.15rem;
+	line-height: 1.6;
+	color: var(--c-text-muted);
+	max-width: 52ch;
+	margin: 0 auto 2rem;
+}
+
+.hero-cta {
+	display: flex;
+	gap: 0.75rem;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin: 0;
+}
+
+/* ─── Tarjetas de contacto ───────────────────────────────────────────────────── */
+.contact-cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 0.9rem;
+	margin-block: 1.5rem 0;
+}
+
+.contact-card {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding: 1.3rem 1.4rem;
+	background-color: var(--c-surface);
+	border: 1px solid var(--c-border);
+	border-radius: var(--radius-md);
+	box-shadow: var(--shadow-sm);
+	text-decoration: none;
+	color: var(--c-text);
+	transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+}
+
+.contact-card:hover {
+	border-color: var(--c-navy);
+	box-shadow: var(--shadow-md);
+	transform: translateY(-3px);
+	text-decoration: none;
+}
+
+.contact-card-icon {
+	width: 2.85rem;
+	height: 2.85rem;
+	border-radius: var(--radius-sm);
+	background-color: var(--c-navy-tint);
+	color: var(--c-navy);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.contact-card-icon svg {
+	width: 1.4rem;
+	height: 1.4rem;
+}
+
+.contact-card-body {
+	display: flex;
+	flex-direction: column;
+	gap: 0.2rem;
+	min-width: 0;
+}
+
+.contact-card-label {
+	font-size: 0.7rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: var(--c-text-muted);
+}
+
+.contact-card-value {
+	font-family: 'Fraunces', Georgia, serif;
+	font-size: 1.02rem;
+	font-weight: 600;
+	color: var(--c-text-strong);
+	line-height: 1.25;
+	overflow-wrap: anywhere;
+}

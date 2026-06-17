@@ -1,15 +1,20 @@
 ---
 const { entry } = Astro.locals.starlightRoute;
-const icon = (entry.data as Record<string, unknown>).icon as string | undefined;
+const data = entry.data as Record<string, unknown>;
+const isLanding = !!data.landing;
+const icon = data.icon as string | undefined;
 const isImage = !!icon && (icon.startsWith('/') || icon.startsWith('http://') || icon.startsWith('https://'));
 const isEmoji = !!icon && !isImage;
 ---
 
-<div class:list={['page-title-wrap', { 'has-icon': !!icon }]}>
-	{isImage && <img src={icon} alt="" aria-hidden="true" class="page-title-icon-img" />}
-	{isEmoji && <span class="page-title-icon" aria-hidden="true">{icon}</span>}
-	<h1 id="_top">{entry.data.title}</h1>
-</div>
+{/* Las portadas (landing: true) ocultan el título automático: el hero lo reemplaza. */}
+{!isLanding && (
+	<div class:list={['page-title-wrap', { 'has-icon': !!icon }]}>
+		{isImage && <img src={icon} alt="" aria-hidden="true" class="page-title-icon-img" />}
+		{isEmoji && <span class="page-title-icon" aria-hidden="true">{icon}</span>}
+		<h1 id="_top">{entry.data.title}</h1>
+	</div>
+)}
 
 <style>
 	.page-title-wrap {

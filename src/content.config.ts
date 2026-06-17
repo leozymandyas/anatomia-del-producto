@@ -12,6 +12,10 @@ export const collections = {
 				pubDate: z.date().optional(),
 				icon: z.string().optional(),
 				relatedArticles: z.array(z.string()).optional().default([]),
+				// Marca una página como "portada": oculta el título automático y el
+				// TOC para que el hero personalizado sea el protagonista (ver
+				// PageTitle, PageSidebar y MarkdownContent overrides).
+				landing: z.boolean().optional().default(false),
 			}),
 		}),
 	}),
