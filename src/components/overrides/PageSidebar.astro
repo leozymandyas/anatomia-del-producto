@@ -1,15 +1,5 @@
 ---
-import MobileTableOfContents from 'virtual:starlight/components/MobileTableOfContents';
-
-const isLanding = !!(Astro.locals.starlightRoute.entry.data as Record<string, unknown>).landing;
+// El TOC de página ("Anatomía de la página") se eliminó por completo: ni el
+// panel derecho de escritorio (oculto vía CSS) ni el TOC colapsable de móvil.
+// Este override no renderiza nada.
 ---
-
-{/* TOC en escritorio va integrado en el sidebar izquierdo (ver Sidebar.astro).
-    Aquí solo mantenemos el TOC colapsable de móvil, salvo en portadas. */}
-{
-	!isLanding && Astro.locals.starlightRoute.toc && (
-		<div class="lg:sl-hidden">
-			<MobileTableOfContents />
-		</div>
-	)
-}

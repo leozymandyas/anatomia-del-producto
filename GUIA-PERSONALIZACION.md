@@ -20,27 +20,28 @@ Referencia práctica para mantener y cambiar el sitio sin tener que recordar có
 
 Los colores están definidos como variables CSS en `src/styles/custom.css`, en el bloque `:root { /* Paleta de colores */ }`. Cambiar un valor aquí lo propaga a todo el sitio.
 
-> Nota: los tokens de acento conservan el nombre histórico `--c-navy` por compatibilidad con el resto del código; su valor es la terracota de marca.
+> Nota: los tokens de acento conservan el nombre histórico `--c-navy` por compatibilidad con el resto del código; su valor es el índigo de marca.
 
 | Variable | Valor | Rol |
 |---|---|---|
-| `--c-bg` | `#FBF8F3` | Fondo de página, sidebar, nav (papel cálido) |
+| `--c-bg` | `#F7F8FB` | Fondo del área de contenido (gris frío) |
+| `--c-bg-sidebar` | `#ECEEF4` | Fondo del sidebar y header móvil (algo más marcado) |
 | `--c-surface` | `#FFFFFF` | Tarjetas y bloques elevados |
-| `--c-surface-soft` | `#F4EEE3` | Relleno sutil (chips, código, citas) |
-| `--c-text` | `#2B2520` | Cuerpo de texto (carbón cálido) |
-| `--c-text-strong` | `#16110D` | Negritas y títulos |
-| `--c-text-muted` | `#776B5E` | Texto secundario |
-| `--c-navy` | `#C25A2C` | Terracota: acento principal, tags, links activos |
-| `--c-navy-dark` | `#9C431D` | Hover sobre elementos de acento |
-| `--c-navy-tint` | `#F5E5DB` | Fondo de acento muy suave |
-| `--c-navy-tint-2` | `#EDD3C3` | Borde/hover de acento |
-| `--c-gray-1..7` | `#16110D` → `#EFE9DD` | Escala carbón cálido (texto secundario, bordes) |
-| `--c-border` | `#E7DECE` | Bordes estándar |
-| `--c-border-soft` | `#F0E9DC` | Bordes interiores del sidebar |
-| `--c-border-dark` | `#D8CBB5` | Bordes con más contraste |
-| `--c-scroll-thumb` | `#CDBFA9` | Thumb de la scrollbar |
-| `--c-scroll-track` | `#F0E9DC` | Track de la scrollbar |
-| `--shadow-sm/md/lg` | — | Sombras cálidas suaves (tarjetas, botones) |
+| `--c-surface-soft` | `#EEF1F7` | Relleno sutil (chips, código, citas) |
+| `--c-text` | `#1E2433` | Cuerpo de texto (pizarra fría) |
+| `--c-text-strong` | `#11151F` | Negritas y títulos |
+| `--c-text-muted` | `#5A6478` | Texto secundario |
+| `--c-navy` | `#3D5AE0` | Índigo: acento principal, tags, links activos |
+| `--c-navy-dark` | `#2B3FB5` | Hover sobre elementos de acento |
+| `--c-navy-tint` | `#E7EBFC` | Fondo de acento muy suave |
+| `--c-navy-tint-2` | `#C7D0F5` | Borde/hover de acento |
+| `--c-gray-1..7` | `#11151F` → `#E9ECF3` | Escala pizarra fría (texto secundario, bordes) |
+| `--c-border` | `#DEE3ED` | Bordes estándar |
+| `--c-border-soft` | `#E8EBF2` | Bordes interiores del sidebar |
+| `--c-border-dark` | `#C7CEDC` | Bordes con más contraste |
+| `--c-scroll-thumb` | `#B7C0D2` | Thumb de la scrollbar |
+| `--c-scroll-track` | `#E9ECF3` | Track de la scrollbar |
+| `--shadow-sm/md/lg` | — | Sombras frías suaves (tarjetas, botones) |
 | `--radius-sm/md/lg` | `0.5/0.75/1rem` | Radios de borde |
 
 ### Cómo cambiar la paleta completa
@@ -136,15 +137,15 @@ carga correctamente en todos los contextos (desktop, móvil, sidebar).
 ```
 src/
 ├── assets/
-│   └── logo.svg                  # Logo (figura vitruviana naranja)
+│   └── logo.svg                  # Logo (figura vitruviana índigo)
 ├── components/
 │   ├── overrides/
 │   │   ├── Header.astro          # Header reducido — solo visible en móvil
 │   │   ├── Sidebar.astro         # Sidebar con branding y botón de colapsar
-│   │   ├── PageSidebar.astro     # TOC en móvil (sin panel derecho en desktop)
+│   │   ├── PageSidebar.astro     # Vacío — sin TOC de página
 │   │   ├── MarkdownContent.astro # Inserta tags encima del contenido
 │   │   └── MobileMenuFooter.astro# Vacío — elimina selector de tema en móvil
-│   └── SidebarWithToc.astro      # Sidebar recursivo con TOC inline
+│   └── SidebarWithToc.astro      # Sidebar de navegación recursivo
 ├── content/
 │   ├── docs/                     # Artículos del sitio (.md / .mdx)
 │   │   ├── index.mdx             # Página de inicio
@@ -237,7 +238,8 @@ Los textos de la UI en español están en `src/content/i18n/es.json`:
 
 ```json
 {
-  "tableOfContents.onThisPage": "Anatomía de la página"
+  "page.previousLink": "Anterior",
+  "page.nextLink": "Siguiente"
 }
 ```
 
@@ -278,7 +280,8 @@ npm run preview   # previsualiza el build
 | Decisión | Razón |
 |---|---|
 | Header oculto en desktop | Estilo tipo Godot Docs — el branding vive en el sidebar |
-| TOC inline en sidebar | Elimina el panel derecho y centra el contenido |
+| Sin TOC de página | Se eliminó el índice "en esta página" (ni panel derecho ni inline ni móvil); el contenido queda centrado |
+| Sidebar con tono propio | `--c-bg-sidebar` lo diferencia del área de contenido |
 | Modo oscuro/claro desactivado | La paleta se fuerza sobreescribiendo `[data-theme='dark']` con los mismos valores |
 | `--sl-color-black` = `--c-bg` | Corrige el fondo blanco del modal de búsqueda (Pagefind usa esta variable) |
 | Script `is:inline` en Sidebar | Restaura el estado colapsado antes del primer paint — evita flash del sidebar expandido |

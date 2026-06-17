@@ -42,12 +42,12 @@ anatomia-del-producto/
 │   │   └── logo.svg          ← Ícono del vitruviano (sidebar + header)
 │   │
 │   ├── components/
-│   │   ├── SidebarWithToc.astro        ← Sidebar personalizado con TOC integrado
+│   │   ├── SidebarWithToc.astro        ← Sidebar de navegación recursivo
 │   │   ├── YouTube.astro               ← Componente para embeber videos de YouTube
 │   │   └── overrides/                  ← Componentes que reemplazan los de Starlight
 │   │       ├── Header.astro            ← Header personalizado
 │   │       ├── Sidebar.astro           ← Sidebar (usa SidebarWithToc)
-│   │       ├── PageSidebar.astro       ← Panel derecho (solo TOC móvil)
+│   │       ├── PageSidebar.astro       ← Vacío (sin TOC de página)
 │   │       └── MarkdownContent.astro   ← Contenido de artículo + tags
 │   │
 │   ├── content/
@@ -203,7 +203,7 @@ Reemplaza el header original de Starlight. Quita el buscador del header (se movi
 Añade el buscador en la parte superior del sidebar. Usa el componente personalizado `SidebarWithToc` en lugar del `SidebarSublist` original de Starlight.
 
 #### `PageSidebar.astro`
-El panel derecho (donde Starlight normalmente muestra la tabla de contenidos en desktop). En este proyecto ese panel está **oculto** — la tabla de contenidos se integró dentro del sidebar izquierdo. Este componente solo mantiene el TOC colapsable en **móvil**.
+El panel derecho (donde Starlight normalmente muestra la tabla de contenidos en desktop). En este proyecto el índice "en esta página" se eliminó por completo, así que este override está **vacío** y no renderiza nada (ni en escritorio ni en móvil).
 
 #### `MarkdownContent.astro`
 Envuelve el contenido de cada artículo. Antes del contenido muestra los **tags** del artículo como chips de colores.
@@ -212,23 +212,18 @@ Envuelve el contenido de cada artículo. Antes del contenido muestra los **tags*
 
 ## 8. Componente clave: `SidebarWithToc.astro`
 
-Este es el componente más complejo del proyecto. Es una versión mejorada del `SidebarSublist` de Starlight que, además de mostrar los enlaces del sidebar, **inyecta la tabla de contenidos del artículo activo** directamente debajo de su enlace en el menú.
+Es una versión del `SidebarSublist` de Starlight que renderiza el menú de navegación del sidebar.
 
 ### Cómo funciona
 
 - Es un componente **recursivo**: se llama a sí mismo para renderizar grupos anidados (`<Astro.self />`).
-- Cuando un enlace es el de la página actual (`entry.isCurrent`), muestra debajo un bloque `<details>` con los titulos del artículo.
-- Usa el elemento nativo `<starlight-toc>` de Starlight para manejar el resaltado automático según el scroll.
-- El bloque "Anatomía de la página" empieza **expandido por defecto** (atributo `open`).
+- El enlace de la página actual (`entry.isCurrent`) se resalta con el color de acento.
+- (Históricamente inyectaba un índice "en esta página" bajo el artículo activo; esa función se eliminó.)
 
 ```
 Cabeza
   └── Inicio
   └── IA y el futuro...   ← página actual, resaltada
-        └── [Anatomía de la página ▾]   ← TOC integrado
-              ├── El cambio más importante
-              ├── Tres áreas donde la IA...
-              └── ...
   └── Otro artículo
 ```
 
@@ -249,24 +244,24 @@ Las fuentes se cargan desde Google Fonts vía el `head` en `astro.config.mjs`:
 | **Inter** | Cuerpo del texto (`body`) y UI |
 
 #### Paleta de colores
-Se sobreescriben las variables CSS de Starlight para usar morado:
+Se definen tokens propios `--c-*` en `:root` y se mapean a las variables internas de Starlight (`--sl-color-*`). El acento es índigo:
 
 ```css
 :root {
-  --sl-color-accent: #7c3aed;        /* morado principal (modo claro) */
+  --c-navy: #3D5AE0;                 /* acento índigo */
 }
-:root[data-theme='dark'] {
-  --sl-color-accent: #a78bfa;        /* morado principal (modo oscuro) */
+:root, :root[data-theme='light'], :root[data-theme='dark'] {
+  --sl-color-accent: var(--c-navy);  /* misma paleta en claro y oscuro */
 }
 ```
 
-#### Layout: TOC integrado en sidebar
+#### Layout: contenido centrado (sin TOC)
 En pantallas anchas (≥ 72rem / ~1152px):
-- Se **oculta** el panel derecho (`right-sidebar-container`) donde Starlight normalmente muestra el TOC.
-- Se añade `padding-inline-end: var(--sl-sidebar-width)` al área principal para crear un **margen simétrico** al del sidebar izquierdo.
+- Se **oculta** el panel derecho (`right-sidebar-container`) donde Starlight normalmente muestra el TOC; el índice de página se eliminó.
+- El contenido queda centrado en el espacio disponible.
 
 #### Tags
-Chips de color morado estilo Notion. Se muestran arriba del contenido de cada artículo y en las páginas de índice.
+Chips estilo pastilla con el acento índigo. Se muestran arriba del contenido de cada artículo y en las páginas de índice.
 
 #### Colores del contenido
 - Título del artículo (`h1#_top`): color accent morado.

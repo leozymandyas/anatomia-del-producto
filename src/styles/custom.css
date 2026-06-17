@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════════════════
    ANATOMÍA DEL PRODUCTO — Estilos globales personalizados
-   Paleta: papel cálido (#FBF8F3) · tinta carbón (#2B2520) · terracota (#C25A2C)
+   Paleta: gris frío (#F7F8FB) · tinta pizarra (#1E2433) · índigo (#3D5AE0)
    Tipografía: Fraunces (display/títulos) · Inter (cuerpo/UI)
    ═══════════════════════════════════════════════════════════════════════════════ */
 
@@ -10,49 +10,50 @@
   La sección "Tokens Starlight" más abajo mapea estas variables a las internas de
   Starlight, lo que permite forzar siempre el modo claro.
 
-  Nota histórica: los tokens de acento conservan el nombre `--c-navy` por
-  compatibilidad con el resto del código; su valor es la terracota de marca.
+  Nota: los tokens de acento conservan el nombre `--c-navy` por compatibilidad
+  con el resto del código; su valor es el índigo de marca.
 */
 :root {
 	/* ── Superficies */
-	--c-bg:                #FBF8F3;   /* papel cálido — página, sidebar, nav */
+	--c-bg:                #F7F8FB;   /* gris frío muy claro — área de contenido */
+	--c-bg-sidebar:        #ECEEF4;   /* gris algo más marcado — sidebar y header móvil */
 	--c-surface:           #FFFFFF;   /* tarjetas y bloques elevados */
-	--c-surface-soft:      #F4EEE3;   /* relleno sutil — chips, código, citas */
+	--c-surface-soft:      #EEF1F7;   /* relleno sutil — chips, código, citas */
 
-	/* ── Texto (carbón cálido, alta legibilidad) */
-	--c-text:              #2B2520;   /* cuerpo del artículo */
-	--c-text-strong:       #16110D;   /* negritas */
-	--c-text-muted:        #776B5E;   /* texto secundario */
+	/* ── Texto (pizarra fría, alta legibilidad) */
+	--c-text:              #1E2433;   /* cuerpo del artículo */
+	--c-text-strong:       #11151F;   /* negritas */
+	--c-text-muted:        #5A6478;   /* texto secundario */
 
-	/* ── Acento / títulos — terracota */
-	--c-navy:              #C25A2C;   /* terracota — títulos, tags, acento */
-	--c-navy-dark:         #9C431D;   /* terracota oscura — hover */
-	--c-navy-tint:         #F5E5DB;   /* terracota muy clara — fondos sutiles */
-	--c-navy-tint-2:       #EDD3C3;   /* terracota clara — bordes/hover de acento */
+	/* ── Acento / títulos — índigo (el token conserva el nombre --c-navy) */
+	--c-navy:              #3D5AE0;   /* índigo — títulos, tags, acento */
+	--c-navy-dark:         #2B3FB5;   /* índigo oscuro — hover */
+	--c-navy-tint:         #E7EBFC;   /* índigo muy claro — fondos sutiles */
+	--c-navy-tint-2:       #C7D0F5;   /* índigo claro — bordes/hover de acento */
 
-	/* ── Escala carbón cálido (1 = más oscuro → 7 = más claro) */
-	--c-gray-1:            #16110D;
-	--c-gray-2:            #2B2520;
-	--c-gray-3:            #5C5147;
-	--c-gray-4:            #8A7D6E;
-	--c-gray-5:            #B8AC9B;
-	--c-gray-6:            #DED4C3;
-	--c-gray-7:            #EFE9DD;
+	/* ── Escala pizarra fría (1 = más oscuro → 7 = más claro) */
+	--c-gray-1:            #11151F;
+	--c-gray-2:            #1E2433;
+	--c-gray-3:            #49526A;
+	--c-gray-4:            #79839A;
+	--c-gray-5:            #A9B2C5;
+	--c-gray-6:            #D3D9E4;
+	--c-gray-7:            #E9ECF3;
 
 	/* ── Bordes */
-	--c-border:            #E7DECE;   /* borde estándar */
-	--c-border-soft:       #F0E9DC;   /* borde suave (sidebar interno) */
-	--c-border-dark:       #D8CBB5;   /* borde con más contraste */
+	--c-border:            #DEE3ED;   /* borde estándar */
+	--c-border-soft:       #E8EBF2;   /* borde suave (sidebar interno) */
+	--c-border-dark:       #C7CEDC;   /* borde con más contraste */
 
 	/* ── Scrollbar */
-	--c-scroll-thumb:      #CDBFA9;
-	--c-scroll-track:      #F0E9DC;
-	--c-scroll-thumb-hover:#A6907A;
+	--c-scroll-thumb:      #B7C0D2;
+	--c-scroll-track:      #E9ECF3;
+	--c-scroll-thumb-hover:#79839A;
 
-	/* ── Sombras (cálidas, suaves) */
-	--shadow-sm: 0 1px 2px rgba(40, 28, 16, 0.05), 0 1px 3px rgba(40, 28, 16, 0.06);
-	--shadow-md: 0 6px 20px rgba(40, 28, 16, 0.08);
-	--shadow-lg: 0 18px 44px rgba(40, 28, 16, 0.12);
+	/* ── Sombras (frías, suaves) */
+	--shadow-sm: 0 1px 2px rgba(20, 30, 60, 0.05), 0 1px 3px rgba(20, 30, 60, 0.07);
+	--shadow-md: 0 6px 20px rgba(20, 30, 60, 0.08);
+	--shadow-lg: 0 18px 44px rgba(20, 30, 60, 0.12);
 
 	/* ── Radios */
 	--radius-sm: 0.5rem;
@@ -72,7 +73,7 @@
 
 /* ─── Tokens Starlight (mapeados desde la paleta) ───────────────────────────── */
 /*
-  Se sobreescriben tanto light como dark para mantener siempre la paleta cálida.
+  Se sobreescriben tanto light como dark para mantener siempre la misma paleta.
   --sl-color-black: corrige el fondo del modal de búsqueda (Pagefind usa esta
   variable como fondo en modo claro).
 */
@@ -81,14 +82,14 @@
 :root[data-theme='dark'] {
 	/* Fondos */
 	--sl-color-bg:             var(--c-bg);
-	--sl-color-bg-nav:         var(--c-bg);
-	--sl-color-bg-sidebar:     var(--c-bg);
+	--sl-color-bg-nav:         var(--c-bg-sidebar);
+	--sl-color-bg-sidebar:     var(--c-bg-sidebar);
 	--sl-color-black:          var(--c-bg);
 
 	/* Texto */
 	--sl-color-text:           var(--c-text);
 	--sl-color-text-accent:    var(--c-navy);
-	--sl-color-text-invert:    #FFF7F1;        /* texto claro sobre acento (link activo) */
+	--sl-color-text-invert:    #F6F8FF;        /* texto claro sobre acento (link activo) */
 	--sl-color-white:          var(--c-gray-1);
 
 	/* Acento */
@@ -452,7 +453,7 @@ button[data-open-modal] kbd {
 
 /* ─── Botones reutilizables ──────────────────────────────────────────────────── */
 /*
-  Clases compartidas por la home, 404 y otros: .btn-primario (terracota sólida)
+  Clases compartidas por la home, 404 y otros: .btn-primario (acento sólido)
   y .btn-ghost (contorno sutil). Definidas globalmente para reutilizarse.
 */
 .btn-primario {
@@ -462,7 +463,7 @@ button[data-open-modal] kbd {
 	padding: 0.62rem 1.4rem;
 	border-radius: var(--radius-sm);
 	background-color: var(--c-navy);
-	color: #FFF7F1;
+	color: #F6F8FF;
 	text-decoration: none;
 	font-weight: 600;
 	font-size: 0.95rem;
@@ -474,7 +475,7 @@ button[data-open-modal] kbd {
 	background-color: var(--c-navy-dark);
 	transform: translateY(-1px);
 	box-shadow: var(--shadow-md);
-	color: #FFF7F1;
+	color: #F6F8FF;
 	text-decoration: none;
 }
 
@@ -508,38 +509,38 @@ button[data-open-modal] kbd {
 */
 .main-pane:has([data-page-theme='terracota']) {
 	background-color: var(--c-navy);
-	color: #FFF7F1;
-	--c-navy:              #FFF7F1;
-	--c-text:              #FFF7F1;
-	--c-text-strong:       #FFF7F1;
-	--c-border:            rgba(255, 247, 241, 0.25);
-	--c-border-soft:       rgba(255, 247, 241, 0.18);
+	color: #F6F8FF;
+	--c-navy:              #F6F8FF;
+	--c-text:              #F6F8FF;
+	--c-text-strong:       #F6F8FF;
+	--c-border:            rgba(246, 248, 255, 0.25);
+	--c-border-soft:       rgba(246, 248, 255, 0.18);
 	--sl-color-bg:         var(--c-navy);
-	--sl-color-text:       #FFF7F1;
-	--sl-color-white:      #FFF7F1;
-	--sl-color-text-accent:#FFF7F1;
-	--sl-color-accent:     #FFF7F1;
-	--sl-color-hairline:        rgba(255, 247, 241, 0.25);
-	--sl-color-hairline-light:  rgba(255, 247, 241, 0.18);
+	--sl-color-text:       #F6F8FF;
+	--sl-color-white:      #F6F8FF;
+	--sl-color-text-accent:#F6F8FF;
+	--sl-color-accent:     #F6F8FF;
+	--sl-color-hairline:        rgba(246, 248, 255, 0.25);
+	--sl-color-hairline-light:  rgba(246, 248, 255, 0.18);
 }
 
 .main-pane:has([data-page-theme='terracota']) a {
-	color: #FFF7F1;
-	text-decoration-color: rgba(255, 247, 241, 0.5);
+	color: #F6F8FF;
+	text-decoration-color: rgba(246, 248, 255, 0.5);
 }
 
 .main-pane:has([data-page-theme='terracota']) a:hover {
-	text-decoration-color: #FFF7F1;
+	text-decoration-color: #F6F8FF;
 }
 
 .main-pane:has([data-page-theme='terracota']) .tag-chip {
-	background-color: rgba(255, 247, 241, 0.18);
-	color: #FFF7F1;
+	background-color: rgba(246, 248, 255, 0.18);
+	color: #F6F8FF;
 	border-color: transparent;
 }
 
 .main-pane:has([data-page-theme='terracota']) .tag-chip:hover {
-	background-color: rgba(255, 247, 241, 0.32);
+	background-color: rgba(246, 248, 255, 0.32);
 }
 
 /* ─── Tags de artículos ──────────────────────────────────────────────────────── */
@@ -631,7 +632,7 @@ mobile-starlight-toc .display-current {
 .hero {
 	text-align: center;
 	background:
-		radial-gradient(125% 90% at 50% -15%, var(--c-navy-tint) 0%, rgba(245, 229, 219, 0) 62%),
+		radial-gradient(125% 90% at 50% -15%, var(--c-navy-tint) 0%, rgba(231, 235, 252, 0) 62%),
 		var(--c-surface);
 	border: 1px solid var(--c-border);
 	border-radius: var(--radius-lg);

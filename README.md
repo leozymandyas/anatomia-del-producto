@@ -41,11 +41,11 @@ src/
 │   │   ├── Header.astro           → header oculto en desktop, visible en móvil
 │   │   ├── MarkdownContent.astro  → añade tags, artículos relacionados y paginación
 │   │   ├── MobileMenuFooter.astro → vacío (elimina selector de tema oscuro/claro)
-│   │   ├── PageSidebar.astro      → TOC móvil (el de escritorio está en el sidebar)
-│   │   ├── PageTitle.astro        → título con soporte de ícono (emoji o imagen)
+│   │   ├── PageSidebar.astro      → vacío (sin TOC de página)
+│   │   ├── PageTitle.astro        → título con ícono; oculto en portadas (landing)
 │   │   └── Sidebar.astro          → sidebar con branding sticky, collapse y copyright
 │   ├── RelatedArticles.astro      → tarjetas de artículos relacionados
-│   ├── SidebarWithToc.astro       → sidebar con TOC integrado
+│   ├── SidebarWithToc.astro       → sidebar de navegación recursivo
 │   ├── UltimoArticulo.astro       → botón "Último artículo →" de la página de inicio
 │   └── YouTube.astro              → componente para incrustar videos de YouTube
 ├── content/
@@ -91,12 +91,13 @@ guia-contenido.md                  → guía para escribir y publicar artículos
 
 | Variable | Valor | Uso |
 |---|---|---|
-| `--c-bg` | `#FBF8F3` | Fondo general (papel cálido) |
+| `--c-bg` | `#F7F8FB` | Fondo del área de contenido (gris frío) |
+| `--c-bg-sidebar` | `#ECEEF4` | Fondo del sidebar y header móvil |
 | `--c-surface` | `#FFFFFF` | Tarjetas y bloques elevados |
-| `--c-navy` | `#C25A2C` | Acento principal (terracota) |
-| `--c-navy-dark` | `#9C431D` | Hover del acento |
-| `--c-text` | `#2B2520` | Texto del cuerpo (carbón cálido) |
-| `--c-text-strong` | `#16110D` | Negritas y títulos |
+| `--c-navy` | `#3D5AE0` | Acento principal (índigo) |
+| `--c-navy-dark` | `#2B3FB5` | Hover del acento |
+| `--c-text` | `#1E2433` | Texto del cuerpo (pizarra fría) |
+| `--c-text-strong` | `#11151F` | Negritas y títulos |
 
 Para cambiar la paleta, edita las variables `--c-*` en `src/styles/custom.css`.
 
@@ -116,7 +117,6 @@ Cargadas desde Google Fonts en `astro.config.mjs`.
 - **Links externos** — cualquier URL `http(s)://` en el contenido abre en pestaña nueva (`target="_blank"`), implementado con un plugin rehype en `astro.config.mjs`
 - **Último artículo** — el botón de la página de inicio apunta siempre al artículo con `pubDate` más reciente entre las secciones de contenido
 - **Artículos relacionados** — se muestran al final del artículo si tiene el campo `relatedArticles`
-- **Paginación** — anterior/siguiente aparece debajo de los artículos relacionados
-- **TOC en sidebar** — en escritorio, la tabla de contenidos aparece inline bajo el artículo activo en el sidebar izquierdo (no en un panel derecho)
+- **Paginación** — anterior/siguiente aparece debajo de los artículos relacionados (oculta en las portadas)
 - **Sidebar sticky** — el bloque de logo/nombre permanece visible al hacer scroll en el sidebar
 - **Sidebar colapsable** — botón en la esquina superior derecha; estado guardado en localStorage

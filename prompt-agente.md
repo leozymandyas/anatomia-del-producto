@@ -169,30 +169,31 @@ Todas las variables de color se definen al inicio de `src/styles/custom.css` den
 
 ```css
 :root {
-    --c-bg:            #FBF8F3;   /* fondo general (papel cálido) */
+    --c-bg:            #F7F8FB;   /* fondo del área de contenido (gris frío) */
+    --c-bg-sidebar:    #ECEEF4;   /* fondo del sidebar y header móvil */
     --c-surface:       #FFFFFF;   /* tarjetas y bloques elevados */
-    --c-surface-soft:  #F4EEE3;   /* relleno sutil (chips, código, citas) */
-    --c-text:          #2B2520;   /* texto del cuerpo (carbón cálido) */
-    --c-text-strong:   #16110D;   /* negritas y títulos */
-    --c-text-muted:    #776B5E;   /* texto secundario */
-    --c-navy:          #C25A2C;   /* acento principal (terracota) */
-    --c-navy-dark:     #9C431D;   /* hover del acento */
-    --c-navy-tint:     #F5E5DB;   /* fondos de acento suave */
-    --c-navy-tint-2:   #EDD3C3;   /* borde/hover de acento */
+    --c-surface-soft:  #EEF1F7;   /* relleno sutil (chips, código, citas) */
+    --c-text:          #1E2433;   /* texto del cuerpo (pizarra fría) */
+    --c-text-strong:   #11151F;   /* negritas y títulos */
+    --c-text-muted:    #5A6478;   /* texto secundario */
+    --c-navy:          #3D5AE0;   /* acento principal (índigo) */
+    --c-navy-dark:     #2B3FB5;   /* hover del acento */
+    --c-navy-tint:     #E7EBFC;   /* fondos de acento suave */
+    --c-navy-tint-2:   #C7D0F5;   /* borde/hover de acento */
 
-    /* Escala carbón cálido (1=oscuro → 7=claro) */
-    --c-gray-1: #16110D;
-    --c-gray-2: #2B2520;
-    --c-gray-3: #5C5147;
-    --c-gray-4: #8A7D6E;
-    --c-gray-5: #B8AC9B;
-    --c-gray-6: #DED4C3;
-    --c-gray-7: #EFE9DD;
+    /* Escala pizarra fría (1=oscuro → 7=claro) */
+    --c-gray-1: #11151F;
+    --c-gray-2: #1E2433;
+    --c-gray-3: #49526A;
+    --c-gray-4: #79839A;
+    --c-gray-5: #A9B2C5;
+    --c-gray-6: #D3D9E4;
+    --c-gray-7: #E9ECF3;
 
     /* Bordes */
-    --c-border:        #E7DECE;
-    --c-border-soft:   #F0E9DC;
-    --c-border-dark:   #D8CBB5;
+    --c-border:        #DEE3ED;
+    --c-border-soft:   #E8EBF2;
+    --c-border-dark:   #C7CEDC;
 }
 ```
 
