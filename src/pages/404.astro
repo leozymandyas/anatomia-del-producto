@@ -4,25 +4,11 @@ import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 
 <StarlightPage frontmatter={{ title: 'Página no encontrada', description: 'Esta página no existe o fue movida.' }}>
 	<p>La página que buscas no existe o fue movida.</p>
-	<a href="/" class="btn-inicio">← Ir al inicio</a>
+	<a href="/" class="btn-primario btn-inicio">← Ir al inicio</a>
 </StarlightPage>
 
 <style>
 	.btn-inicio {
-		display: inline-flex;
-		align-items: center;
 		margin-top: 1.5rem;
-		padding: 0.55rem 1.4rem;
-		border-radius: 0.4rem;
-		background-color: var(--c-navy);
-		color: #FDF5E5;
-		text-decoration: none;
-		font-weight: 600;
-		font-size: 0.95rem;
-		transition: background-color 0.15s;
-	}
-
-	.btn-inicio:hover {
-		background-color: var(--c-navy-dark);
 	}
 </style>

@@ -1,6 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════════════════════
    ANATOMÍA DEL PRODUCTO — Estilos globales personalizados
-   Paleta: crema cálida (#FDF5E5) × terracota (#B25F28)
+   Paleta: papel cálido (#FBF8F3) · tinta carbón (#2B2520) · terracota (#C25A2C)
+   Tipografía: Fraunces (display/títulos) · Inter (cuerpo/UI)
    ═══════════════════════════════════════════════════════════════════════════════ */
 
 /* ─── Paleta de colores ──────────────────────────────────────────────────────── */
@@ -8,57 +9,72 @@
   Variables propias del proyecto. Cambiar un valor aquí lo propaga a todo el sitio.
   La sección "Tokens Starlight" más abajo mapea estas variables a las internas de
   Starlight, lo que permite forzar siempre el modo claro.
+
+  Nota histórica: los tokens de acento conservan el nombre `--c-navy` por
+  compatibilidad con el resto del código; su valor es la terracota de marca.
 */
 :root {
-	/* ── Fondos */
-	--c-bg:                #FDF5E5;   /* crema cálida — página, sidebar, nav, modal */
+	/* ── Superficies */
+	--c-bg:                #FBF8F3;   /* papel cálido — página, sidebar, nav */
+	--c-surface:           #FFFFFF;   /* tarjetas y bloques elevados */
+	--c-surface-soft:      #F4EEE3;   /* relleno sutil — chips, código, citas */
 
-	/* ── Texto */
-	--c-text:              #3D2010;   /* marrón oscuro legible — cuerpo del artículo */
-	--c-text-strong:       #2A1508;   /* marrón profundo — negritas */
+	/* ── Texto (carbón cálido, alta legibilidad) */
+	--c-text:              #2B2520;   /* cuerpo del artículo */
+	--c-text-strong:       #16110D;   /* negritas */
+	--c-text-muted:        #776B5E;   /* texto secundario */
 
-	/* ── Acento / títulos */
-	--c-navy:              #B25F28;   /* terracota — títulos, tags, sidebar, acento */
-	--c-navy-dark:         #7A3F18;   /* terracota oscura — hover de acento */
-	--c-navy-tint:         #F2DDD0;   /* terracota muy claro — fondos de acento sutil */
+	/* ── Acento / títulos — terracota */
+	--c-navy:              #C25A2C;   /* terracota — títulos, tags, acento */
+	--c-navy-dark:         #9C431D;   /* terracota oscura — hover */
+	--c-navy-tint:         #F5E5DB;   /* terracota muy clara — fondos sutiles */
+	--c-navy-tint-2:       #EDD3C3;   /* terracota clara — bordes/hover de acento */
 
-	/* ── Escala marrón-anaranjada (1 = más oscuro → 7 = más claro) */
-	--c-gray-1:            #2A1508;
-	--c-gray-2:            #3D2010;
-	--c-gray-3:            #7A4A30;
-	--c-gray-4:            #B28060;
-	--c-gray-5:            #CCA888;
-	--c-gray-6:            #E0CDB8;
-	--c-gray-7:            #F0E8DC;
+	/* ── Escala carbón cálido (1 = más oscuro → 7 = más claro) */
+	--c-gray-1:            #16110D;
+	--c-gray-2:            #2B2520;
+	--c-gray-3:            #5C5147;
+	--c-gray-4:            #8A7D6E;
+	--c-gray-5:            #B8AC9B;
+	--c-gray-6:            #DED4C3;
+	--c-gray-7:            #EFE9DD;
 
 	/* ── Bordes */
-	--c-border:            #D4B090;   /* borde estándar */
-	--c-border-soft:       #E0C8A8;   /* borde suave (sidebar interno) */
-	--c-border-dark:       #C09870;   /* borde con más contraste */
+	--c-border:            #E7DECE;   /* borde estándar */
+	--c-border-soft:       #F0E9DC;   /* borde suave (sidebar interno) */
+	--c-border-dark:       #D8CBB5;   /* borde con más contraste */
 
 	/* ── Scrollbar */
-	--c-scroll-thumb:      #B28060;
-	--c-scroll-track:      #F0E8DC;
-	--c-scroll-thumb-hover:#7A4A30;
+	--c-scroll-thumb:      #CDBFA9;
+	--c-scroll-track:      #F0E9DC;
+	--c-scroll-thumb-hover:#A6907A;
+
+	/* ── Sombras (cálidas, suaves) */
+	--shadow-sm: 0 1px 2px rgba(40, 28, 16, 0.05), 0 1px 3px rgba(40, 28, 16, 0.06);
+	--shadow-md: 0 6px 20px rgba(40, 28, 16, 0.08);
+	--shadow-lg: 0 18px 44px rgba(40, 28, 16, 0.12);
+
+	/* ── Radios */
+	--radius-sm: 0.5rem;
+	--radius-md: 0.75rem;
+	--radius-lg: 1rem;
 }
 
 /* ─── Ancho del área de contenido ───────────────────────────────────────────── */
 /*
   Starlight usa --sl-content-width como max-width del bloque de texto.
   Con el sidebar expandido (~300px), el main-frame tiene ~980px disponibles.
-  Con 56rem (~896px) el contenido casi lo llena → poco margen visible.
-  Con el sidebar colapsado (~60px), el main-frame tiene ~1220px →
-  el contenido queda centrado con ~162px de margen a cada lado (cambio visible).
+  Con 52rem (~832px) el contenido respira y la lectura es más cómoda.
 */
 :root {
-	--sl-content-width: 56rem;
+	--sl-content-width: 52rem;
 }
 
 /* ─── Tokens Starlight (mapeados desde la paleta) ───────────────────────────── */
 /*
   Se sobreescriben tanto light como dark para mantener siempre la paleta cálida.
-  --sl-color-black: corrige el fondo blanco del modal de búsqueda (Pagefind usa
-  esta variable como fondo en modo claro).
+  --sl-color-black: corrige el fondo del modal de búsqueda (Pagefind usa esta
+  variable como fondo en modo claro).
 */
 :root,
 :root[data-theme='light'],
@@ -72,7 +88,7 @@
 	/* Texto */
 	--sl-color-text:           var(--c-text);
 	--sl-color-text-accent:    var(--c-navy);
-	--sl-color-text-invert:    #FDF0E8;        /* texto claro sobre fondo de acento (link activo) */
+	--sl-color-text-invert:    #FFF7F1;        /* texto claro sobre acento (link activo) */
 	--sl-color-white:          var(--c-gray-1);
 
 	/* Acento */
@@ -119,6 +135,7 @@
 @media (min-width: 50rem) {
 	.sidebar-pane {
 		transition: width 0.2s ease-in-out;
+		border-inline-end: 1px solid var(--c-border);
 	}
 
 	.main-frame {
@@ -156,12 +173,6 @@
 }
 
 /* ─── Footer siempre al fondo de la pantalla ────────────────────────────────── */
-/*
-  .main-pane ocupa al menos toda la altura de la ventana (el header está oculto
-  en desktop, así que --sl-nav-height = 0). Esto garantiza que en artículos
-  cortos la página llene el viewport y el footer quede al fondo naturalmente.
-  No se usa margin-top:auto porque .site-footer no es hijo directo del flex container.
-*/
 @media (min-width: 50rem) {
 	.main-pane {
 		min-height: calc(100dvh - var(--sl-nav-height, 0rem));
@@ -183,8 +194,6 @@
 		order: unset;
 	}
 
-	/* Sin padding-inline-end: el sl-container se centra solo en el espacio disponible.
-	   Cuando el sidebar colapsa, el espacio crece y el contenido se recentra. */
 	.main-pane .sl-container {
 		margin-inline: auto;
 	}
@@ -216,10 +225,6 @@
 }
 
 /* ─── Fix Firefox "sinopsis" en elementos <details> ─────────────────────────── */
-/*
-  Firefox en español muestra "sinopsis" como texto nativo del <details> cuando
-  el <summary> tiene display:list-item. Cambiar a display:block lo suprime.
-*/
 summary {
 	display: block;
 }
@@ -230,7 +235,9 @@ summary::marker {
 
 /* ─── Tipografía ─────────────────────────────────────────────────────────────── */
 body {
-	font-family: 'Lato', sans-serif;
+	font-family: 'Inter', system-ui, -apple-system, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
 }
 
 h1,
@@ -245,28 +252,64 @@ h6,
 .sl-markdown-content h4,
 .sl-markdown-content h5,
 .sl-markdown-content h6 {
-	font-family: 'PT Serif', serif;
+	font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+	font-optical-sizing: auto;
+	letter-spacing: -0.01em;
 }
 
 /* Título del sitio en el sidebar */
 .site-title {
-	font-family: 'Alegreya', serif;
+	font-family: 'Fraunces', Georgia, serif;
 	color: var(--c-navy);
 }
 
 /* Título del artículo — h1 generado por Starlight fuera de .sl-markdown-content */
 h1#_top {
-	color: var(--c-navy);
+	color: var(--c-text-strong);
+	font-weight: 600;
+	line-height: 1.12;
+	letter-spacing: -0.02em;
 }
 
 /* Encabezados dentro del cuerpo del artículo */
 .sl-markdown-content :is(h2, h3, h4, h5, h6) {
-	color: var(--c-navy);
+	color: var(--c-text-strong);
+	font-weight: 600;
+}
+
+.sl-markdown-content h2 {
+	margin-top: 2.75rem;
+	padding-top: 0.2rem;
+	font-size: 1.6rem;
+	line-height: 1.25;
+}
+
+/* Marca de acento antes de cada h2 del cuerpo */
+.sl-markdown-content h2::before {
+	content: '';
+	display: block;
+	width: 2.25rem;
+	height: 3px;
+	border-radius: 999px;
+	background-color: var(--c-navy);
+	margin-bottom: 0.9rem;
+}
+
+.sl-markdown-content h3 {
+	margin-top: 2rem;
+	font-size: 1.25rem;
 }
 
 /* Texto en negrita */
 .sl-markdown-content strong {
 	color: var(--c-text-strong);
+	font-weight: 700;
+}
+
+/* Cuerpo: ritmo de lectura cómodo */
+.sl-markdown-content {
+	font-size: 1.0625rem;
+	line-height: 1.75;
 }
 
 /* Ocultar ícono de ancla al pasar el cursor sobre encabezados */
@@ -274,11 +317,93 @@ h1#_top {
 	display: none;
 }
 
-/* ─── Sidebar: colores de links ──────────────────────────────────────────────── */
+/* ─── Enlaces dentro del contenido ──────────────────────────────────────────── */
 /*
-  --sl-color-gray-2 y --sl-color-white están mapeados a marrones muy oscuros que
-  parecen negros. Estos overrides los corrigen con mayor especificidad.
+  Se estilizan solo los enlaces de prosa real (dentro de párrafos, listas, tablas
+  o citas). Así los componentes de UI que viven dentro de .sl-markdown-content
+  (botones, tarjetas, chips, paginación) conservan su propio estilo.
 */
+.sl-markdown-content :is(p, li, td, th, blockquote) a:not(:where(
+	.not-content *, .article-link, .tag-chip, .related-card,
+	.home-card, .btn-primario, .btn-ghost, .btn-ultimo, .pg-link, .back-link
+)) {
+	color: var(--c-navy);
+	text-decoration: underline;
+	text-decoration-color: var(--c-navy-tint-2);
+	text-decoration-thickness: 1.5px;
+	text-underline-offset: 0.18em;
+	transition: text-decoration-color 0.15s, color 0.15s;
+}
+
+.sl-markdown-content :is(p, li, td, th, blockquote) a:not(:where(
+	.not-content *, .article-link, .tag-chip, .related-card,
+	.home-card, .btn-primario, .btn-ghost, .btn-ultimo, .pg-link, .back-link
+)):hover {
+	color: var(--c-navy-dark);
+	text-decoration-color: var(--c-navy);
+}
+
+/* ─── Citas ─────────────────────────────────────────────────────────────────── */
+.sl-markdown-content blockquote {
+	border-inline-start: 3px solid var(--c-navy);
+	background-color: var(--c-surface-soft);
+	border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+	padding: 0.85rem 1.25rem;
+	margin-inline: 0;
+	color: var(--c-text);
+	font-style: italic;
+}
+
+.sl-markdown-content blockquote :last-child {
+	margin-bottom: 0;
+}
+
+/* ─── Código ────────────────────────────────────────────────────────────────── */
+.sl-markdown-content :not(pre) > code {
+	background-color: var(--c-surface-soft);
+	border: 1px solid var(--c-border);
+	border-radius: 0.35rem;
+	padding: 0.12em 0.4em;
+	font-size: 0.875em;
+	color: var(--c-navy-dark);
+}
+
+.sl-markdown-content pre {
+	border: 1px solid var(--c-border);
+	border-radius: var(--radius-md);
+	box-shadow: var(--shadow-sm);
+}
+
+/* ─── Imágenes y separadores ────────────────────────────────────────────────── */
+.sl-markdown-content img {
+	border-radius: var(--radius-md);
+	border: 1px solid var(--c-border);
+}
+
+.sl-markdown-content hr {
+	border: none;
+	border-top: 1px solid var(--c-border);
+	margin-block: 2.5rem;
+}
+
+/* ─── Tablas ────────────────────────────────────────────────────────────────── */
+.sl-markdown-content table {
+	border-radius: var(--radius-sm);
+	overflow: hidden;
+}
+
+.sl-markdown-content th {
+	background-color: var(--c-surface-soft);
+	color: var(--c-text-strong);
+	font-family: 'Inter', sans-serif;
+}
+
+/* ─── Sidebar: marca y branding ──────────────────────────────────────────────── */
+.site-title {
+	font-weight: 600;
+}
+
+/* ─── Sidebar: colores de links ──────────────────────────────────────────────── */
 .sidebar-pane a:not([aria-current='page']) {
 	color: var(--c-gray-3);
 }
@@ -290,7 +415,8 @@ h1#_top {
 
 /* ─── Sidebar: etiquetas de grupos (Cabeza, Caja torácica…) ─────────────────── */
 .group-label .large {
-	color: var(--c-navy);
+	color: var(--c-text-strong);
+	font-family: 'Fraunces', Georgia, serif;
 }
 
 /* ─── Sidebar: separador antes de "Todos los artículos" ─────────────────────── */
@@ -308,7 +434,15 @@ h1#_top {
 
 .sidebar-search-wrapper button[data-open-modal] {
 	width: 100%;
-	border-radius: 0.5rem;
+	border-radius: var(--radius-sm);
+	background-color: var(--c-surface);
+	border-color: var(--c-border);
+	box-shadow: var(--shadow-sm);
+	transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.sidebar-search-wrapper button[data-open-modal]:hover {
+	border-color: var(--c-navy);
 }
 
 /* Ocultar el hint "Ctrl K" en el botón de búsqueda */
@@ -316,109 +450,134 @@ button[data-open-modal] kbd {
 	display: none;
 }
 
-/* ─── Temas de página ────────────────────────────────────────────────────────── */
+/* ─── Botones reutilizables ──────────────────────────────────────────────────── */
 /*
-  Uso: añadir `pageTheme: terracota` (u otro nombre) al frontmatter del artículo.
-  El selector :has() detecta el atributo en el contenido y aplica estilos al área
-  de la página, sin tocar el sidebar ni el header.
-  Para agregar un tema nuevo: duplica un bloque y cambia el nombre y los colores.
+  Clases compartidas por la home, 404 y otros: .btn-primario (terracota sólida)
+  y .btn-ghost (contorno sutil). Definidas globalmente para reutilizarse.
 */
-
-/* Tema: terracota — fondo terracota (#B25F28), texto crema (#FDF5E5)
-   Las variables se definen en .main-pane para que afecten a TODO su contenido:
-   título, cuerpo, tarjetas de paginación, footer, etc. Se usan valores hex
-   directos para evitar referencias circulares entre variables. */
-.main-pane:has([data-page-theme='terracota']) {
-	background-color: #B25F28;
-	color: #FDF5E5;
-	/* Tokens propios */
-	--c-navy:              #FDF5E5;
-	--c-text:              #FDF5E5;
-	--c-text-strong:       #FDF5E5;
-	--c-border:            rgba(253, 245, 229, 0.25);
-	--c-border-soft:       rgba(253, 245, 229, 0.18);
-	/* Tokens de Starlight */
-	--sl-color-bg:         #B25F28;
-	--sl-color-text:       #FDF5E5;
-	--sl-color-white:      #FDF5E5;
-	--sl-color-text-accent:#FDF5E5;
-	--sl-color-accent:     #FDF5E5;
-	--sl-color-hairline:        rgba(253, 245, 229, 0.25);
-	--sl-color-hairline-light:  rgba(253, 245, 229, 0.18);
+.btn-primario {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.62rem 1.4rem;
+	border-radius: var(--radius-sm);
+	background-color: var(--c-navy);
+	color: #FFF7F1;
+	text-decoration: none;
+	font-weight: 600;
+	font-size: 0.95rem;
+	box-shadow: var(--shadow-sm);
+	transition: background-color 0.15s, transform 0.15s, box-shadow 0.15s;
 }
 
-.main-pane:has([data-page-theme='terracota']) a {
-	color: #FDF5E5;
-	text-decoration-color: rgba(253, 245, 229, 0.5);
-}
-
-.main-pane:has([data-page-theme='terracota']) a:hover {
-	text-decoration-color: #FDF5E5;
-}
-
-.main-pane:has([data-page-theme='terracota']) .tag-chip {
-	background-color: rgba(253, 245, 229, 0.18);
-	color: #FDF5E5;
-}
-
-.main-pane:has([data-page-theme='terracota']) .tag-chip:hover {
-	background-color: rgba(253, 245, 229, 0.32);
-}
-
-/* El botón "Último artículo" es crema sobre terracota — el link override
-   del tema lo haría invisible; esta regla restaura el color correcto. */
-.main-pane:has([data-page-theme='terracota']) a.btn-ultimo {
-	color: #B25F28;
+.btn-primario:hover {
+	background-color: var(--c-navy-dark);
+	transform: translateY(-1px);
+	box-shadow: var(--shadow-md);
+	color: #FFF7F1;
 	text-decoration: none;
 }
 
-.main-pane:has([data-page-theme='terracota']) a.btn-ultimo:hover {
-	color: #7A3F18;
+.btn-ghost {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.62rem 1.4rem;
+	border-radius: var(--radius-sm);
+	border: 1px solid var(--c-border-dark);
+	background-color: var(--c-surface);
+	color: var(--c-text-strong);
+	text-decoration: none;
+	font-weight: 600;
+	font-size: 0.95rem;
+	transition: border-color 0.15s, color 0.15s, transform 0.15s;
+}
+
+.btn-ghost:hover {
+	border-color: var(--c-navy);
+	color: var(--c-navy);
+	transform: translateY(-1px);
+	text-decoration: none;
+}
+
+/* ─── Temas de página ────────────────────────────────────────────────────────── */
+/*
+  Uso: añadir `pageTheme: terracota` al frontmatter del artículo para pintar toda
+  el área de página en terracota con texto crema. El selector :has() detecta el
+  atributo en el contenido y aplica los estilos sin tocar sidebar ni header.
+*/
+.main-pane:has([data-page-theme='terracota']) {
+	background-color: var(--c-navy);
+	color: #FFF7F1;
+	--c-navy:              #FFF7F1;
+	--c-text:              #FFF7F1;
+	--c-text-strong:       #FFF7F1;
+	--c-border:            rgba(255, 247, 241, 0.25);
+	--c-border-soft:       rgba(255, 247, 241, 0.18);
+	--sl-color-bg:         var(--c-navy);
+	--sl-color-text:       #FFF7F1;
+	--sl-color-white:      #FFF7F1;
+	--sl-color-text-accent:#FFF7F1;
+	--sl-color-accent:     #FFF7F1;
+	--sl-color-hairline:        rgba(255, 247, 241, 0.25);
+	--sl-color-hairline-light:  rgba(255, 247, 241, 0.18);
+}
+
+.main-pane:has([data-page-theme='terracota']) a {
+	color: #FFF7F1;
+	text-decoration-color: rgba(255, 247, 241, 0.5);
+}
+
+.main-pane:has([data-page-theme='terracota']) a:hover {
+	text-decoration-color: #FFF7F1;
+}
+
+.main-pane:has([data-page-theme='terracota']) .tag-chip {
+	background-color: rgba(255, 247, 241, 0.18);
+	color: #FFF7F1;
+	border-color: transparent;
+}
+
+.main-pane:has([data-page-theme='terracota']) .tag-chip:hover {
+	background-color: rgba(255, 247, 241, 0.32);
 }
 
 /* ─── Tags de artículos ──────────────────────────────────────────────────────── */
 .article-tags-header {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 0.35rem;
+	gap: 0.4rem;
 	margin-bottom: 1.75rem;
 }
 
 .tag-chip {
 	display: inline-flex;
 	align-items: center;
-	padding: 0.15rem 0.6rem;
-	border-radius: 4px;
-	background-color: rgba(178, 95, 40, 0.12); /* --c-navy al 12% */
-	color: var(--c-navy);
+	padding: 0.2rem 0.65rem;
+	border-radius: 999px;
+	background-color: var(--c-surface-soft);
+	border: 1px solid var(--c-border);
+	color: var(--c-navy-dark);
 	font-size: 0.8rem;
-	font-weight: 500;
+	font-weight: 600;
 	text-decoration: none;
 	white-space: nowrap;
-	transition: background-color 0.15s, color 0.15s;
+	transition: background-color 0.15s, color 0.15s, border-color 0.15s;
 	line-height: 1.6;
 }
 
 .tag-chip:hover {
-	background-color: rgba(178, 95, 40, 0.22); /* --c-navy al 22% */
+	background-color: var(--c-navy-tint);
+	border-color: var(--c-navy-tint-2);
 	color: var(--c-navy-dark);
 }
 
 /* ─── TOC móvil: ocultar indicador de sección actual ───────────────────────── */
-/*
-  Starlight muestra en la barra del TOC móvil el nombre de la sección activa
-  (span.display-current). Lo ocultamos porque el TOC está en el sidebar y
-  ese indicador solo añade ruido visual en móvil.
-*/
 mobile-starlight-toc .display-current {
 	display: none;
 }
 
 /* ─── Paginación anterior / siguiente ────────────────────────────────────────── */
-/*
-  Starlight renderiza la paginación en @layer starlight.core.
-  Al estar fuera de @layer, estos estilos tienen mayor prioridad.
-*/
 .pagination-links {
 	margin-top: 2rem;
 	gap: 0.6rem;
@@ -431,7 +590,7 @@ mobile-starlight-toc .display-current {
 	color: var(--c-gray-3);
 	font-size: var(--sl-text-sm);
 	gap: 0.35rem;
-	border-radius: 0.4rem;
+	border-radius: var(--radius-sm);
 }
 
 .pagination-links a:hover {

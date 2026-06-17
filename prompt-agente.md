@@ -169,26 +169,30 @@ Todas las variables de color se definen al inicio de `src/styles/custom.css` den
 
 ```css
 :root {
-    --c-bg:            #FDF5E5;   /* fondo general */
-    --c-text:          #3D2010;   /* texto del cuerpo */
-    --c-text-strong:   #2A1508;   /* negritas */
-    --c-navy:          #B25F28;   /* acento principal */
-    --c-navy-dark:     #7A3F18;   /* hover del acento */
-    --c-navy-tint:     #F2DDD0;   /* fondos de acento suave */
+    --c-bg:            #FBF8F3;   /* fondo general (papel cálido) */
+    --c-surface:       #FFFFFF;   /* tarjetas y bloques elevados */
+    --c-surface-soft:  #F4EEE3;   /* relleno sutil (chips, código, citas) */
+    --c-text:          #2B2520;   /* texto del cuerpo (carbón cálido) */
+    --c-text-strong:   #16110D;   /* negritas y títulos */
+    --c-text-muted:    #776B5E;   /* texto secundario */
+    --c-navy:          #C25A2C;   /* acento principal (terracota) */
+    --c-navy-dark:     #9C431D;   /* hover del acento */
+    --c-navy-tint:     #F5E5DB;   /* fondos de acento suave */
+    --c-navy-tint-2:   #EDD3C3;   /* borde/hover de acento */
 
-    /* Escala de grises (tonos del acento, 1=oscuro → 7=claro) */
-    --c-gray-1: #2A1508;
-    --c-gray-2: #3D2010;
-    --c-gray-3: #7A4A30;
-    --c-gray-4: #B28060;
-    --c-gray-5: #CCA888;
-    --c-gray-6: #E0CDB8;
-    --c-gray-7: #F0E8DC;
+    /* Escala carbón cálido (1=oscuro → 7=claro) */
+    --c-gray-1: #16110D;
+    --c-gray-2: #2B2520;
+    --c-gray-3: #5C5147;
+    --c-gray-4: #8A7D6E;
+    --c-gray-5: #B8AC9B;
+    --c-gray-6: #DED4C3;
+    --c-gray-7: #EFE9DD;
 
     /* Bordes */
-    --c-border:        #D4B090;
-    --c-border-soft:   #E0C8A8;
-    --c-border-dark:   #C09870;
+    --c-border:        #E7DECE;
+    --c-border-soft:   #F0E9DC;
+    --c-border-dark:   #D8CBB5;
 }
 ```
 
@@ -223,7 +227,7 @@ En el array `head`, hay una entrada `<link>` con la URL de Google Fonts. Para ag
 ```css
 /* Cuerpo del texto */
 body {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
 }
 
 /* Encabezados (h1–h6) */
@@ -231,12 +235,12 @@ h1, h2, h3, h4, h5, h6,
 .sl-markdown-content h1,
 .sl-markdown-content h2,
 .sl-markdown-content h3 {
-    font-family: 'PT Serif', serif;
+    font-family: 'Fraunces', Georgia, serif;
 }
 
 /* Nombre del sitio en el sidebar */
 .site-title {
-    font-family: 'Alegreya', serif;
+    font-family: 'Fraunces', Georgia, serif;
 }
 ```
 

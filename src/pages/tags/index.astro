@@ -47,29 +47,32 @@ const tags = Object.entries(tagCounts).sort(([a], [b]) => a.localeCompare(b, 'es
 	.tag-chip {
 		display: inline-flex;
 		align-items: center;
-		gap: 0.4rem;
-		padding: 0.25rem 0.75rem;
-		border-radius: 4px;
-		background-color: rgba(178, 95, 40, 0.12);
-		color: var(--c-navy);
-		font-size: 0.875rem;
-		font-weight: 500;
+		gap: 0.45rem;
+		padding: 0.3rem 0.85rem;
+		border-radius: 999px;
+		background-color: var(--c-surface-soft);
+		border: 1px solid var(--c-border);
+		color: var(--c-navy-dark);
+		font-size: 0.9rem;
+		font-weight: 600;
 		text-decoration: none;
-		transition: background-color 0.15s, color 0.15s;
+		transition: background-color 0.15s, color 0.15s, border-color 0.15s;
 	}
 
 	.tag-chip:hover {
-		background-color: rgba(178, 95, 40, 0.22);
+		background-color: var(--c-navy-tint);
+		border-color: var(--c-navy-tint-2);
 		color: var(--c-navy-dark);
 	}
 
 	.tag-count {
-		font-size: 0.7rem;
+		font-size: 0.72rem;
 		font-weight: 700;
-		background-color: rgba(178, 95, 40, 0.20);
-		padding: 0 0.4rem;
+		color: #FFF7F1;
+		background-color: var(--c-navy);
+		padding: 0.05rem 0.45rem;
 		border-radius: 999px;
-		min-width: 1.2rem;
+		min-width: 1.3rem;
 		text-align: center;
 	}
 </style>

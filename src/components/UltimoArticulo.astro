@@ -15,26 +15,8 @@ const ultimo = allDocs
 ---
 
 {ultimo && (
-	<a href={`/${ultimo.id}/`} class="btn-ultimo">
-		Último artículo →
+	<a href={`/${ultimo.id}/`} class="btn-primario">
+		Último artículo
+		<span aria-hidden="true">→</span>
 	</a>
 )}
-
-<style>
-	.btn-ultimo {
-		display: inline-flex;
-		align-items: center;
-		padding: 0.55rem 1.4rem;
-		border-radius: 0.4rem;
-		background-color: #FDF5E5;
-		color: #B25F28;
-		text-decoration: none;
-		font-weight: 700;
-		font-size: 0.95rem;
-		transition: background-color 0.15s;
-	}
-
-	.btn-ultimo:hover {
-		background-color: #F0E4D0;
-	}
-</style>

@@ -1,123 +1,185 @@
 ---
 title: Anatomía del Producto
 description: El blog sobre cómo se crean productos digitales inteligentes en la era de la IA.
-pageTheme: terracota
 ---
 
 import UltimoArticulo from '../../components/UltimoArticulo.astro';
 
-{/* === Imagen principal — agregar aquí === */}
-{/* ![Descripción](../../assets/nombre-imagen.png) */}
-
-<p class="home-intro">Un blog que disecciona cómo se construyen los mejores productos digitales en la era de la IA — con técnicas prácticas y criterio editorial.</p>
-
-<div class="home-sections">
-	<a href="/cabeza/ia-y-el-futuro-de-los-productos-digitales/" class="home-card">
-		<strong>Cabeza</strong>
-		<span>Estrategia, visión y toma de decisiones.</span>
-	</a>
-	<a href="/caja-toracica/" class="home-card">
-		<strong>Caja torácica</strong>
-		<span>Validación, desarrollo y ejecución.</span>
-	</a>
-	<a href="/extremidades/" class="home-card">
-		<strong>Extremidades</strong>
-		<span>Herramientas, integraciones y extensiones.</span>
-	</a>
-</div>
-
-<p class="home-start">Primera visita — empieza por <a href="/cabeza/ia-y-el-futuro-de-los-productos-digitales/">IA y el futuro de los productos digitales</a>. Si ya sabes lo que buscas, usa el <a href="/tags/">índice de tags</a>.</p>
+<p class="home-lead">Un blog que disecciona cómo se construyen los mejores productos digitales en la era de la IA — con técnicas prácticas y criterio editorial.</p>
 
 <div class="home-cta">
 	<UltimoArticulo />
-	<a href="/contacto/" class="btn-secundario">Contacto</a>
+	<a href="/articulos/" class="btn-ghost">Explorar artículos</a>
+</div>
+
+<p class="home-eyebrow">Las tres regiones</p>
+
+<div class="home-sections">
+	<a href="/cabeza/ia-y-el-futuro-de-los-productos-digitales/" class="home-card">
+		<span class="home-card-num">01</span>
+		<span class="home-card-body">
+			<strong>Cabeza</strong>
+			<span>Estrategia, visión y toma de decisiones.</span>
+		</span>
+		<span class="home-card-go" aria-hidden="true">→</span>
+	</a>
+	<a href="/caja-toracica/" class="home-card">
+		<span class="home-card-num">02</span>
+		<span class="home-card-body">
+			<strong>Caja torácica</strong>
+			<span>Validación, desarrollo y ejecución.</span>
+		</span>
+		<span class="home-card-go" aria-hidden="true">→</span>
+	</a>
+	<a href="/extremidades/" class="home-card">
+		<span class="home-card-num">03</span>
+		<span class="home-card-body">
+			<strong>Extremidades</strong>
+			<span>Herramientas, integraciones y extensiones.</span>
+		</span>
+		<span class="home-card-go" aria-hidden="true">→</span>
+	</a>
+</div>
+
+<div class="home-start">
+	<div class="home-start-text">
+		<p class="home-start-label">¿Primera visita?</p>
+		<p class="home-start-body">Empieza por <a href="/cabeza/ia-y-el-futuro-de-los-productos-digitales/">IA y el futuro de los productos digitales</a>, o explora el <a href="/tags/">índice de tags</a>.</p>
+	</div>
+	<a href="/contacto/" class="btn-ghost">Contacto</a>
 </div>
 
 <style>{`
-	.home-intro {
-		font-size: 1.175rem;
-		line-height: 1.65;
-		margin-bottom: 2rem;
-		opacity: 0.95;
-	}
-
-	.home-sections {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-		gap: 0.75rem;
-		margin-bottom: 1.75rem;
-	}
-
-	.home-card {
-		display: flex;
-		flex-direction: column;
-		gap: 0.3rem;
-		padding: 1rem 1.1rem;
-		background-color: rgba(253, 245, 229, 0.1);
-		border: 1px solid rgba(253, 245, 229, 0.22);
-		border-radius: 0.5rem;
-		text-decoration: none;
-		color: #FDF5E5;
-		transition: background-color 0.15s, border-color 0.15s;
-	}
-
-	.home-card:hover {
-		background-color: rgba(253, 245, 229, 0.18);
-		border-color: rgba(253, 245, 229, 0.45);
-		text-decoration: none;
-	}
-
-	.home-card strong {
-		font-family: 'PT Serif', serif;
-		font-size: 1rem;
-		font-weight: 700;
-		color: #FDF5E5;
-	}
-
-	.home-card span {
-		font-size: 0.85rem;
-		opacity: 0.75;
-		line-height: 1.4;
-	}
-
-	.home-start {
-		font-size: 0.9rem;
-		opacity: 0.72;
-		margin-bottom: 2rem;
+	.home-lead {
+		font-size: 1.3rem;
 		line-height: 1.55;
-	}
-
-	.home-start a {
-		color: #FDF5E5;
-		text-decoration-color: rgba(253, 245, 229, 0.5);
-	}
-
-	.home-start a:hover {
-		text-decoration-color: #FDF5E5;
+		color: var(--c-text);
+		max-width: 40ch;
+		margin-top: 0.5rem;
+		margin-bottom: 1.75rem;
 	}
 
 	.home-cta {
 		display: flex;
 		gap: 0.75rem;
 		flex-wrap: wrap;
+		margin-bottom: 3.5rem;
 	}
 
-	.btn-secundario {
+	.home-eyebrow {
+		font-family: 'Inter', sans-serif;
+		font-size: 0.72rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
+		color: var(--c-navy);
+		margin-bottom: 1rem;
+	}
+
+	.home-sections {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 0.9rem;
+		margin-bottom: 3.5rem;
+	}
+
+	.home-card {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.85rem;
+		padding: 1.3rem 1.4rem;
+		background-color: var(--c-surface);
+		border: 1px solid var(--c-border);
+		border-radius: var(--radius-md);
+		text-decoration: none;
+		color: var(--c-text);
+		box-shadow: var(--shadow-sm);
+		transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+	}
+
+	.home-card:hover {
+		border-color: var(--c-navy);
+		box-shadow: var(--shadow-md);
+		transform: translateY(-3px);
+		text-decoration: none;
+	}
+
+	.home-card-num {
+		font-family: 'Fraunces', serif;
+		font-size: 1.05rem;
+		font-weight: 600;
+		color: var(--c-navy);
+		background-color: var(--c-navy-tint);
+		width: 2.2rem;
+		height: 2.2rem;
+		border-radius: 999px;
 		display: inline-flex;
 		align-items: center;
-		padding: 0.55rem 1.4rem;
-		border: 1.5px solid rgba(253, 245, 229, 0.7);
-		border-radius: 0.4rem;
-		color: #FDF5E5;
-		text-decoration: none;
-		font-weight: 600;
-		font-size: 0.95rem;
-		transition: background-color 0.15s, border-color 0.15s;
+		justify-content: center;
+		flex-shrink: 0;
 	}
 
-	.btn-secundario:hover {
-		background-color: rgba(253, 245, 229, 0.15);
-		border-color: #FDF5E5;
-		text-decoration: none;
+	.home-card-body {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		flex: 1;
+	}
+
+	.home-card-body strong {
+		font-family: 'Fraunces', serif;
+		font-size: 1.15rem;
+		font-weight: 600;
+		color: var(--c-text-strong);
+		line-height: 1.2;
+	}
+
+	.home-card-body span {
+		font-size: 0.9rem;
+		color: var(--c-text-muted);
+		line-height: 1.45;
+	}
+
+	.home-card-go {
+		color: var(--c-gray-5);
+		font-size: 1.1rem;
+		transition: transform 0.18s, color 0.18s;
+	}
+
+	.home-card:hover .home-card-go {
+		color: var(--c-navy);
+		transform: translateX(3px);
+	}
+
+	.home-start {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 1rem;
+		padding: 1.4rem 1.6rem;
+		background-color: var(--c-surface-soft);
+		border: 1px solid var(--c-border);
+		border-radius: var(--radius-md);
+	}
+
+	.home-start-label {
+		font-family: 'Fraunces', serif;
+		font-size: 1.05rem;
+		font-weight: 600;
+		color: var(--c-text-strong);
+		margin-bottom: 0.25rem;
+	}
+
+	.home-start-body {
+		font-size: 0.95rem;
+		color: var(--c-text-muted);
+		margin: 0;
+		line-height: 1.55;
+	}
+
+	.home-start .btn-ghost {
+		background-color: var(--c-surface);
+		flex-shrink: 0;
 	}
 `}</style>

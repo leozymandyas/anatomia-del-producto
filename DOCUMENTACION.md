@@ -245,9 +245,8 @@ Las fuentes se cargan desde Google Fonts vía el `head` en `astro.config.mjs`:
 
 | Fuente | Uso |
 |---|---|
-| **Alegreya** | Título del sitio "Anatomía del Producto" (clase `.site-title`) |
-| **PT Serif** | Todos los encabezados h1–h6 del contenido |
-| **Lato** | Cuerpo del texto (`body`) |
+| **Fraunces** | Título del sitio (`.site-title`), encabezados h1–h6 y títulos de tarjetas |
+| **Inter** | Cuerpo del texto (`body`) y UI |
 
 #### Paleta de colores
 Se sobreescriben las variables CSS de Starlight para usar morado:

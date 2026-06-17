@@ -9,6 +9,9 @@ const tags = (data.tags ?? []) as string[];
 const pageTheme = (data.pageTheme ?? '') as string;
 const relatedArticles = (data.relatedArticles ?? []) as string[];
 
+// La portada no muestra paginación anterior/siguiente (es una landing).
+const isHome = (Astro.locals.starlightRoute.slug ?? '') === '';
+
 function slugifyTag(tag: string) {
 	return tag.toLowerCase().replace(/\s+/g, '-');
 }
@@ -24,5 +27,5 @@ function slugifyTag(tag: string) {
 	)}
 	<slot />
 	<RelatedArticles ids={relatedArticles} />
-	<Pagination />
+	{!isHome && <Pagination />}
 </div>

@@ -91,11 +91,12 @@ guia-contenido.md                  → guía para escribir y publicar artículos
 
 | Variable | Valor | Uso |
 |---|---|---|
-| `--c-bg` | `#FDF5E5` | Fondo general (crema cálida) |
-| `--c-navy` | `#B25F28` | Acento principal (terracota) |
-| `--c-navy-dark` | `#7A3F18` | Hover del acento |
-| `--c-text` | `#3D2010` | Texto del cuerpo |
-| `--c-text-strong` | `#2A1508` | Negritas |
+| `--c-bg` | `#FBF8F3` | Fondo general (papel cálido) |
+| `--c-surface` | `#FFFFFF` | Tarjetas y bloques elevados |
+| `--c-navy` | `#C25A2C` | Acento principal (terracota) |
+| `--c-navy-dark` | `#9C431D` | Hover del acento |
+| `--c-text` | `#2B2520` | Texto del cuerpo (carbón cálido) |
+| `--c-text-strong` | `#16110D` | Negritas y títulos |
 
 Para cambiar la paleta, edita las variables `--c-*` en `src/styles/custom.css`.
 
@@ -103,9 +104,8 @@ Para cambiar la paleta, edita las variables `--c-*` en `src/styles/custom.css`.
 
 ## Fuentes
 
-- **Alegreya** — nombre del sitio en el sidebar
-- **PT Serif** — encabezados (h1–h6)
-- **Lato** — cuerpo del texto
+- **Fraunces** — nombre del sitio, encabezados (h1–h6) y títulos de tarjetas
+- **Inter** — cuerpo del texto y UI
 
 Cargadas desde Google Fonts en `astro.config.mjs`.
 

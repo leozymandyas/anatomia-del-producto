@@ -20,20 +20,28 @@ Referencia práctica para mantener y cambiar el sitio sin tener que recordar có
 
 Los colores están definidos como variables CSS en `src/styles/custom.css`, en el bloque `:root { /* Paleta de colores */ }`. Cambiar un valor aquí lo propaga a todo el sitio.
 
+> Nota: los tokens de acento conservan el nombre histórico `--c-navy` por compatibilidad con el resto del código; su valor es la terracota de marca.
+
 | Variable | Valor | Rol |
 |---|---|---|
-| `--c-bg` | `#FDF5E5` | Fondo de página, sidebar, nav, modal de búsqueda |
-| `--c-text` | `#3D2010` | Cuerpo de texto (párrafos, listas) |
-| `--c-text-strong` | `#2A1508` | Negritas dentro del contenido |
-| `--c-navy` | `#B25F28` | Títulos, acento principal, tags, sidebar, links activos |
-| `--c-navy-dark` | `#7A3F18` | Hover sobre elementos de acento |
-| `--c-navy-tint` | `#F2DDD0` | Fondo de acento muy suave |
-| `--c-gray-1..7` | `#2A1508` → `#F0E8DC` | Escala marrón-anaranjada (texto secundario, bordes) |
-| `--c-border` | `#D4B090` | Bordes estándar |
-| `--c-border-soft` | `#E0C8A8` | Bordes interiores del sidebar |
-| `--c-border-dark` | `#C09870` | Bordes con más contraste |
-| `--c-scroll-thumb` | `#B28060` | Thumb de la scrollbar |
-| `--c-scroll-track` | `#F0E8DC` | Track de la scrollbar |
+| `--c-bg` | `#FBF8F3` | Fondo de página, sidebar, nav (papel cálido) |
+| `--c-surface` | `#FFFFFF` | Tarjetas y bloques elevados |
+| `--c-surface-soft` | `#F4EEE3` | Relleno sutil (chips, código, citas) |
+| `--c-text` | `#2B2520` | Cuerpo de texto (carbón cálido) |
+| `--c-text-strong` | `#16110D` | Negritas y títulos |
+| `--c-text-muted` | `#776B5E` | Texto secundario |
+| `--c-navy` | `#C25A2C` | Terracota: acento principal, tags, links activos |
+| `--c-navy-dark` | `#9C431D` | Hover sobre elementos de acento |
+| `--c-navy-tint` | `#F5E5DB` | Fondo de acento muy suave |
+| `--c-navy-tint-2` | `#EDD3C3` | Borde/hover de acento |
+| `--c-gray-1..7` | `#16110D` → `#EFE9DD` | Escala carbón cálido (texto secundario, bordes) |
+| `--c-border` | `#E7DECE` | Bordes estándar |
+| `--c-border-soft` | `#F0E9DC` | Bordes interiores del sidebar |
+| `--c-border-dark` | `#D8CBB5` | Bordes con más contraste |
+| `--c-scroll-thumb` | `#CDBFA9` | Thumb de la scrollbar |
+| `--c-scroll-track` | `#F0E9DC` | Track de la scrollbar |
+| `--shadow-sm/md/lg` | — | Sombras cálidas suaves (tarjetas, botones) |
+| `--radius-sm/md/lg` | `0.5/0.75/1rem` | Radios de borde |
 
 ### Cómo cambiar la paleta completa
 
@@ -49,9 +57,8 @@ Las fuentes vienen de Google Fonts y se cargan en `astro.config.mjs` (sección `
 
 | Fuente | Rol | Pesos cargados |
 |---|---|---|
-| **Epunda Sans** | Cuerpo de texto (párrafos, UI, sidebar) | 300, 400, 700 |
-| **Epunda Slab** | Todos los encabezados h1–h6 | 400, 700 normal + 400 italic |
-| **IM Fell French Canon** | Nombre del sitio en sidebar | 400 normal + italic (solo tiene 400) |
+| **Inter** | Cuerpo de texto (párrafos, UI, sidebar) | 400–700 (variable) |
+| **Fraunces** | Encabezados h1–h6, títulos de tarjetas y nombre del sitio | 400–700 (variable, opsz 9–144) + itálica |
 
 ### Cómo cambiar una fuente (paso a paso)
 

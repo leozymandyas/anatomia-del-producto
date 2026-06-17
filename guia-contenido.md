@@ -114,24 +114,24 @@ pageTheme: terracota
 ```css
 .main-pane:has([data-page-theme='marino']) {
   background-color: #1A2A45;
-  color: #FDF5E5;
-  --c-navy:              #FDF5E5;
-  --c-text:              #FDF5E5;
-  --c-text-strong:       #FDF5E5;
-  --c-border:            rgba(253, 245, 229, 0.25);
-  --c-border-soft:       rgba(253, 245, 229, 0.18);
+  color: #FFF7F1;
+  --c-navy:              #FFF7F1;
+  --c-text:              #FFF7F1;
+  --c-text-strong:       #FFF7F1;
+  --c-border:            rgba(255, 247, 241, 0.25);
+  --c-border-soft:       rgba(255, 247, 241, 0.18);
   --sl-color-bg:         #1A2A45;
-  --sl-color-text:       #FDF5E5;
-  --sl-color-white:      #FDF5E5;
-  --sl-color-text-accent:#FDF5E5;
-  --sl-color-accent:     #FDF5E5;
-  --sl-color-hairline:        rgba(253, 245, 229, 0.25);
-  --sl-color-hairline-light:  rgba(253, 245, 229, 0.18);
+  --sl-color-text:       #FFF7F1;
+  --sl-color-white:      #FFF7F1;
+  --sl-color-text-accent:#FFF7F1;
+  --sl-color-accent:     #FFF7F1;
+  --sl-color-hairline:        rgba(255, 247, 241, 0.25);
+  --sl-color-hairline-light:  rgba(255, 247, 241, 0.18);
 }
 
 .main-pane:has([data-page-theme='marino']) a {
-  color: #FDF5E5;
-  text-decoration-color: rgba(253, 245, 229, 0.5);
+  color: #FFF7F1;
+  text-decoration-color: rgba(255, 247, 241, 0.5);
 }
 ```
 
