@@ -1,6 +1,10 @@
 ---
+// Override de Head. Antes añadía <ClientRouter /> (view transitions de Astro),
+// pero las transiciones de vista rompían la interactividad al navegar: los
+// listeners adjuntados con <script> normal (p. ej. el botón de colapsar del
+// sidebar) no se vuelven a registrar tras una navegación cliente. Sin
+// ClientRouter cada navegación es una carga completa y todo se reinicializa.
 import Default from '@astrojs/starlight/components/Head.astro';
-import { ClientRouter } from 'astro:transitions';
 ---
+
 <Default {...Astro.props}><slot /></Default>
-<ClientRouter />
