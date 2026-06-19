@@ -1,8 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
-
-const SECCIONES = ['cabeza', 'caja-toracica', 'extremidades'];
+import { esArticulo, etiquetaRegion } from '../../lib/regiones';
 
 const allDocs = await getCollection('docs');
 
@@ -18,21 +17,14 @@ function slugifyTag(tag: string) {
 	return tag.toLowerCase().replace(/\s+/g, '-');
 }
 
-function seccionLabel(id: string) {
-	if (id.startsWith('cabeza/')) return 'Cabeza';
-	if (id.startsWith('caja-toracica/')) return 'Caja torácica';
-	if (id.startsWith('extremidades/')) return 'Extremidades';
-	return '';
-}
-
 const articulos: ArticuloItem[] = allDocs
-	.filter((doc) => SECCIONES.some((s) => doc.id.startsWith(s + '/')))
+	.filter((doc) => esArticulo(doc))
 	.sort((a, b) => a.data.title.localeCompare(b.data.title, 'es'))
 	.map((doc) => ({
 		id: doc.id,
 		title: doc.data.title,
 		description: doc.data.description,
-		seccion: seccionLabel(doc.id),
+		seccion: etiquetaRegion(doc),
 		tags: (doc.data.tags ?? []) as string[],
 	}));
 ---

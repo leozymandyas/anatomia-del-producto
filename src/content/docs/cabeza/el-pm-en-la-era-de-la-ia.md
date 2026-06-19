@@ -4,8 +4,8 @@ description: Cómo evoluciona el rol de Product Manager cuando la inteligencia a
 tags: ["IA", "Product Manager", "Producto Digital"]
 pubDate: 2025-03-15
 relatedArticles:
-  - cabeza/ia-y-el-futuro-de-los-productos-digitales
-  - extremidades/herramientas-ia-para-equipos-de-producto
+  - ia-y-el-futuro-de-los-productos-digitales
+  - herramientas-ia-para-equipos-de-producto
 ---
 
 La pregunta que más escucho en comunidades de producto no es "¿qué herramienta de IA debo usar?" sino "¿sigue siendo relevante mi rol?". La respuesta corta: sí. La respuesta larga es más interesante.

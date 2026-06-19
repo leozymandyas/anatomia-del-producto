@@ -1,13 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
-
-const SECCIONES = ['cabeza', 'caja-toracica', 'extremidades'];
+import { esArticulo } from '../../lib/regiones';
 
 const allDocs = await getCollection('docs');
-const articulos = allDocs.filter((doc) =>
-	SECCIONES.some((s) => doc.id.startsWith(s + '/'))
-);
+const articulos = allDocs.filter((doc) => esArticulo(doc));
 
 const tagCounts: Record<string, number> = {};
 for (const doc of articulos) {

@@ -87,6 +87,10 @@ export default defineConfig({
 					items: [{ autogenerate: { directory: 'extremidades' } }],
 				},
 				{
+					label: 'Obsidian',
+					items: [{ autogenerate: { directory: 'obsidian' } }],
+				},
+				{
 					label: 'Todos los artículos',
 					link: '/articulos/',
 					attrs: { class: 'sidebar-sep-link' },

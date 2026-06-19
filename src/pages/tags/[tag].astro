@@ -1,8 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
-
-const SECCIONES = ['cabeza', 'caja-toracica', 'extremidades'];
+import { esArticulo } from '../../lib/regiones';
 
 function slugifyTag(tag: string) {
 	return tag.toLowerCase().replace(/\s+/g, '-');
@@ -16,16 +15,12 @@ interface ArticuloItem {
 }
 
 export async function getStaticPaths() {
-	const SECCIONES = ['cabeza', 'caja-toracica', 'extremidades'];
-
 	function slugifyTag(tag: string) {
 		return tag.toLowerCase().replace(/\s+/g, '-');
 	}
 
 	const allDocs = await getCollection('docs');
-	const articulos = allDocs.filter((doc) =>
-		SECCIONES.some((s) => doc.id.startsWith(s + '/'))
-	);
+	const articulos = allDocs.filter((doc) => esArticulo(doc));
 
 	const tagMap: Record<string, ArticuloItem[]> = {};
 	for (const doc of articulos) {

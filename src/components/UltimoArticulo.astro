@@ -1,14 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
-
-const SECCIONES = ['cabeza', 'caja-toracica', 'extremidades'];
+import { esArticulo } from '../lib/regiones';
 
 const allDocs = await getCollection('docs');
 const ultimo = allDocs
-	.filter((doc) =>
-		SECCIONES.some((s) => doc.id.startsWith(s + '/')) &&
-		doc.data.pubDate
-	)
+	.filter((doc) => esArticulo(doc) && doc.data.pubDate)
 	.sort((a, b) =>
 		(b.data.pubDate as Date).getTime() - (a.data.pubDate as Date).getTime()
 	)[0];
