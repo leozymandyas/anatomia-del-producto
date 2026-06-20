@@ -143,6 +143,17 @@ nav.sidebar,
 }
 /* La fila intermedia (sidebar + contenido) debe crecer para que main-pane llene. */
 .main-frame > .lg\:sl-flex { flex: 1 1 auto; min-height: 0; }
+
+/* min-width:0 evita el bug de flexbox: sin esto, .main-pane (flex item) no se
+   encoge por debajo del min-content de su contenido (p. ej. un bloque de código
+   ancho), forzando el ancho de la página en móvil. */
+.main-frame > .lg\:sl-flex,
+.main-pane,
+.main-pane > main,
+.content-panel,
+.content-panel > .sl-container {
+	min-width: 0;
+}
 .site-footer { margin-top: auto; }
 /* El panel de título queda vacío en landing (PageTitle no renderiza): se colapsa,
    junto con su borde y padding, para que el contenido empiece bajo la cabecera. */
@@ -159,11 +170,16 @@ nav.sidebar,
 /* Los paneles no añaden padding propio; cada bloque controla su columna. */
 .content-panel { padding: 0; border: none !important; }
 
-/* Cuerpo del artículo: columna de lectura centrada. */
+/* Cuerpo del artículo: columna de lectura centrada. min-width:0 + overflow-x:clip
+   evitan que contenido ancho (bloques de código) fuerce el ancho de la página en
+   móvil; el código y las tablas conservan su propio scroll horizontal interno. */
 .sl-markdown-content:not([data-landing]) {
+	width: 100%;
 	max-width: 760px;
 	margin-inline: auto;
 	padding: 50px clamp(20px, 5vw, 56px) 10px;
+	min-width: 0;
+	overflow-x: clip;
 }
 
 /* Fondo papel con resplandor de color (cambia con el tema).
@@ -465,6 +481,14 @@ h1, h2, h3, h4, h5, h6,
 	font-family: 'IBM Plex Mono', monospace; font-size: 0.85em;
 	background: rgba(var(--accent-rgb), 0.08); border: 1px solid rgba(var(--accent-rgb), 0.2);
 	border-radius: 6px; padding: 0.1em 0.4em; color: var(--accent-dark);
+	overflow-wrap: anywhere;   /* rutas/tokens largos no fuerzan el ancho en móvil */
+}
+
+/* Tablas anchas hacen scroll interno en vez de desbordar la página */
+.sl-markdown-content table {
+	display: block;
+	max-width: 100%;
+	overflow-x: auto;
 }
 
 /* ─── Listado / Archivo ─────────────────────────────────────────────────────── */
