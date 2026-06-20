@@ -1,6 +1,6 @@
 # Guía de contenido — Anatomía del Producto
 
-Cómo escribir artículos, crear secciones y estructurar el sitio.
+Cómo escribir artículos, usar categorías y estructurar el sitio.
 
 ---
 
@@ -8,152 +8,101 @@ Cómo escribir artículos, crear secciones y estructurar el sitio.
 
 ```
 src/content/docs/
-├── index.mdx              → página de inicio (ruta: /)
-├── contacto.md            → ruta: /contacto/
-├── cabeza/                → sección "Cabeza" en el sidebar
-│   └── mi-articulo.md     → ruta: /cabeza/mi-articulo/
-├── caja-toracica/         → sección "Caja torácica"
-│   └── mi-articulo.mdx
-└── extremidades/          → sección "Extremidades"
-    └── mi-articulo.md
+├── index.mdx              → portada (ruta: /)
+├── contacto.md            → /contacto/
+├── estrategia/            → categoría "Estrategia"
+│   └── mi-articulo.md     → ruta: /mi-articulo/   (¡plana!)
+├── validacion/            → categoría "Validación"
+├── herramientas/          → categoría "Herramientas"
+└── obsidian/              → categoría "Obsidian" (tema morado)
 ```
 
-**Regla clave:** la ruta de la URL refleja la carpeta y el nombre del archivo.
-`src/content/docs/cabeza/producto-y-ia.md` → `anatomia-del-producto.com/cabeza/producto-y-ia/`
+**Regla clave:** la categoría es la carpeta, pero **NO aparece en la URL**. El
+slug es plano y sale del nombre del archivo:
+`src/content/docs/estrategia/producto-y-ia.md` →
+`anatomia-del-producto.com/producto-y-ia/`
+
+La carpeta define el **color y el tema** del artículo (Obsidian → morado; el
+resto → azul).
 
 ---
 
 ## Estructura de un artículo
 
-Todo artículo empieza con un bloque de **frontmatter** (entre `---`) seguido del contenido en Markdown.
+Frontmatter (entre `---`) + contenido en Markdown:
 
 ```markdown
 ---
 title: Título del artículo
-description: Una frase que describe el artículo. Aparece en SEO y en vistas previas.
+description: Una frase que describe el artículo (SEO y extracto en listados).
 tags: ["producto", "IA", "estrategia"]
-pubDate: 2025-03-15
+pubDate: 2026-03-15
 ---
 
-El primer párrafo va aquí, sin ningún encabezado encima.
+El primer párrafo va aquí (recibe una **capitular** automática).
 
 ## Primer subtítulo
 
-Contenido de la sección...
+Contenido…
 ```
 
 ### Campos del frontmatter
 
 | Campo | Obligatorio | Descripción |
 |---|---|---|
-| `title` | Sí | Título del artículo. Aparece como h1 y en el sidebar. |
-| `description` | Recomendado | Descripción corta para SEO y tarjetas de vista previa. |
+| `title` | Sí | Título del artículo. Aparece en la tarjeta de título y en los listados. |
+| `description` | Recomendado | Descripción corta (SEO y extracto en tarjetas/filas). |
 | `tags` | No | Lista de etiquetas. Genera chips y páginas `/tags/<tag>/`. |
-| `pubDate` | Recomendado | Fecha de publicación (YYYY-MM-DD). Usada para el botón "Último artículo" del inicio. |
-| `icon` | No | Ícono que aparece junto al título. Puede ser un emoji (`🧠`) o una ruta de imagen (`/favicon.svg`). |
-| `relatedArticles` | No | Lista de IDs de artículos relacionados. Muestra tarjetas al final del artículo. |
-| `pageTheme` | No | Tema de color de la página (ej: `terracota`). |
+| `pubDate` | Recomendado | `YYYY-MM-DD`. Ordena el listado y el "anterior/siguiente"; define el "Último artículo" del inicio. |
+| `icon` | No | Ícono junto al título: emoji (`🧠`) o ruta de imagen (`/favicon.svg`). |
+| `relatedArticles` | No | Slugs (planos) de artículos relacionados. Tarjetas al final. |
+| `landing` | No | Marca la página como portada (ancho completo, sin título automático). Solo para páginas especiales. |
+
+> El **color y el tema** del artículo salen de su carpeta-categoría, no del
+> frontmatter.
 
 ### El campo `pubDate`
 
-Controla qué artículo aparece en el botón "Último artículo →" de la página de inicio. El botón apunta siempre al artículo con la fecha más reciente dentro de las secciones Cabeza, Caja torácica y Extremidades.
-
-```yaml
-pubDate: 2025-03-15
-```
-
-> El campo es interno — no se muestra visiblemente en el artículo.
-
-### El campo `icon`
-
-Aparece alineado al lado izquierdo del título (`<h1>`). Acepta dos formatos:
-
-```yaml
-# Emoji
-icon: 🧠
-
-# Ruta de imagen (debe existir en /public/ o como asset)
-icon: /favicon.svg
-```
+Controla el orden del listado, la navegación anterior/siguiente, y qué artículo
+aparece en "Último artículo →" del inicio (el de fecha más reciente).
 
 ### El campo `relatedArticles`
 
-Muestra tarjetas de artículos relacionados al final del contenido, antes de la navegación anterior/siguiente. Se escribe como lista de IDs de documento (ruta relativa sin extensión desde `src/content/docs/`):
+Tarjetas de artículos relacionados al final, antes del anterior/siguiente. Se
+escribe con **slugs planos** (el nombre del archivo sin carpeta ni extensión):
 
 ```yaml
 relatedArticles:
-  - cabeza/ia-y-el-futuro-de-los-productos-digitales
-  - extremidades/herramientas-ia-para-equipos-de-producto
+  - ia-y-el-futuro-de-los-productos-digitales
+  - herramientas-ia-para-equipos-de-producto
 ```
 
-El ID es la ruta del archivo sin `src/content/docs/` y sin extensión.
+Si un slug no coincide con ningún artículo, esa tarjeta simplemente no aparece.
 
 ---
 
-## Tema de color de la página (`pageTheme`)
+## Categorías
 
-Puedes cambiar los colores del área de contenido de una página sin afectar el sidebar ni el menú.
+Las cuatro categorías están definidas en `src/lib/categorias.ts`:
 
-```yaml
+| Carpeta | Categoría | Color | Tema |
+|---|---|---|---|
+| `estrategia/` | Estrategia | azul oscuro | azul |
+| `validacion/` | Validación | azul | azul |
+| `herramientas/` | Herramientas | azul claro | azul |
+| `obsidian/` | Obsidian | morado | **morado** |
+
+Para escribir un artículo, basta con ponerlo en la carpeta correcta. Para crear
+una categoría nueva ver "Agregar una categoría" más abajo.
+
 ---
-title: Inicio
-pageTheme: terracota
----
-```
 
-| Valor | Efecto |
+## .md vs .mdx
+
+| Extensión | Cuándo |
 |---|---|
-| `terracota` | Fondo terracota, texto crema (colores invertidos de la paleta principal) |
-| *(sin valor)* | Colores normales del sitio |
-
-**Cómo crear un tema nuevo:**
-
-1. Abre `src/styles/custom.css` y busca la sección `/* Temas de página */`
-2. Duplica el bloque `terracota` y cambia el nombre y los colores. Usa valores hex directos (no variables CSS) para evitar referencias circulares:
-
-```css
-.main-pane:has([data-page-theme='marino']) {
-  background-color: #1A2A45;
-  color: #F6F8FF;
-  --c-navy:              #F6F8FF;
-  --c-text:              #F6F8FF;
-  --c-text-strong:       #F6F8FF;
-  --c-border:            rgba(246, 248, 255, 0.25);
-  --c-border-soft:       rgba(246, 248, 255, 0.18);
-  --sl-color-bg:         #1A2A45;
-  --sl-color-text:       #F6F8FF;
-  --sl-color-white:      #F6F8FF;
-  --sl-color-text-accent:#F6F8FF;
-  --sl-color-accent:     #F6F8FF;
-  --sl-color-hairline:        rgba(246, 248, 255, 0.25);
-  --sl-color-hairline-light:  rgba(246, 248, 255, 0.18);
-}
-
-.main-pane:has([data-page-theme='marino']) a {
-  color: #F6F8FF;
-  text-decoration-color: rgba(246, 248, 255, 0.5);
-}
-```
-
-3. Usa `pageTheme: marino` en el frontmatter.
-
----
-
-## Sobre los tags
-
-- Se escriben como lista: `tags: ["Producto Digital", "IA"]`
-- Si el tag tiene espacios, usa comillas
-- Al usar un tag por primera vez se crea automáticamente su página en `/tags/<tag>/`
-- Usa tags consistentes entre artículos (misma capitalización y ortografía)
-
----
-
-## Extensión del archivo: .md vs .mdx
-
-| Extensión | Cuándo usarla |
-|---|---|
-| `.md` | La mayoría de artículos. Solo texto, imágenes y Markdown estándar. |
-| `.mdx` | Cuando necesitas insertar componentes como `<YouTube>` o elementos interactivos. |
+| `.md` | La mayoría de artículos. Texto, imágenes y Markdown estándar. |
+| `.mdx` | Cuando necesitas componentes como `<YouTube>`. |
 
 ---
 
@@ -163,227 +112,122 @@ pageTheme: terracota
 ## Encabezado nivel 2
 ### Encabezado nivel 3
 
-**Texto en negrita**
-*Texto en cursiva*
+**Negrita**  ·  *cursiva*
 
-- Lista con viñetas
-- Otro elemento
-
+- Lista
 1. Lista numerada
-2. Otro elemento
 
-> Cita o bloque destacado
+> Cita destacada (se renderiza como tarjeta de vidrio)
 
 `código inline`
 
 [Texto del link](https://ejemplo.com)
 
-![Descripción de imagen](../../assets/mi-imagen.png)
-```
-
-### Imágenes
-
-Las imágenes van en `src/assets/` y se referencian con ruta relativa desde el artículo:
-
-```markdown
 ![Descripción](../../assets/mi-imagen.png)
 ```
 
-También puedes poner imágenes en `public/` y referenciarlas con ruta absoluta:
+También puedes usar *asides* de Starlight (`:::note`, `:::tip`, etc.), que se ven
+como tarjetas de vidrio con el color del tema.
 
-```markdown
-![Descripción](/imagenes/mi-imagen.png)
-```
+### Imágenes
+
+En `src/assets/` (ruta relativa) o en `public/` (ruta absoluta `/...`).
 
 ### Links externos
 
-Cualquier link que empiece con `http://` o `https://` se abre automáticamente en una pestaña nueva (`target="_blank"`). Los links internos (que empiezan con `/`) abren en la misma pestaña. No necesitas configurar nada.
+Los links `http(s)://` abren en pestaña nueva automáticamente.
 
 ---
 
-## Incrustar videos de YouTube
-
-Los artículos `.mdx` pueden usar el componente `<YouTube>`:
+## Incrustar videos de YouTube (`.mdx`)
 
 ```mdx
 ---
 title: Mi artículo con video
-description: Descripción del artículo.
+description: Descripción.
 tags: ["producto"]
-pubDate: 2025-03-15
+pubDate: 2026-03-15
 ---
 
 import YouTube from '../../../components/YouTube.astro';
 
-Texto introductorio del artículo.
+Texto introductorio.
 
 <YouTube id="dQw4w9WgXcQ" />
 ```
 
-El `id` es el código que aparece en la URL de YouTube después de `?v=`.
+El `id` es el código tras `?v=` en la URL de YouTube.
 
 ---
 
-## Agregar una nueva sección al sidebar
+## Agregar una categoría
 
-Una "sección" es una carpeta dentro de `src/content/docs/` + una entrada en el sidebar de `astro.config.mjs`.
-
-### Paso 1: Crear la carpeta
-
-```
-src/content/docs/columna/
-```
-
-### Paso 2: Agregar la sección al sidebar
-
-Abre `astro.config.mjs` y agrega una entrada en el array `sidebar`:
-
-```js
-sidebar: [
-  // ... entradas existentes ...
-  {
-    label: 'Columna',
-    items: [
-      { autogenerate: { directory: 'columna' } }
-    ],
-  },
-]
-```
-
-### Paso 3: Crear el primer artículo de la sección
-
-```markdown
----
-title: Mi primer artículo de Columna
-description: Descripción del artículo.
-tags: ["columna"]
-pubDate: 2025-04-01
----
-
-Contenido del artículo...
-```
+1. Crea la carpeta en `src/content/docs/` (minúsculas, sin tildes ni espacios),
+   p. ej. `src/content/docs/cultura/`.
+2. Añádela en `src/lib/categorias.ts`:
+   - a la lista `CATEGORIAS`
+   - a `INFO_CATEGORIAS` con su `label`, `color` y `tema` (`'azul'` u `'obsidian'`).
+3. Crea al menos un artículo dentro. La URL seguirá siendo plana y la categoría
+   aparecerá como filtro en `/articulos/` automáticamente.
 
 ---
 
-## Agregar subsecciones
+## Sobre los tags
 
-Puedes anidar carpetas dentro de una sección. Con `autogenerate`, Starlight convierte las subcarpetas en grupos automáticamente.
-
-```
-src/content/docs/
-└── cabeza/
-    ├── ojos/
-    │   └── ia-y-vision.md
-    └── oidos/
-        └── procesamiento-de-audio.md
-```
+- Lista en el frontmatter: `tags: ["Producto Digital", "IA"]` (comillas si hay espacios).
+- Cada tag genera su página `/tags/<tag>/` automáticamente.
+- Usa tags consistentes (misma capitalización).
 
 ---
 
-## Orden de los artículos en el sidebar
-
-Por defecto, `autogenerate` ordena los artículos **alfabéticamente** por nombre de archivo.
-
-Para controlar el orden usa un prefijo numérico en el nombre del archivo:
-
-```
-cabeza/
-├── 01-introduccion.md
-├── 02-ia-y-producto.md
-└── 03-estrategia.md
-```
-
-El número no aparece en la URL.
-
----
-
-## Quitar un artículo del sidebar
-
-Si borras un archivo `.md`, desaparece automáticamente del sidebar. No hace falta tocar `astro.config.mjs` si usas `autogenerate`.
-
-Si el artículo estaba listado manualmente en `astro.config.mjs` (como "Inicio" o "Contacto"), también debes quitarlo de ahí.
-
----
-
-## Crear páginas especiales (sin sección)
-
-Páginas como "Contacto" van directamente en `src/content/docs/` y se agregan manualmente al sidebar:
-
-```js
-{
-  label: 'Anatomía del producto',
-  items: [
-    { label: 'Inicio', link: '/' },
-    { label: 'Contacto', link: '/contacto/' },
-  ],
-},
-```
-
----
-
-## Páginas automáticas del sitio
+## Páginas automáticas
 
 | URL | Descripción |
 |---|---|
-| `/articulos/` | Índice de todos los artículos, ordenados con su sección y tags |
-| `/tags/` | Lista de todos los tags usados |
-| `/tags/<tag>/` | Artículos filtrados por un tag específico |
+| `/` | Portada (hero, secciones, últimos artículos, newsletter) |
+| `/articulos/` | Listado con buscador en vivo + filtros por categoría |
+| `/tags/` | Todos los temas con contador |
+| `/tags/<tag>/` | Artículos de un tema |
 
-Se actualizan solas cada vez que publicas un artículo nuevo.
-
----
-
-## Navegación al final de los artículos
-
-Al final de cada artículo aparecen (en este orden):
-
-1. **Tarjetas de artículos relacionados** — si el artículo tiene `relatedArticles` en el frontmatter
-2. **Navegación Anterior / Siguiente** — siempre presente (excepto en el primero y último artículo de la secuencia del sidebar)
-
-No necesitas configurar nada para la navegación. Los artículos relacionados se configuran con el campo `relatedArticles`.
+Se actualizan solas al publicar.
 
 ---
 
-## Footer de copyright
+## Final de cada artículo
 
-Todos los artículos muestran automáticamente al final:
+En orden:
 
-> Copyright © Todos los Derechos Reservados Leonardo Ruano Hernández {año}
+1. **Artículos relacionados** — si hay `relatedArticles` (tarjetas glass con chip de categoría).
+2. **Anterior / Siguiente** — vecinos por orden cronológico (`pubDate`), en tarjetas glass.
 
-El año se actualiza solo. No necesitas añadirlo manualmente.
-
----
-
-## Sidebar colapsable
-
-En escritorio, el sidebar tiene un botón en la esquina superior derecha que lo colapsa a un rail de íconos. El estado se guarda automáticamente en el navegador.
-
-El bloque de branding (logo + nombre + botón) es **sticky** — permanece visible aunque hagas scroll dentro del sidebar.
+No hay que configurar el anterior/siguiente; los relacionados sí (campo `relatedArticles`).
 
 ---
 
-## Flujo completo: publicar un artículo nuevo
+## Flujo: publicar un artículo
 
-1. Crea el archivo `.md` en la carpeta correcta
-2. Escribe el frontmatter con al menos `title`, `description`, `tags`, `pubDate`
-3. (Opcional) Agrega `relatedArticles` con IDs de otros artículos
-4. Escribe el contenido en Markdown
+1. Crea el `.md` en la carpeta de su categoría.
+2. Frontmatter con al menos `title`, `description`, `tags`, `pubDate`.
+3. (Opcional) `relatedArticles` con slugs planos.
+4. Escribe el contenido.
 5. Publica:
    ```bash
    git add .
-   git commit -m "Nuevo artículo: nombre del artículo"
+   git commit -m "Nuevo artículo: nombre"
    git push
    ```
-6. Vercel despliega automáticamente en ~1 minuto
+6. Vercel despliega en ~1 minuto.
 
 ---
 
 ## Referencia rápida de rutas
 
-| Archivo | URL resultante |
+| Archivo | URL |
 |---|---|
 | `docs/index.mdx` | `/` |
 | `docs/contacto.md` | `/contacto/` |
-| `docs/cabeza/ia-y-producto.md` | `/cabeza/ia-y-producto/` |
-| `docs/cabeza/01-intro.md` | `/cabeza/intro/` (el número se elimina) |
-| `docs/caja-toracica/mvp.md` | `/caja-toracica/mvp/` |
+| `docs/estrategia/ia-y-producto.md` | `/ia-y-producto/` |
+| `docs/validacion/mvp.md` | `/mvp/` |
+| `docs/obsidian/gestion-de-epicas.md` | `/gestion-de-epicas/` |
+
+> La categoría (carpeta) **no** aparece en la URL — solo agrupa y colorea.

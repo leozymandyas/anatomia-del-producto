@@ -1,347 +1,209 @@
 # Documentación del proyecto — Anatomía del Producto
 
-> Guía de referencia para entender la estructura del proyecto, el stack tecnológico y todas las personalizaciones realizadas.
+> Referencia de arquitectura: estructura, stack y todas las personalizaciones.
+> Diseño actual: **"edición digital"** (periódico/revista, *liquid-glass*).
 
 ---
 
-## 1. ¿Qué es este proyecto?
+## 1. ¿Qué es?
 
-**Anatomía del Producto** es un blog sobre creación de productos digitales en la era de la inteligencia artificial. La URL de producción es `https://anatomia-del-producto.com`.
-
-El sitio está construido con **Astro** usando el tema **Starlight**, que originalmente está pensado para documentación técnica pero fue adaptado para funcionar como blog.
+**Anatomía del Producto** es un blog sobre creación de productos digitales en la
+era de la IA (`https://anatomia-del-producto.com`). Está construido con **Astro**
++ **Starlight**. Starlight es un tema de documentación, pero aquí se adaptó a un
+blog tipo periódico: se **oculta el sidebar** y la navegación vive en una
+cabecera superior; se reaprovechan sus colecciones de contenido, su buscador
+(Pagefind) y su pipeline de Markdown.
 
 ---
 
-## 2. Stack tecnológico
+## 2. Stack
 
-| Tecnología | Versión | Para qué sirve |
+| Tecnología | Versión | Para qué |
 |---|---|---|
-| **Astro** | 6.3.x | Framework base. Genera HTML estático en el build. |
-| **Starlight** | 0.39.x | Tema/plugin de Astro. Provee layout, sidebar, buscador, TOC, modo oscuro, etc. |
-| **TypeScript** | (incluido) | Se usa en los componentes `.astro` para tipado. |
-| **Sharp** | 0.34.x | Procesamiento de imágenes (incluido por Astro). |
-
-### Comandos esenciales
+| **Astro** | 6.3.x | Framework. Genera HTML estático en el build. |
+| **Starlight** | 0.39.x | Colecciones de contenido, buscador, overrides, routing. |
+| **Sharp** | 0.34.x | Procesamiento de imágenes. |
 
 ```bash
-npm run dev       # Servidor local en http://localhost:4321
-npm run build     # Genera el sitio estático en la carpeta /dist
-npm run preview   # Sirve el /dist localmente para revisar antes de subir
+npm run dev       # http://localhost:4321
+npm run build     # genera /dist
+npm run preview   # sirve /dist
 ```
 
 ---
 
-## 3. Estructura de carpetas
+## 3. Estructura
 
 ```
-anatomia-del-producto/
-│
-├── astro.config.mjs          ← Configuración central del proyecto
-├── src/
-│   ├── assets/
-│   │   └── logo.svg          ← Ícono del vitruviano (sidebar + header)
-│   │
-│   ├── components/
-│   │   ├── SidebarWithToc.astro        ← Sidebar de navegación recursivo
-│   │   ├── YouTube.astro               ← Componente para embeber videos de YouTube
-│   │   └── overrides/                  ← Componentes que reemplazan los de Starlight
-│   │       ├── Header.astro            ← Header personalizado
-│   │       ├── Sidebar.astro           ← Sidebar (usa SidebarWithToc)
-│   │       ├── PageSidebar.astro       ← Vacío (sin TOC de página)
-│   │       └── MarkdownContent.astro   ← Contenido de artículo + tags
-│   │
-│   ├── content/
-│   │   └── docs/                       ← Aquí viven todos los artículos
-│   │       ├── index.mdx               ← Página de inicio (/)
-│   │       ├── contacto.md             ← Página /contacto
-│   │       ├── cabeza/                 ← Sección "Cabeza"
-│   │       │   └── ia-y-el-futuro-de-los-productos-digitales.md
-│   │       ├── caja-toracica/          ← Sección "Caja torácica"
-│   │       │   └── como-validar-un-mvp-con-ia.mdx
-│   │       └── extremidades/           ← Sección "Extremidades"
-│   │           └── herramientas-ia-para-equipos-de-producto.md
-│   │
-│   ├── pages/
-│   │   ├── articulos/
-│   │   │   └── index.astro             ← Página /articulos (índice de todos los artículos)
-│   │   └── tags/
-│   │       ├── index.astro             ← Página /tags (nube de tags)
-│   │       └── [tag].astro             ← Página dinámica por tag (/tags/ia/, etc.)
-│   │
-│   ├── styles/
-│   │   └── custom.css                  ← Todos los estilos personalizados
-│   │
-│   └── content.config.ts               ← Define el esquema de los artículos
-│
-└── public/
-    └── favicon.svg                     ← Ícono de la pestaña del navegador
+src/
+├── assets/logo.svg                 ← figura vitruviana (marca)
+├── components/
+│   ├── overrides/                  ← reemplazan componentes de Starlight
+│   │   ├── Head.astro              ← tema morado (Obsidian) + sin ClientRouter
+│   │   ├── Header.astro            ← masthead + cabecera glass + nav + buscador
+│   │   ├── Footer.astro            ← footer (sticky al fondo)
+│   │   ├── PageTitle.astro         ← tarjeta de título en vidrio (artículos)
+│   │   ├── MarkdownContent.astro   ← cuerpo + relacionados + anterior/siguiente
+│   │   └── PageSidebar.astro       ← vacío (sin TOC de página)
+│   ├── HomePage.astro              ← cuerpo de la portada
+│   ├── RelatedArticles.astro       ← tarjetas glass
+│   ├── ArticlePagination.astro     ← anterior / siguiente (cronológico)
+│   ├── BrandMark.astro             ← logo SVG temable
+│   └── UltimoArticulo.astro
+├── content/
+│   ├── docs/                       ← contenido por categoría
+│   │   ├── index.mdx               ← portada (/)
+│   │   ├── contacto.md
+│   │   ├── estrategia/  validacion/  herramientas/  obsidian/
+│   └── i18n/es.json
+├── lib/categorias.ts               ← categorías: etiqueta, color, tema, helpers
+├── pages/
+│   ├── articulos/index.astro       ← /articulos/ (buscador en vivo + filtros)
+│   └── tags/{index,[tag]}.astro
+├── styles/custom.css
+└── content.config.ts               ← esquema + URLs planas
+
+public/favicon.svg
+astro.config.mjs
 ```
 
 ---
 
-## 4. Cómo funciona Astro + Starlight
+## 4. Categorías, temas y URLs planas
 
-### Astro en una frase
+`src/lib/categorias.ts` es el corazón de la taxonomía:
 
-Astro convierte archivos `.astro`, `.md` y `.mdx` en HTML estático. No hay JavaScript en el cliente por defecto — el sitio carga muy rápido.
+- `CATEGORIAS = ['estrategia','validacion','herramientas','obsidian']` — cada una
+  es una **carpeta** bajo `src/content/docs/`.
+- `INFO_CATEGORIAS` define para cada una: `label`, `color` y `tema`
+  (`'azul'` o `'obsidian'` → morado).
+- Helpers: `categoriaDeDoc`, `esArticulo`, `etiquetaCategoria`, `colorCategoria`,
+  `temaDeDoc`, `minutosLectura`. Derivan la categoría del `filePath` del doc.
 
-### Starlight en una frase
-
-Starlight es un tema completo que añade: layout de dos columnas, sidebar navegable, tabla de contenidos, buscador (Pagefind), modo oscuro, y más. Todo configurable desde `astro.config.mjs`.
-
-### El ciclo de vida de una página
+**URLs planas:** `src/content.config.ts` define `generateId`, que descarta el
+segmento de categoría del slug:
 
 ```
-src/content/docs/cabeza/mi-articulo.md
-        ↓
-Astro lo lee en el build
-        ↓
-Starlight genera el layout (header + sidebar + contenido)
-        ↓
-Los overrides personalizan partes del layout
-        ↓
-dist/cabeza/mi-articulo/index.html  (HTML listo para publicar)
+src/content/docs/estrategia/el-pm-en-la-era-de-la-ia.md
+        → URL:  /el-pm-en-la-era-de-la-ia/
 ```
+
+Así la categoría agrupa y colorea, pero no aparece en la URL. Los enlaces
+internos y `relatedArticles` usan el **slug plano**.
+
+**Cambio de tema (azul ↔ morado):** `Head.astro` calcula `temaDeDoc(entry)` y, si
+es `'obsidian'`, inyecta `<script is:inline>` que pone `data-tema="obsidian"` en
+`<html>` antes del primer paint. El CSS `[data-tema='obsidian']` redefine
+`--accent` y derivados; como todo el sitio usa `var(--accent)`, la página entera
+cambia a morado.
 
 ---
 
-## 5. Cómo crear un artículo nuevo
+## 5. Crear un artículo
 
-1. Crea un archivo `.md` o `.mdx` dentro de `src/content/docs/` en la carpeta de la sección correspondiente.
-2. El archivo debe empezar con un bloque **frontmatter** entre `---`:
+Crea un `.md` (o `.mdx`) en la carpeta de su categoría con frontmatter:
 
 ```markdown
 ---
 title: Título del artículo
-description: Descripción corta (aparece en el índice y en el SEO).
-tags: ["IA", "Producto", "Estrategia"]
+description: Descripción corta (SEO y extracto).
+tags: ["IA", "Producto"]
+pubDate: 2026-03-15
 ---
 
-Aquí empieza el contenido en Markdown...
+Primer párrafo (lleva capitular automática).
 
-## Un subtítulo
-
-Párrafo normal. **Texto en negrita.** *Texto en cursiva.*
+## Subtítulo
 ```
 
-3. El artículo aparece automáticamente en el sidebar bajo la sección correcta (Starlight lo detecta por la carpeta donde está).
-
-### Secciones disponibles
-
-| Carpeta | Sección en sidebar |
-|---|---|
-| `src/content/docs/cabeza/` | Cabeza |
-| `src/content/docs/caja-toracica/` | Caja torácica |
-| `src/content/docs/extremidades/` | Extremidades |
-
-### Tags
-
-Los tags se definen en el frontmatter como array de strings. Aparecen como chips morados al inicio del artículo y generan páginas propias en `/tags/nombre-del-tag/`. El esquema de tags está definido en `src/content.config.ts`.
+Aparece automáticamente en `/articulos/`, en `/tags/<tag>/` y en el
+"anterior/siguiente". Su color y tema salen de la carpeta.
 
 ---
 
-## 6. Archivo central: `astro.config.mjs`
+## 6. `astro.config.mjs`
 
-Este es el archivo más importante del proyecto. Controla todo lo que Starlight hace.
-
-```js
-starlight({
-  title: 'Anatomía del Producto',      // Nombre del sitio
-  favicon: '/favicon.svg',             // Ícono de la pestaña
-  logo: { src: './src/assets/logo.svg', replacesTitle: false }, // Ícono junto al título
-  
-  head: [ ... ],      // Inyecta <link> en el <head> de todas las páginas (aquí van las fuentes)
-  customCss: ['./src/styles/custom.css'], // CSS global personalizado
-  
-  components: { ... }, // Reemplaza componentes internos de Starlight por los nuestros
-  
-  sidebar: [ ... ],   // Define la estructura del menú lateral
-})
-```
-
-### Sidebar config
-
-```js
-sidebar: [
-  {
-    label: 'Cabeza',
-    items: [
-      { label: 'Inicio', link: '/' },
-      { autogenerate: { directory: 'cabeza' } }, // Lee automáticamente los .md de esa carpeta
-    ],
-  },
-  // ...más secciones
-  {
-    label: 'Todos los artículos',
-    link: '/articulos/',
-    attrs: { class: 'sidebar-sep-link' }, // Clase CSS que añade un separador visual antes de este enlace
-  },
-]
-```
+Controla el sitio: `title`, `favicon`, `logo`, `head` (fuentes), `customCss`,
+`components` (overrides) y `sidebar`. El `sidebar` se mantiene válido pero
+**está oculto** por CSS (la navegación está en la cabecera).
 
 ---
 
-## 7. Componentes override: cómo funciona el sistema
+## 7. Overrides de Starlight
 
-Starlight permite reemplazar cualquiera de sus componentes internos. En lugar de editar los archivos de `node_modules` (que se perderían al actualizar), se crea un componente propio y se registra en `astro.config.mjs`:
+Se registran en `astro.config.mjs` → `components`. Qué hace cada uno:
 
-```js
-components: {
-  Header: './src/components/overrides/Header.astro',
-  Sidebar: './src/components/overrides/Sidebar.astro',
-  PageSidebar: './src/components/overrides/PageSidebar.astro',
-  MarkdownContent: './src/components/overrides/MarkdownContent.astro',
-},
-```
-
-### Qué hace cada override
-
-#### `Header.astro`
-Reemplaza el header original de Starlight. Quita el buscador del header (se movió al sidebar) y añade el enlace "Contacto" a la derecha.
-
-#### `Sidebar.astro`
-Añade el buscador en la parte superior del sidebar. Usa el componente personalizado `SidebarWithToc` en lugar del `SidebarSublist` original de Starlight.
-
-#### `PageSidebar.astro`
-El panel derecho (donde Starlight normalmente muestra la tabla de contenidos en desktop). En este proyecto el índice "en esta página" se eliminó por completo, así que este override está **vacío** y no renderiza nada (ni en escritorio ni en móvil).
-
-#### `MarkdownContent.astro`
-Envuelve el contenido de cada artículo. Antes del contenido muestra los **tags** del artículo como chips de colores.
+- **`Head.astro`** — passthrough del Head por defecto + activación del tema
+  morado. **No** incluye `<ClientRouter />`: las view transitions rompían la
+  interactividad al navegar (los listeners de `<script>` no se re-registraban).
+- **`Header.astro`** — el *chrome* superior: masthead (fecha + categoría),
+  cabecera de vidrio con el logo (`BrandMark`), el buscador (`<Search>` de
+  Starlight estilizado) y la navegación (Artículos / Temas / Contacto).
+- **`Footer.astro`** — `.site-footer`, pegado al fondo (sticky).
+- **`PageTitle.astro`** — en artículos renderiza la **tarjeta de título en
+  vidrio** (breadcrumb + chip de categoría + h1 + byline con fecha y minutos de
+  lectura). En portadas (`landing`) no renderiza nada.
+- **`MarkdownContent.astro`** — envuelve el cuerpo (`<slot/>`) y, en artículos,
+  añade `RelatedArticles` + `ArticlePagination`.
+- **`PageSidebar.astro`** — vacío (no hay índice "en esta página").
 
 ---
 
-## 8. Componente clave: `SidebarWithToc.astro`
+## 8. Componentes propios
 
-Es una versión del `SidebarSublist` de Starlight que renderiza el menú de navegación del sidebar.
-
-### Cómo funciona
-
-- Es un componente **recursivo**: se llama a sí mismo para renderizar grupos anidados (`<Astro.self />`).
-- El enlace de la página actual (`entry.isCurrent`) se resalta con el color de acento.
-- (Históricamente inyectaba un índice "en esta página" bajo el artículo activo; esa función se eliminó.)
-
-```
-Cabeza
-  └── Inicio
-  └── IA y el futuro...   ← página actual, resaltada
-  └── Otro artículo
-```
+- **`HomePage.astro`** — cuerpo de la portada: hero, "Secciones" (las 4
+  categorías), "Últimos artículos" (filas planas) y newsletter.
+- **`RelatedArticles.astro`** — tarjetas glass de los `relatedArticles`.
+- **`ArticlePagination.astro`** — anterior/siguiente calculado por orden
+  **cronológico** (`pubDate`), en tarjetas glass.
+- **`BrandMark.astro`** — el logo en SVG con el círculo en `var(--accent)`, así
+  se tiñe con el tema. Se usa en la cabecera y, semitransparente, en bylines.
+- **`UltimoArticulo.astro`** — botón al artículo más reciente.
 
 ---
 
 ## 9. Estilos: `src/styles/custom.css`
 
-Starlight usa un sistema de **CSS layers** (`@layer starlight.core`). Los estilos en capas (`@layer`) tienen **menor prioridad** que los estilos normales (sin capa). Por eso el CSS en `custom.css` siempre gana sin necesidad de `!important`.
+Starlight usa `@layer starlight.core`; el CSS sin capa de `custom.css` gana sin
+`!important`. Secciones principales:
 
-### Secciones del archivo
-
-#### Tipografía (Google Fonts)
-Las fuentes se cargan desde Google Fonts vía el `head` en `astro.config.mjs`:
-
-| Fuente | Uso |
-|---|---|
-| **Fraunces** | Título del sitio (`.site-title`), encabezados h1–h6 y títulos de tarjetas |
-| **Inter** | Cuerpo del texto (`body`) y UI |
-
-#### Paleta de colores
-Se definen tokens propios `--c-*` en `:root` y se mapean a las variables internas de Starlight (`--sl-color-*`). El acento es índigo:
-
-```css
-:root {
-  --c-navy: #3D5AE0;                 /* acento índigo */
-}
-:root, :root[data-theme='light'], :root[data-theme='dark'] {
-  --sl-color-accent: var(--c-navy);  /* misma paleta en claro y oscuro */
-}
-```
-
-#### Layout: contenido centrado (sin TOC)
-En pantallas anchas (≥ 72rem / ~1152px):
-- Se **oculta** el panel derecho (`right-sidebar-container`) donde Starlight normalmente muestra el TOC; el índice de página se eliminó.
-- El contenido queda centrado en el espacio disponible.
-
-#### Tags
-Chips estilo pastilla con el acento índigo. Se muestran arriba del contenido de cada artículo y en las páginas de índice.
-
-#### Colores del contenido
-- Título del artículo (`h1#_top`): color accent morado.
-- Subtítulos del artículo (h2–h6 dentro de `.sl-markdown-content`): color accent morado.
-- Negritas (`<strong>`): morado medio (#9333ea en claro, #c084fc en oscuro).
+- **Tokens** (`:root`): papel/tinta + tema azul; `[data-tema='obsidian']` para el
+  morado.
+- **Layout invertido**: `.header` a todo el ancho, sidebar oculto, contenido a
+  ancho completo (cada bloque centra su columna). Footer sticky vía cadena flex.
+- **Tipografía**: Newsreader (cuerpo/títulos) + IBM Plex Mono (`.mono` y UI).
+- **Chrome**: `.masthead`, `.site-header`, `.site-nav`, `.site-footer`.
+- **Liquid-glass**: `.btn-primary`/`.btn-ghost`, `.chip`, tarjetas, buscador,
+  tarjeta de título, citas y asides.
+- **Portada y listado**: `.hero`, `.seccion-row`, `.article-row`, `.big-search`,
+  `.filter`.
 
 ---
 
-## 10. Páginas especiales (fuera de Starlight)
+## 10. Páginas especiales (`.astro`)
 
-Estas páginas no son artículos Markdown sino componentes Astro que usan `StarlightPage` para mantener el mismo layout.
+Usan `<StarlightPage frontmatter={{ ..., landing: true }}>` para ir a ancho
+completo con el mismo chrome:
 
-### `/articulos/` — `src/pages/articulos/index.astro`
-Lista todos los artículos del sitio. Usa `getCollection('docs')` para leer todos los artículos y los muestra como tarjetas con título, descripción, sección y tags.
-
-### `/tags/` — `src/pages/tags/index.astro`
-Nube de tags con contador de artículos por tag.
-
-### `/tags/[tag]/` — `src/pages/tags/[tag].astro`
-Página dinámica generada para cada tag. Muestra todos los artículos que tienen ese tag.
+- **`/articulos/`** — listado con **buscador en vivo** + **filtros por
+  categoría** (un `<script is:inline>` filtra las filas por texto y categoría).
+- **`/tags/`** — chips de todos los temas con contador.
+- **`/tags/<tag>/`** — artículos de ese tema (filas con su color de categoría).
+- **`/404`** — página de error.
 
 ---
 
-## 11. Archivos de assets
+## 11. Assets
 
-| Archivo | Descripción |
-|---|---|
-| `public/favicon.svg` | Ícono que aparece en la pestaña del navegador. Los archivos en `public/` se sirven tal cual en la raíz del sitio. |
-| `src/assets/logo.svg` | Ícono del vitruviano que aparece junto al título "Anatomía del Producto" en el header. Starlight lo procesa y optimiza durante el build. |
-
-La diferencia entre `public/` y `src/assets/`:
-- `public/` → copiado tal cual a `/dist`, accesible por URL directa.
-- `src/assets/` → procesado por Astro (optimización, hash de nombre), no accesible por URL directa.
+- `public/favicon.svg` — favicon (servido tal cual desde la raíz).
+- `src/assets/logo.svg` — marca; Astro la procesa en el build.
+- El logo de la cabecera no usa estos archivos directamente sino
+  `BrandMark.astro` (SVG inline, temable).
 
 ---
 
-## 12. Variables CSS útiles de Starlight
+## 12. Deploy
 
-Starlight expone variables CSS que puedes usar en tus propios estilos:
-
-```css
-var(--sl-color-accent)       /* color de énfasis (morado en este proyecto) */
-var(--sl-color-accent-low)   /* versión pálida del color de énfasis */
-var(--sl-color-white)        /* blanco (o casi blanco en dark mode) */
-var(--sl-color-text)         /* color del texto normal */
-var(--sl-color-gray-1)       /* gris muy claro */
-var(--sl-color-gray-3)       /* gris medio */
-var(--sl-color-hairline)     /* gris muy sutil para bordes */
-var(--sl-sidebar-width)      /* ancho del sidebar (18.75rem = 300px) */
-var(--sl-content-width)      /* ancho máximo del contenido (45rem = 720px) */
-var(--sl-text-sm)            /* tamaño de fuente pequeño */
-var(--sl-text-base)          /* tamaño de fuente base */
-var(--sl-text-lg)            /* tamaño de fuente grande */
-```
-
----
-
-## 13. Cómo desplegar en Vercel
-
-**Opción A — Desde la web (recomendada):**
-1. Sube el proyecto a un repositorio de GitHub.
-2. Entra a [vercel.com](https://vercel.com) → **Add New Project**.
-3. Importa el repositorio. Vercel detecta Astro automáticamente.
-4. Haz clic en **Deploy**. Cada `git push` redespliega el sitio.
-
-**Opción B — Con la CLI:**
-```bash
-npm i -g vercel
-vercel        # primera vez
-vercel --prod # deploys siguientes
-```
-
----
-
-## 14. Flujo de trabajo diario
-
-```
-1. npm run dev          ← Arranca el servidor local
-2. Crea o edita un .md en src/content/docs/
-3. El navegador se actualiza automáticamente (hot reload)
-4. git add . && git commit -m "nuevo artículo"
-5. git push              ← Vercel redespliega automáticamente
-```
+Auto-deploy en Vercel al hacer push a `main`. En este entorno el remoto HTTPS no
+tiene credenciales; el push se hace por SSH
+(`git@github.com:leozymandyas/anatomia-del-producto.git`).

@@ -1,304 +1,136 @@
 # Prompt de agente — Anatomía del Producto
 
-Este documento define el contexto y las instrucciones que debe seguir un agente de IA para realizar cambios estructurales en el sitio. Úsalo como prompt de sistema o pégalo al inicio de una conversación nueva.
+Contexto e instrucciones para que un agente de IA haga cambios estructurales en
+el sitio. Úsalo como prompt de sistema o pégalo al inicio de una conversación.
 
 ---
 
 ## Contexto del proyecto
 
-Sitio web estático construido con **Astro 6 + Starlight 0.39**. El contenido vive en archivos Markdown dentro de `src/content/docs/`. El deploy es automático en Vercel al hacer `git push` a la rama `main`.
+Sitio estático con **Astro 6 + Starlight 0.39**. Diseño **"edición digital"**
+(periódico/revista, *liquid-glass*): cabecera superior a todo el ancho, **sin
+sidebar**, tipografía Newsreader + IBM Plex Mono, y **dos temas** de color —
+azul (por defecto) y morado (para Obsidian). El contenido vive en
+`src/content/docs/`. Deploy automático en Vercel al hacer push a `main`.
 
-### Carpetas que almacenan contenido renderizado
-
-Las siguientes carpetas contienen los archivos que generan páginas visibles en el sitio. Cualquier archivo `.md` o `.mdx` que se cree aquí produce una URL pública:
+### Carpetas de contenido
 
 ```
-src/content/docs/          ← raíz del contenido
-├── index.mdx              → ruta: /
-├── *.md                   → páginas especiales (ej: /contacto/)
-└── <seccion>/             → cada subcarpeta es una sección del sidebar
-    └── *.md o *.mdx       → artículos de esa sección
+src/content/docs/
+├── index.mdx              → /
+├── contacto.md            → /contacto/
+└── <categoria>/           → estrategia | validacion | herramientas | obsidian
+    └── *.md | *.mdx       → artículos (URL PLANA, sin la categoría)
 ```
 
-Las páginas de tags y artículos (`/tags/`, `/articulos/`) se generan automáticamente desde `src/pages/` y no requieren edición de contenido.
-
-El archivo de configuración del sidebar y comportamiento del sitio es `astro.config.mjs`.
-El esquema de frontmatter está en `src/content.config.ts`.
-Los estilos globales están en `src/styles/custom.css`.
+- **URLs planas:** `src/content.config.ts` (`generateId`) descarta el segmento de
+  categoría. `src/content/docs/estrategia/x.md` → `/x/`.
+- La **categoría = carpeta** define color y tema (Obsidian → morado).
+  Definición en `src/lib/categorias.ts`.
+- `/articulos/`, `/tags/` y `/tags/<tag>/` se generan desde `src/pages/`.
+- Config del sitio: `astro.config.mjs`. Esquema de frontmatter:
+  `src/content.config.ts`. Estilos: `src/styles/custom.css`.
 
 ---
 
 ## Esquema de frontmatter
 
-Todo archivo de contenido acepta los siguientes campos en el bloque `---`:
-
 ```yaml
-title: string              # obligatorio — título del artículo
-description: string        # recomendado — descripción SEO
-tags: ["Tag Uno", "Tag"]   # opcional — lista de etiquetas
-pubDate: YYYY-MM-DD        # recomendado — fecha de publicación
-icon: string               # opcional — emoji ("🧠") o ruta de imagen ("/favicon.svg")
-pageTheme: string          # opcional — nombre del tema de color (ej: "terracota")
-relatedArticles:           # opcional — IDs de artículos relacionados
-  - seccion/nombre-archivo
-  - otra-seccion/nombre-archivo
+title: string              # obligatorio
+description: string        # recomendado — SEO y extracto
+tags: ["Tag Uno", "Tag"]   # opcional
+pubDate: YYYY-MM-DD        # recomendado — orden, anterior/siguiente, "último"
+icon: string               # opcional — emoji o ruta de imagen
+relatedArticles:           # opcional — SLUGS PLANOS (sin carpeta ni extensión)
+  - nombre-archivo
+landing: boolean           # opcional — portada a ancho completo, sin título auto
 ```
 
-El ID de un artículo es su ruta dentro de `src/content/docs/` sin extensión.
-Ejemplo: `src/content/docs/cabeza/mi-articulo.md` → ID: `cabeza/mi-articulo`
+El **slug** de un artículo es el nombre del archivo sin extensión (la categoría
+no entra). Ej.: `estrategia/mi-articulo.md` → slug `mi-articulo`.
+El **color/tema** salen de la carpeta, NO del frontmatter.
 
 ---
 
 ## Operaciones de contenido
 
-### Agregar una sección nueva
-
-1. Crear la carpeta:
-   ```
-   src/content/docs/<nombre-seccion>/
-   ```
-   Usar solo minúsculas, sin espacios ni tildes en el nombre de carpeta.
-
-2. Registrar la sección en el array `sidebar` de `astro.config.mjs`:
-   ```js
-   {
-     label: 'Nombre visible en el sidebar',
-     items: [{ autogenerate: { directory: '<nombre-seccion>' } }],
-   }
-   ```
-   Agregar la entrada en la posición correcta dentro del array, respetando el orden deseado.
-
-3. Crear al menos un artículo dentro de la carpeta (ver "Agregar un artículo").
-
----
-
-### Quitar una sección
-
-1. Eliminar todos los archivos dentro de `src/content/docs/<nombre-seccion>/`.
-2. Eliminar la carpeta `<nombre-seccion>/`.
-3. Eliminar la entrada correspondiente del array `sidebar` en `astro.config.mjs`.
-
-> Si algún artículo de otras secciones tiene `relatedArticles` apuntando a artículos de esta sección, eliminar esas referencias del frontmatter de cada artículo afectado.
-
----
-
-### Cambiar el nombre visible de una sección en el sidebar
-
-Editar el campo `label` de la entrada de la sección en `astro.config.mjs`:
-
-```js
-{ label: 'Nuevo nombre visible', items: [...] }
-```
-
-Esto no cambia las URLs — solo el texto que aparece en la navegación.
-
----
-
 ### Agregar un artículo
+1. Crear `src/content/docs/<categoria>/<slug>.md` (minúsculas, sin tildes ni espacios).
+2. Frontmatter mínimo: `title`, `description`, `tags`, `pubDate`.
+3. Escribir el contenido en Markdown. Aparece solo en `/articulos/`, tags y anterior/siguiente.
 
-1. Crear el archivo en la carpeta de la sección correspondiente:
-   ```
-   src/content/docs/<seccion>/<nombre-del-articulo>.md
-   ```
+### Agregar una categoría
+1. Crear la carpeta `src/content/docs/<categoria>/`.
+2. Añadirla en `src/lib/categorias.ts`: a `CATEGORIAS` y a `INFO_CATEGORIAS`
+   (`label`, `color` hex, `tema`: `'azul'` u `'obsidian'`).
+   `generateId` ya lee `CATEGORIAS` (URL plana automática). El filtro de
+   `/articulos/` itera `CATEGORIAS` (aparece solo).
 
-2. Escribir el frontmatter mínimo:
-   ```yaml
-   ---
-   title: Título del artículo
-   description: Descripción del artículo.
-   tags: ["Tag"]
-   pubDate: YYYY-MM-DD
-   ---
-   ```
+### Quitar / renombrar un artículo
+- Quitar: borrar el archivo. Revisar `relatedArticles` que lo apunten.
+- Renombrar: cambia el slug → cambia la URL. Actualizar `relatedArticles` que usen el slug viejo.
 
-3. Escribir el contenido en Markdown debajo del frontmatter.
+### Relacionar artículos
+Campo `relatedArticles` con **slugs planos**. Para relación bidireccional,
+agregarlo en ambos.
 
-Si la sección usa `autogenerate` en `astro.config.mjs`, el artículo aparece automáticamente en el sidebar. El orden por defecto es alfabético por nombre de archivo; se puede controlar con prefijos numéricos (`01-nombre.md`, `02-nombre.md`).
-
----
-
-### Quitar un artículo
-
-1. Eliminar el archivo `src/content/docs/<seccion>/<nombre-del-articulo>.md`.
-2. Si la sección lista artículos manualmente en `astro.config.mjs`, eliminar la entrada correspondiente.
-3. Revisar si otros artículos tienen `relatedArticles` apuntando al artículo eliminado y quitar esas referencias.
-
----
-
-### Renombrar un artículo
-
-Renombrar el archivo cambia la URL del artículo. Pasos:
-
-1. Renombrar el archivo (esto cambia la URL).
-2. Si la sección usa listado manual en `astro.config.mjs`, actualizar el `link` y el `label` de esa entrada.
-3. Actualizar cualquier `relatedArticles` en otros artículos que referencie el ID anterior.
-
----
-
-### Relacionar artículos entre sí
-
-Agregar el campo `relatedArticles` al frontmatter del artículo. Los valores son los IDs de los artículos a relacionar:
-
-```yaml
-relatedArticles:
-  - seccion-a/nombre-articulo-a
-  - seccion-b/nombre-articulo-b
-```
-
-Las tarjetas de artículos relacionados aparecen automáticamente al final del contenido. Para una relación bidireccional, agregar el campo en ambos artículos apuntándose mutuamente.
-
----
-
-### Cambiar el tema de color de un artículo
-
-Agregar o modificar el campo `pageTheme` en el frontmatter:
-
-```yaml
-pageTheme: terracota
-```
-
-Los temas disponibles están definidos en `src/styles/custom.css` bajo la sección `/* Temas de página */`. Para agregar un tema nuevo, ver la siguiente sección de este documento.
+### Tema de color de un artículo
+**No** se controla por frontmatter: depende de la carpeta-categoría. Para que un
+artículo sea morado, ponlo en `obsidian/` (o en una categoría con `tema:
+'obsidian'`). El tema lo aplica `src/components/overrides/Head.astro` poniendo
+`data-tema="obsidian"` en `<html>` según `temaDeDoc(entry)`.
 
 ---
 
 ## Operaciones de estilo
 
-### Cambiar la paleta de colores
-
-Todas las variables de color se definen al inicio de `src/styles/custom.css` dentro de `:root`. Las variables propias del proyecto tienen el prefijo `--c-`:
+### Paleta de colores (`src/styles/custom.css`, `:root`)
 
 ```css
 :root {
-    --c-bg:            #F7F8FB;   /* fondo del área de contenido (gris frío) */
-    --c-bg-sidebar:    #ECEEF4;   /* fondo del sidebar y header móvil */
-    --c-surface:       #FFFFFF;   /* tarjetas y bloques elevados */
-    --c-surface-soft:  #EEF1F7;   /* relleno sutil (chips, código, citas) */
-    --c-text:          #1E2433;   /* texto del cuerpo (pizarra fría) */
-    --c-text-strong:   #11151F;   /* negritas y títulos */
-    --c-text-muted:    #5A6478;   /* texto secundario */
-    --c-navy:          #3D5AE0;   /* acento principal (índigo) */
-    --c-navy-dark:     #2B3FB5;   /* hover del acento */
-    --c-navy-tint:     #E7EBFC;   /* fondos de acento suave */
-    --c-navy-tint-2:   #C7D0F5;   /* borde/hover de acento */
-
-    /* Escala pizarra fría (1=oscuro → 7=claro) */
-    --c-gray-1: #11151F;
-    --c-gray-2: #1E2433;
-    --c-gray-3: #49526A;
-    --c-gray-4: #79839A;
-    --c-gray-5: #A9B2C5;
-    --c-gray-6: #D3D9E4;
-    --c-gray-7: #E9ECF3;
-
-    /* Bordes */
-    --c-border:        #DEE3ED;
-    --c-border-soft:   #E8EBF2;
-    --c-border-dark:   #C7CEDC;
+    --paper-1: #F6F5F0;  --paper-2: #EEEDE6;   /* fondo (papel) */
+    --ink: #1A1814;  --ink-soft: #56524A;  --mono-muted: #7d7868;
+    --hairline: #D9D5CA;
+    /* Tema azul (por defecto) */
+    --accent: #2C5BA8;  --accent-dark: #21407E;  --accent-rgb: 44, 91, 168;
+}
+[data-tema='obsidian'] {                       /* Tema morado (Obsidian) */
+    --accent: #6A4FB0;  --accent-dark: #43356E;  --accent-rgb: 106, 79, 176;
 }
 ```
 
-Estas variables se mapean automáticamente a los tokens internos de Starlight en el bloque `:root, :root[data-theme='light'], :root[data-theme='dark']` que sigue en el mismo archivo. Cambiar `--c-*` propaga el cambio a todo el sitio.
+- Acento: editar `--accent` / `--accent-dark` / `--accent-rgb` (en ambos bloques
+  si quieres cambiar ambos temas). Si cambias el azul, retinta el logo
+  (`rgb(44,91,168)` en `src/assets/logo.svg` y `public/favicon.svg`).
+- Fondo: `--paper-1` / `--paper-2`. Texto: `--ink` / `--ink-soft`.
+- Color por categoría (chips/dots): `INFO_CATEGORIAS` en `src/lib/categorias.ts`.
 
-**Para cambiar el color de acento** (links, títulos, tags, sidebar activo), editar `--c-navy` y `--c-navy-dark`.
-**Para cambiar el fondo**, editar `--c-bg`.
-**Para cambiar el texto**, editar `--c-text`.
+### Tipografías
 
----
-
-### Cambiar tipografías
-
-Las fuentes se definen en dos lugares:
-
-**1. Carga de fuentes — `astro.config.mjs`**
-
-En el array `head`, hay una entrada `<link>` con la URL de Google Fonts. Para agregar o cambiar fuentes, modificar esa URL:
-
-```js
-{
-    tag: 'link',
-    attrs: {
-        rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=NombreFuente:wght@400;700&display=swap',
-    },
-}
-```
-
-**2. Asignación de fuentes — `src/styles/custom.css`**
-
-```css
-/* Cuerpo del texto */
-body {
-    font-family: 'Inter', system-ui, sans-serif;
-}
-
-/* Encabezados (h1–h6) */
-h1, h2, h3, h4, h5, h6,
-.sl-markdown-content h1,
-.sl-markdown-content h2,
-.sl-markdown-content h3 {
-    font-family: 'Fraunces', Georgia, serif;
-}
-
-/* Nombre del sitio en el sidebar */
-.site-title {
-    font-family: 'Fraunces', Georgia, serif;
-}
-```
-
-Para cambiar una fuente: reemplazar el nombre en `custom.css` y actualizar la URL en `astro.config.mjs` si es una fuente de Google Fonts diferente.
-
----
-
-### Agregar un tema de página nuevo
-
-Un tema de página cambia los colores del área de contenido sin afectar el sidebar ni el header.
-
-1. En `src/styles/custom.css`, localizar la sección `/* Temas de página */`.
-2. Agregar un bloque nuevo. Usar valores hex directos (no variables CSS) para evitar referencias circulares:
-
-```css
-.main-pane:has([data-page-theme='nombre-tema']) {
-    background-color: #HEXCOLOR;
-    color: #HEXCOLOR;
-    --c-navy:              #HEXCOLOR;
-    --c-text:              #HEXCOLOR;
-    --c-text-strong:       #HEXCOLOR;
-    --c-border:            rgba(r, g, b, 0.25);
-    --c-border-soft:       rgba(r, g, b, 0.18);
-    --sl-color-bg:         #HEXCOLOR;
-    --sl-color-text:       #HEXCOLOR;
-    --sl-color-white:      #HEXCOLOR;
-    --sl-color-text-accent:#HEXCOLOR;
-    --sl-color-accent:     #HEXCOLOR;
-    --sl-color-hairline:        rgba(r, g, b, 0.25);
-    --sl-color-hairline-light:  rgba(r, g, b, 0.18);
-}
-
-.main-pane:has([data-page-theme='nombre-tema']) a {
-    color: #HEXCOLOR;
-    text-decoration-color: rgba(r, g, b, 0.5);
-}
-
-.main-pane:has([data-page-theme='nombre-tema']) a:hover {
-    text-decoration-color: #HEXCOLOR;
-}
-
-.main-pane:has([data-page-theme='nombre-tema']) .tag-chip {
-    background-color: rgba(r, g, b, 0.18);
-    color: #HEXCOLOR;
-}
-```
-
-3. Usar el tema en el frontmatter del artículo: `pageTheme: nombre-tema`
+1. **Carga** en `astro.config.mjs` (`head`): un `<link>` de Google Fonts con
+   `Newsreader` + `IBM Plex Mono`. Cambiar el `href` para otras fuentes.
+2. **Asignación** en `custom.css`:
+   ```css
+   body { font-family: 'Newsreader', Georgia, serif; }   /* títulos y cuerpo */
+   .mono { font-family: 'IBM Plex Mono', monospace; }     /* etiquetas/UI */
+   ```
 
 ---
 
 ## Notas técnicas importantes
 
-- **No mover archivos fuera de `src/content/docs/`**. El loader de Starlight (`docsLoader()`) solo lee de esa carpeta. Archivos en otras ubicaciones no generan páginas.
-- **Nombres de carpetas y archivos**: solo minúsculas, sin espacios, sin tildes ni caracteres especiales. Los espacios o caracteres no-ASCII en rutas pueden causar errores en el build de producción (Vercel).
-- **Frontmatter de fechas**: el campo `pubDate` debe estar en formato `YYYY-MM-DD`. YAML lo parsea como Date automáticamente.
-- **IDs de artículos en `relatedArticles`**: son la ruta relativa desde `src/content/docs/` sin extensión. Si el ID no coincide con ningún archivo existente, la tarjeta simplemente no aparece (no rompe el build).
-- **Cambios en `astro.config.mjs`**: requieren reiniciar el servidor de desarrollo (`npm run dev`). En producción, el build de Vercel los toma automáticamente.
-- **Cambios en `src/styles/custom.css`**: se reflejan en caliente en desarrollo sin reiniciar.
-- **El archivo `.gitignore` excluye `.obsidian/`** — si usas Obsidian como editor, su carpeta de configuración no se sube al repositorio.
+- **No mover archivos fuera de `src/content/docs/`**: el loader (`docsLoader`) solo
+  lee de ahí.
+- **Nombres** de carpetas/archivos: minúsculas, sin espacios ni tildes (evita
+  errores en el build de Vercel).
+- **`pubDate`** en `YYYY-MM-DD` (YAML lo parsea como Date).
+- **`relatedArticles`**: slugs planos; un slug inexistente no rompe el build (la
+  tarjeta no aparece).
+- **No reintroducir `<ClientRouter />`** (view transitions) en `Head.astro`:
+  rompía la interactividad al navegar.
+- **Cambios en `astro.config.mjs`** o `src/content.config.ts` requieren reiniciar
+  `npm run dev`. Los de `custom.css` se reflejan en caliente.
+- **Deploy**: push a `main` → Vercel. En este entorno el remoto HTTPS no tiene
+  credenciales; usar SSH:
+  `git push git@github.com:leozymandyas/anatomia-del-producto.git main`.
+- **Verificar** con `npm run build` antes de subir (el aviso de `/404` es benigno).

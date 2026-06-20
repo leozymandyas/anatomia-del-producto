@@ -1,6 +1,8 @@
 # Guía de personalización — Anatomía del Producto
 
-Referencia práctica para mantener y cambiar el sitio sin tener que recordar cómo funciona por dentro.
+Referencia práctica para mantener y cambiar el sitio sin recordar cómo funciona
+por dentro. El diseño actual es **"edición digital"** (periódico/revista con
+estética *liquid-glass*).
 
 ---
 
@@ -9,7 +11,7 @@ Referencia práctica para mantener y cambiar el sitio sin tener que recordar có
 | Capa | Tecnología |
 |---|---|
 | Framework | Astro 6 |
-| Tema de documentación | Starlight 0.39 |
+| Tema base | Starlight 0.39 (adaptado a blog, sin sidebar) |
 | Hosting | Vercel (auto-deploy desde GitHub) |
 | Repositorio | `leozymandyas/anatomia-del-producto` |
 | Dominio | `anatomia-del-producto.com` |
@@ -18,117 +20,75 @@ Referencia práctica para mantener y cambiar el sitio sin tener que recordar có
 
 ## Paleta de colores
 
-Los colores están definidos como variables CSS en `src/styles/custom.css`, en el bloque `:root { /* Paleta de colores */ }`. Cambiar un valor aquí lo propaga a todo el sitio.
+Los colores son variables CSS en `src/styles/custom.css`, bloque `:root`.
+Cambiar un valor lo propaga a todo el sitio.
 
-> Nota: los tokens de acento conservan el nombre histórico `--c-navy` por compatibilidad con el resto del código; su valor es el índigo de marca.
-
-| Variable | Valor | Rol |
+| Token | Valor | Rol |
 |---|---|---|
-| `--c-bg` | `#F7F8FB` | Fondo del área de contenido (gris frío) |
-| `--c-bg-sidebar` | `#ECEEF4` | Fondo del sidebar y header móvil (algo más marcado) |
-| `--c-surface` | `#FFFFFF` | Tarjetas y bloques elevados |
-| `--c-surface-soft` | `#EEF1F7` | Relleno sutil (chips, código, citas) |
-| `--c-text` | `#1E2433` | Cuerpo de texto (pizarra fría) |
-| `--c-text-strong` | `#11151F` | Negritas y títulos |
-| `--c-text-muted` | `#5A6478` | Texto secundario |
-| `--c-navy` | `#3D5AE0` | Índigo: acento principal, tags, links activos |
-| `--c-navy-dark` | `#2B3FB5` | Hover sobre elementos de acento |
-| `--c-navy-tint` | `#E7EBFC` | Fondo de acento muy suave |
-| `--c-navy-tint-2` | `#C7D0F5` | Borde/hover de acento |
-| `--c-gray-1..7` | `#11151F` → `#E9ECF3` | Escala pizarra fría (texto secundario, bordes) |
-| `--c-border` | `#DEE3ED` | Bordes estándar |
-| `--c-border-soft` | `#E8EBF2` | Bordes interiores del sidebar |
-| `--c-border-dark` | `#C7CEDC` | Bordes con más contraste |
-| `--c-scroll-thumb` | `#B7C0D2` | Thumb de la scrollbar |
-| `--c-scroll-track` | `#E9ECF3` | Track de la scrollbar |
-| `--shadow-sm/md/lg` | — | Sombras frías suaves (tarjetas, botones) |
-| `--radius-sm/md/lg` | `0.5/0.75/1rem` | Radios de borde |
+| `--paper-1` | `#F6F5F0` | Fondo (papel), arriba |
+| `--paper-2` | `#EEEDE6` | Fondo (papel), abajo |
+| `--ink` | `#1A1814` | Texto principal |
+| `--ink-soft` | `#56524A` | Texto secundario |
+| `--mono-muted` | `#7d7868` | Etiquetas mono, meta |
+| `--hairline` | `#D9D5CA` | Líneas finas |
+| `--accent` | `#2C5BA8` | Acento (azul, por defecto) |
+| `--accent-dark` | `#21407E` | Acento oscuro / hover |
+| `--accent-rgb` | `44, 91, 168` | Versión RGB para vidrios y tintes |
 
-### Cómo cambiar la paleta completa
+### Dos temas: azul y morado (Obsidian)
 
-1. Abre `src/styles/custom.css`
-2. Edita los valores en el bloque `:root { /* Paleta de colores */ }`
-3. Los tokens de Starlight (`--sl-color-*`) están mapeados a estas variables en el bloque siguiente — no hace falta tocarlos
+El sitio cambia de tema según la **categoría** del artículo. El tema redefine
+`--accent` / `--accent-dark` / `--accent-rgb` / `--glow-rgb`:
+
+| Tema | Cuándo | Acento |
+|---|---|---|
+| Azul | por defecto (todo salvo Obsidian) | `#2C5BA8` / `#21407E` |
+| Morado | artículos en la carpeta `obsidian/` | `#6A4FB0` / `#43356E` |
+
+El morado se activa con el selector `[data-tema="obsidian"]`, que coloca
+`src/components/overrides/Head.astro` en `<html>` antes del primer paint, leyendo
+la categoría del artículo (`temaDeDoc` en `src/lib/categorias.ts`). Como todo
+(cabecera, logo, glow, tarjetas, citas, footer) usa `var(--accent)`, la página
+entera se vuelve morada sola.
+
+### Color por categoría
+
+Cada categoría tiene además un color propio (para chips y dots), en
+`src/lib/categorias.ts` → `INFO_CATEGORIAS`:
+
+| Categoría | Color | Tema |
+|---|---|---|
+| Estrategia | `#21407E` | azul |
+| Validación | `#2C5BA8` | azul |
+| Herramientas | `#2E78B8` | azul |
+| Obsidian | `#6A4FB0` | morado |
+
+### Cambiar la paleta completa
+
+1. Abre `src/styles/custom.css`.
+2. Edita los tokens en `:root` (papel/tinta) y, para el acento, los bloques
+   `:root` (azul) y `[data-tema='obsidian']` (morado).
+3. Si cambias el azul, retinta también el logo: `src/assets/logo.svg` y
+   `public/favicon.svg` usan el hex fijo `rgb(44,91,168)`.
 
 ---
 
 ## Tipografía
 
-Las fuentes vienen de Google Fonts y se cargan en `astro.config.mjs` (sección `head`).
+Se cargan desde Google Fonts en `astro.config.mjs` (sección `head`).
 
-| Fuente | Rol | Pesos cargados |
-|---|---|---|
-| **Inter** | Cuerpo de texto (párrafos, UI, sidebar) | 400–700 (variable) |
-| **Fraunces** | Encabezados h1–h6, títulos de tarjetas y nombre del sitio | 400–700 (variable, opsz 9–144) + itálica |
+| Fuente | Rol |
+|---|---|
+| **Newsreader** | Títulos y cuerpo del texto (serif) |
+| **IBM Plex Mono** | Etiquetas, meta, navegación, botones, chips |
 
-### Cómo cambiar una fuente (paso a paso)
+### Cómo cambiar una fuente
 
-**Paso 1 — Elige la fuente en Google Fonts**
-1. Ve a [fonts.google.com](https://fonts.google.com)
-2. Busca la fuente y haz clic en ella
-3. Selecciona los pesos que quieres (ej: 400, 700) con el botón "Get font"
-4. Haz clic en **"Get embed code"** → pestaña **@import** o **\<link\>**
-5. Copia la URL que aparece en el `href` del `<link>`
-
-**Paso 2 — Actualiza la URL en `astro.config.mjs`**
-
-Busca el bloque de Google Fonts en la sección `head` y reemplaza el `href`:
-
-```js
-{
-  tag: 'link',
-  attrs: {
-    rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Nueva+Fuente:wght@400;700&display=swap',
-  },
-},
-```
-
-Si cargas múltiples fuentes en la misma URL (recomendado para evitar peticiones extra), sepáralas con `&family=`:
-
-```
-?family=Fuente+Uno:wght@400;700&family=Fuente+Dos:ital,wght@0,400;1,400&display=swap
-```
-
-**Paso 3 — Actualiza `font-family` en `custom.css`**
-
-Según qué rol quieras cambiar, edita el selector correspondiente:
-
-```css
-/* Cuerpo de texto */
-body {
-  font-family: 'Nueva Fuente Sans', sans-serif;
-}
-
-/* Encabezados h1–h6 */
-h1, h2, h3, h4, h5, h6,
-.sl-markdown-content h1, ... {
-  font-family: 'Nueva Fuente Slab', serif;
-}
-
-/* Nombre del sitio en sidebar */
-.site-title {
-  font-family: 'Nueva Fuente Display', serif;
-}
-```
-
-**Paso 4 — Actualiza `Sidebar.astro` si cambias el nombre del sitio**
-
-El nombre "Anatomía del Producto" en el sidebar usa su propio `font-family` en
-`src/components/overrides/Sidebar.astro`, selector `.brand-link`. Cámbialo también.
-
-> **Importante:** si la nueva fuente solo tiene peso 400 (como IM Fell French Canon),
-> asegúrate de que el selector CSS no tenga `font-weight: 700` o el navegador
-> intentará sintetizar la negrita y puede verse mal.
-
-**Paso 5 — Verifica localmente**
-
-```bash
-npm run dev
-```
-
-Abre el navegador en `localhost:4321`, navega por el sitio y comprueba que la fuente
-carga correctamente en todos los contextos (desktop, móvil, sidebar).
+1. En [fonts.google.com](https://fonts.google.com) elige la fuente y copia la URL del `<link>`.
+2. Reemplaza el `href` del bloque de fuentes en `astro.config.mjs` (varias fuentes se separan con `&family=`).
+3. Ajusta `font-family` en `custom.css`:
+   - Cuerpo/títulos: `body` y el selector de `h1..h6`/`.sl-markdown-content` usan `'Newsreader'`.
+   - UI/etiquetas: la clase `.mono` y muchos componentes usan `'IBM Plex Mono'`.
 
 ---
 
@@ -136,120 +96,87 @@ carga correctamente en todos los contextos (desktop, móvil, sidebar).
 
 ```
 src/
-├── assets/
-│   └── logo.svg                  # Logo (figura vitruviana índigo)
+├── assets/logo.svg                # figura vitruviana (marca)
 ├── components/
-│   ├── overrides/
-│   │   ├── Header.astro          # Header reducido — solo visible en móvil
-│   │   ├── Sidebar.astro         # Sidebar con branding y botón de colapsar
-│   │   ├── PageSidebar.astro     # Vacío — sin TOC de página
-│   │   ├── MarkdownContent.astro # Inserta tags encima del contenido
-│   │   └── MobileMenuFooter.astro# Vacío — elimina selector de tema en móvil
-│   └── SidebarWithToc.astro      # Sidebar de navegación recursivo
+│   ├── overrides/                 # reemplazan componentes de Starlight
+│   │   ├── Head.astro             # tema morado + sin ClientRouter
+│   │   ├── Header.astro           # masthead + cabecera glass + nav + buscador
+│   │   ├── Footer.astro           # footer (sticky)
+│   │   ├── PageTitle.astro        # tarjeta de título glass (artículos)
+│   │   ├── MarkdownContent.astro  # cuerpo + relacionados + anterior/siguiente
+│   │   └── PageSidebar.astro      # vacío
+│   ├── HomePage.astro             # cuerpo de la portada
+│   ├── RelatedArticles.astro      # tarjetas glass
+│   ├── ArticlePagination.astro    # anterior / siguiente
+│   ├── BrandMark.astro            # logo temable
+│   └── UltimoArticulo.astro
 ├── content/
-│   ├── docs/                     # Artículos del sitio (.md / .mdx)
-│   │   ├── index.mdx             # Página de inicio
-│   │   ├── sobre-mi.md
-│   │   ├── contacto.md
-│   │   ├── articulos.md          # Índice de todos los artículos
-│   │   ├── cabeza/               # Sección "Cabeza"
-│   │   ├── caja-toracica/        # Sección "Caja torácica"
-│   │   └── extremidades/         # Sección "Extremidades"
-│   └── i18n/
-│       └── es.json               # Textos de interfaz en español
-├── styles/
-│   └── custom.css                # Todo el estilo personalizado del sitio
-└── content.config.ts             # Esquema de colecciones (docs + i18n)
+│   ├── docs/                      # contenido (.md / .mdx) por categoría
+│   └── i18n/es.json               # textos de interfaz
+├── lib/categorias.ts              # categorías, colores, temas y helpers
+├── pages/                         # /articulos/, /tags/, 404
+├── styles/custom.css              # todo el estilo del sitio
+└── content.config.ts              # esquema + URLs planas (generateId)
 
-public/
-└── favicon.svg                   # Copia del logo para favicon
-
-astro.config.mjs                  # Configuración principal: sidebar, fuentes, overrides
-guia-personalizacion.md           # Este archivo
+public/favicon.svg                 # favicon (copia del logo)
+astro.config.mjs                   # config: fuentes, overrides, sidebar (oculto)
 ```
 
 ---
 
 ## Agregar un artículo
 
-1. Crea un archivo `.md` en la carpeta de sección correcta:
+1. Crea un `.md` en la carpeta de la categoría:
    ```
-   src/content/docs/cabeza/nombre-del-articulo.md
+   src/content/docs/estrategia/nombre-del-articulo.md
    ```
-
-2. Agrega el frontmatter:
+2. Frontmatter mínimo:
    ```yaml
    ---
    title: Título del artículo
-   description: Frase corta que describe el artículo (SEO y vista previa).
-   tags: [producto, estrategia]
+   description: Frase corta (SEO y extracto en listados).
+   tags: ["IA", "Producto"]
+   pubDate: 2026-03-15
    ---
    ```
+3. Escribe el contenido en Markdown.
 
-3. Escribe el contenido en Markdown debajo del frontmatter.
-
-El artículo aparece automáticamente en el sidebar gracias a `autogenerate`.
-
-### Tags
-
-Los tags se renderizan como chips encima del artículo y enlazan a `/tags/<tag>/`. Se declaran en el frontmatter:
-
-```yaml
-tags: [producto, IA, estrategia]
-```
+El color y el tema salen de la carpeta. La URL es **plana**: el artículo de
+arriba queda en `/nombre-del-articulo/` (la categoría no aparece en la URL).
 
 ---
 
-## Cambiar el sidebar
+## Agregar o cambiar una categoría
 
-El sidebar se configura en `astro.config.mjs`, propiedad `sidebar`:
+Las categorías son carpetas bajo `src/content/docs/` declaradas en
+`src/lib/categorias.ts`.
 
-```js
-sidebar: [
-  { label: 'Anatomía del producto', items: [
-    { label: 'Inicio', link: '/' },
-    { label: 'Sobre mí', link: '/sobre-mi/' },
-  ]},
-  { label: 'Cabeza', items: [{ autogenerate: { directory: 'cabeza' } }] },
-  { label: 'Caja torácica', items: [{ autogenerate: { directory: 'caja-toracica' } }] },
-  { label: 'Extremidades', items: [{ autogenerate: { directory: 'extremidades' } }] },
-  { label: 'Todos los artículos', link: '/articulos/', attrs: { class: 'sidebar-sep-link' } },
-  { label: 'Tags', link: '/tags/' },
-]
-```
-
-- `autogenerate` genera los links desde los archivos de la carpeta automáticamente
-- La clase `sidebar-sep-link` pinta un separador visual encima del link
-
-### Sidebar colapsable
-
-El sidebar se puede colapsar en desktop. El estado se persiste en `localStorage` (`sidebar-collapsed`). Cuando está colapsado:
-
-- Ancho: `3.75rem` en lugar de `18.75rem` (variable `--sl-sidebar-width`)
-- Solo se ve el logo y el botón de colapsar; se ocultan buscador, nombre y links
-
-La lógica vive en `src/components/overrides/Sidebar.astro` y el CSS en `custom.css` bajo `/* Sidebar colapsable */`.
+1. Crea la carpeta (minúsculas, sin tildes ni espacios).
+2. Añádela a `CATEGORIAS` y a `INFO_CATEGORIAS` (etiqueta, `color`, `tema`) en
+   `src/lib/categorias.ts`. `generateId` (en `content.config.ts`) ya lee
+   `CATEGORIAS`, así que la URL seguirá siendo plana.
+3. Si quieres que salga como pastilla en los filtros del listado, no hay que
+   hacer nada extra: `/articulos/` itera `CATEGORIAS`.
 
 ---
 
 ## Internacionalización (textos de interfaz)
 
-Los textos de la UI en español están en `src/content/i18n/es.json`:
+`src/content/i18n/es.json`:
 
 ```json
 {
+  "search.label": "Buscar artículos…",
   "page.previousLink": "Anterior",
   "page.nextLink": "Siguiente"
 }
 ```
 
-Para cambiar una etiqueta de UI busca la clave en la documentación de Starlight i18n y agrégala aquí.
-
 ---
 
 ## Despliegue
 
-El sitio se despliega automáticamente en Vercel al hacer push a `main`.
+Auto-deploy en Vercel al hacer push a `main`:
 
 ```bash
 git add .
@@ -257,21 +184,20 @@ git commit -m "descripción del cambio"
 git push
 ```
 
-Para probar localmente antes de publicar:
+> En este entorno el remoto HTTPS no tiene credenciales; el push se hace por SSH:
+> `git push git@github.com:leozymandyas/anatomia-del-producto.git main`.
 
-```bash
-npm run dev       # servidor en http://localhost:4321
-npm run build     # compila y detecta errores
-npm run preview   # previsualiza el build
-```
+Probar antes de publicar: `npm run dev` (4321) · `npm run build` · `npm run preview`.
 
 ---
 
 ## Cambiar el logo / favicon
 
-1. Reemplaza `public/favicon.svg` y `src/assets/logo.svg` con el nuevo SVG
-2. El favicon se aplica automáticamente (configurado en `astro.config.mjs`)
-3. Si el navegador sigue mostrando el favicon anterior, fuerza recarga con `Ctrl+Shift+R`
+1. Reemplaza `public/favicon.svg` y `src/assets/logo.svg`.
+2. La marca de la cabecera usa el componente `BrandMark.astro` (SVG inline con el
+   círculo en `var(--accent)`, así se tiñe con el tema). Si cambias el dibujo,
+   actualízalo ahí también.
+3. Si el navegador conserva el favicon viejo, recarga con `Ctrl+Shift+R`.
 
 ---
 
@@ -279,11 +205,10 @@ npm run preview   # previsualiza el build
 
 | Decisión | Razón |
 |---|---|
-| Header oculto en desktop | Estilo tipo Godot Docs — el branding vive en el sidebar |
-| Sin TOC de página | Se eliminó el índice "en esta página" (ni panel derecho ni inline ni móvil); el contenido queda centrado |
-| Sidebar con tono propio | `--c-bg-sidebar` lo diferencia del área de contenido |
-| Modo oscuro/claro desactivado | La paleta se fuerza sobreescribiendo `[data-theme='dark']` con los mismos valores |
-| `--sl-color-black` = `--c-bg` | Corrige el fondo blanco del modal de búsqueda (Pagefind usa esta variable) |
-| Script `is:inline` en Sidebar | Restaura el estado colapsado antes del primer paint — evita flash del sidebar expandido |
-| i18n collection en content.config.ts | Necesario para que `es.json` sea procesado por Starlight |
-| `h1#_top` separado de `.sl-markdown-content` | El h1 del título lo genera Starlight fuera del contenido markdown, requiere selector propio |
+| Layout periódico, sin sidebar | El diseño "edición digital": la navegación vive en la cabecera superior |
+| Tema por categoría (`data-tema`) | Obsidian se distingue en morado sin marcar cada artículo a mano |
+| URLs planas (`generateId`) | La categoría agrupa y colorea, pero no ensucia la URL |
+| Sin view transitions (`ClientRouter`) | Rompían la interactividad (menú/colapso) al navegar entre páginas |
+| Footer sticky | Se mantiene al fondo en páginas cortas (cadena flex desde `.page`) |
+| Solo modo claro | La paleta se fuerza igual en claro y oscuro |
+| Estética liquid-glass | `backdrop-filter` en controles y destacados (botones, chips, tarjetas, citas) |
