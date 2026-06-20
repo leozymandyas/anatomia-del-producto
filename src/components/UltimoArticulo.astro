@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import { esArticulo } from '../lib/regiones';
+import { esArticulo } from '../lib/categorias';
 
 const allDocs = await getCollection('docs');
 const ultimo = allDocs
@@ -11,7 +11,7 @@ const ultimo = allDocs
 ---
 
 {ultimo && (
-	<a href={`/${ultimo.id}/`} class="btn-primario">
+	<a href={`/${ultimo.id}/`} class="btn-primary">
 		Último artículo
 		<span aria-hidden="true">→</span>
 	</a>

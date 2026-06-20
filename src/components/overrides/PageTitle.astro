@@ -1,39 +1,37 @@
 ---
+import BrandMark from '../BrandMark.astro';
+import { categoriaDeDoc, etiquetaCategoria, minutosLectura } from '../../lib/categorias';
+
 const { entry } = Astro.locals.starlightRoute;
 const data = entry.data as Record<string, unknown>;
 const isLanding = !!data.landing;
-const icon = data.icon as string | undefined;
-const isImage = !!icon && (icon.startsWith('/') || icon.startsWith('http://') || icon.startsWith('https://'));
-const isEmoji = !!icon && !isImage;
+
+const cat = categoriaDeDoc(entry);
+const catLabel = etiquetaCategoria(entry);
+const isArticle = !!cat;
+
+const pubDate = data.pubDate as Date | undefined;
+const fecha = pubDate
+	? new Intl.DateTimeFormat('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }).format(pubDate)
+	: '';
+const lectura = isArticle ? `${minutosLectura(entry)} min de lectura` : '';
 ---
 
-{/* Las portadas (landing: true) ocultan el título automático: el hero lo reemplaza. */}
-{!isLanding && (
-	<div class:list={['page-title-wrap', { 'has-icon': !!icon }]}>
-		{isImage && <img src={icon} alt="" aria-hidden="true" class="page-title-icon-img" />}
-		{isEmoji && <span class="page-title-icon" aria-hidden="true">{icon}</span>}
+{!isLanding && (isArticle ? (
+	<div class="article-head">
+		<div class="article-head-glow" aria-hidden="true"></div>
+		<div class="article-head-card">
+			<div class="crumb"><a href="/articulos/">Artículos</a> &nbsp;/&nbsp; <span>{catLabel}</span></div>
+			<span class="chip" style="--cat:var(--accent);--cat-rgb:var(--accent-rgb)">{catLabel}</span>
+			<h1 id="_top">{entry.data.title}</h1>
+			<div class="article-byline">
+				<span class="byline-mark" aria-hidden="true"><BrandMark /></span>
+				<span>Leonardo Ruano Hernández{fecha && ` · ${fecha}`}{lectura && ` · ${lectura}`}</span>
+			</div>
+		</div>
+	</div>
+) : (
+	<div class="page-title-simple">
 		<h1 id="_top">{entry.data.title}</h1>
 	</div>
-)}
-
-<style>
-	.page-title-wrap {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-		flex-wrap: wrap;
-	}
-
-	.page-title-icon {
-		font-size: 2rem;
-		line-height: 1;
-		flex-shrink: 0;
-	}
-
-	.page-title-icon-img {
-		width: 2.5rem;
-		height: 2.5rem;
-		object-fit: contain;
-		flex-shrink: 0;
-	}
-</style>
+))}

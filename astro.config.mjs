@@ -39,7 +39,7 @@ export default defineConfig({
 					tag: 'link',
 					attrs: {
 						rel: 'stylesheet',
-						href: 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Inter:wght@400..700&display=swap',
+						href: 'https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;0,6..72,800;1,6..72,400;1,6..72,500;1,6..72,600;1,6..72,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap',
 					},
 				},
 				{
@@ -73,18 +73,16 @@ export default defineConfig({
 					],
 				},
 				{
-					label: 'Cabeza',
-					items: [
-						{ autogenerate: { directory: 'cabeza' } },
-					],
+					label: 'Estrategia',
+					items: [{ autogenerate: { directory: 'estrategia' } }],
 				},
 				{
-					label: 'Caja torácica',
-					items: [{ autogenerate: { directory: 'caja-toracica' } }],
+					label: 'Validación',
+					items: [{ autogenerate: { directory: 'validacion' } }],
 				},
 				{
-					label: 'Extremidades',
-					items: [{ autogenerate: { directory: 'extremidades' } }],
+					label: 'Herramientas',
+					items: [{ autogenerate: { directory: 'herramientas' } }],
 				},
 				{
 					label: 'Obsidian',

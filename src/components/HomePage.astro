@@ -1,0 +1,114 @@
+---
+import { getCollection } from 'astro:content';
+import {
+	esArticulo, etiquetaCategoria, colorCategoria,
+	INFO_CATEGORIAS, CATEGORIAS, minutosLectura,
+} from '../lib/categorias';
+import UltimoArticulo from './UltimoArticulo.astro';
+import BrandMark from './BrandMark.astro';
+
+const all = await getCollection('docs');
+const articulos = all.filter(esArticulo);
+
+function hexToRgb(hex: string): string {
+	const n = parseInt(hex.replace('#', ''), 16);
+	return `${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}`;
+}
+function fechaCorta(d?: Date): string {
+	if (!d) return '';
+	return new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'numeric' })
+		.format(d).replace('.', '');
+}
+
+const DESCRIPCIONES: Record<string, string> = {
+	estrategia: 'Visión, decisiones y dirección de producto.',
+	validacion: 'MVPs, experimentos y aprendizaje real.',
+	herramientas: 'Stack, integraciones y flujos de trabajo.',
+	obsidian: 'Notas, sistemas y gestión del conocimiento.',
+};
+
+const secciones = CATEGORIAS.map((cat, i) => ({
+	n: String(i + 1).padStart(2, '0'),
+	name: INFO_CATEGORIAS[cat].label,
+	color: INFO_CATEGORIAS[cat].color,
+	desc: DESCRIPCIONES[cat],
+}));
+
+const ultimos = articulos
+	.filter((a) => a.data.pubDate)
+	.sort((a, b) => (b.data.pubDate as Date).getTime() - (a.data.pubDate as Date).getTime())
+	.slice(0, 4)
+	.map((a) => ({
+		id: a.id,
+		title: a.data.title,
+		excerpt: a.data.description ?? '',
+		cat: etiquetaCategoria(a),
+		color: colorCategoria(a),
+		date: fechaCorta(a.data.pubDate as Date),
+		read: `${minutosLectura(a)} min`,
+	}));
+---
+
+<div class="adp-page">
+
+	<section class="hero">
+		<div class="hero-kicker">El blog · Producto + IA</div>
+		<h1>Cómo se construyen los productos digitales que <em>funcionan</em>.</h1>
+		<p class="hero-lead">Diseccionamos el diseño, la validación y el lanzamiento de producto en la era de la IA — con técnicas prácticas y, sobre todo, criterio humano.</p>
+		<div class="hero-actions">
+			<UltimoArticulo />
+			<a href="/articulos/" class="btn-ghost">Explorar artículos</a>
+		</div>
+		<div class="byline">
+			<span class="byline-mark" aria-hidden="true"><BrandMark /></span>
+			Escrito a mano por Leonardo Ruano Hernández
+		</div>
+	</section>
+
+	<section class="secciones">
+		<div class="section-head" style="--surface-line:#1A1814;"><span>Secciones</span></div>
+		{secciones.map((s) => (
+			<a href="/articulos/" class="seccion-row" style={`--cat:${s.color}`}>
+				<span class="seccion-bar"></span>
+				<span class="seccion-n">{s.n}</span>
+				<span class="seccion-name">{s.name}</span>
+				<span class="seccion-desc">{s.desc}</span>
+				<span class="arrow">→</span>
+			</a>
+		))}
+	</section>
+
+	<section class="articles">
+		<div class="section-head">
+			<span>Últimos artículos</span>
+			<span>{ultimos.length} resultados</span>
+		</div>
+		{ultimos.map((a) => (
+			<a href={`/${a.id}/`} class="article-row" style={`--cat:${a.color}`}>
+				<span class="article-meta">
+					<span class="chip" style={`--cat:${a.color};--cat-rgb:${hexToRgb(a.color)}`}>{a.cat}</span>
+					<span class="date">{a.date} · {a.read}</span>
+				</span>
+				<span>
+					<span class="title">{a.title}</span>
+					<span class="excerpt">{a.excerpt}</span>
+				</span>
+				<span class="arrow">→</span>
+			</a>
+		))}
+	</section>
+
+	<section>
+		<div class="newsletter">
+			<div>
+				<div class="nl-kicker">Carta quincenal</div>
+				<div class="nl-title">Ideas de producto, sin ruido ni hype, directo a tu correo.</div>
+			</div>
+			<form onsubmit="return false;">
+				<input type="email" placeholder="tu@correo.com" aria-label="Tu correo" />
+				<button class="btn-primary" type="submit">Apuntarme</button>
+			</form>
+		</div>
+	</section>
+
+</div>

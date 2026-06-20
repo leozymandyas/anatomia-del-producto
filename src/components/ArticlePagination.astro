@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import { esArticulo } from '../lib/categorias';
+
+const { entry } = Astro.locals.starlightRoute;
+
+// Anterior / siguiente en orden cronológico (más antiguo → más reciente).
+const articulos = (await getCollection('docs'))
+	.filter(esArticulo)
+	.sort((a, b) => {
+		const ta = (a.data.pubDate as Date | undefined)?.getTime() ?? 0;
+		const tb = (b.data.pubDate as Date | undefined)?.getTime() ?? 0;
+		return ta - tb;
+	});
+
+const i = articulos.findIndex((d) => d.id === entry.id);
+const prev = i > 0 ? articulos[i - 1] : null;
+const next = i >= 0 && i < articulos.length - 1 ? articulos[i + 1] : null;
+---
+
+{(prev || next) && (
+	<nav class="article-pager" aria-label="Más artículos">
+		{prev ? (
+			<a href={`/${prev.id}/`} class="pager-card pager-prev">
+				<span class="pager-label">← Anterior</span>
+				<span class="pager-title">{prev.data.title}</span>
+			</a>
+		) : <span />}
+		{next ? (
+			<a href={`/${next.id}/`} class="pager-card pager-next">
+				<span class="pager-label">Siguiente →</span>
+				<span class="pager-title">{next.data.title}</span>
+			</a>
+		) : <span />}
+	</nav>
+)}

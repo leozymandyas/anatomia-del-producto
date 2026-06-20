@@ -1,31 +1,18 @@
 ---
 import '@astrojs/starlight/style/markdown.css';
 import RelatedArticles from '../RelatedArticles.astro';
-import Pagination from 'virtual:starlight/components/Pagination';
+import ArticlePagination from '../ArticlePagination.astro';
+import { esArticulo } from '../../lib/categorias';
 
-const entry = Astro.locals.starlightRoute.entry;
+const { entry } = Astro.locals.starlightRoute;
 const data = entry.data as Record<string, unknown>;
-const tags = (data.tags ?? []) as string[];
-const pageTheme = (data.pageTheme ?? '') as string;
-const relatedArticles = (data.relatedArticles ?? []) as string[];
-
-// Las portadas (landing) no muestran paginación anterior/siguiente.
 const isLanding = !!data.landing;
-
-function slugifyTag(tag: string) {
-	return tag.toLowerCase().replace(/\s+/g, '-');
-}
+const isArticle = esArticulo(entry);
+const relatedArticles = (data.relatedArticles ?? []) as string[];
 ---
 
-<div class="sl-markdown-content" data-page-theme={pageTheme || undefined} data-landing={isLanding ? '' : undefined}>
-	{tags.length > 0 && (
-		<div class="article-tags-header">
-			{tags.map((tag) => (
-				<a href={`/tags/${slugifyTag(tag)}/`} class="tag-chip">{tag}</a>
-			))}
-		</div>
-	)}
+<div class="sl-markdown-content" data-landing={isLanding ? '' : undefined}>
 	<slot />
-	<RelatedArticles ids={relatedArticles} />
-	{!isLanding && <Pagination />}
+	{isArticle && <RelatedArticles ids={relatedArticles} />}
+	{isArticle && <ArticlePagination />}
 </div>

@@ -1,10 +1,16 @@
 ---
-// Override de Head. Antes añadía <ClientRouter /> (view transitions de Astro),
-// pero las transiciones de vista rompían la interactividad al navegar: los
-// listeners adjuntados con <script> normal (p. ej. el botón de colapsar del
-// sidebar) no se vuelven a registrar tras una navegación cliente. Sin
-// ClientRouter cada navegación es una carga completa y todo se reinicializa.
+// Override de Head.
+// 1) Sin <ClientRouter /> (las view transitions rompían la interactividad al navegar).
+// 2) Activa el tema morado (Obsidian) marcando <html data-tema="obsidian"> antes
+//    del primer paint, según la categoría del artículo (ver src/lib/categorias.ts).
 import Default from '@astrojs/starlight/components/Head.astro';
+import { temaDeDoc } from '../../lib/categorias';
+
+const entry = Astro.locals.starlightRoute?.entry as any;
+const tema = entry ? temaDeDoc(entry) : 'azul';
 ---
 
 <Default {...Astro.props}><slot /></Default>
+{tema === 'obsidian' && (
+	<script is:inline>document.documentElement.setAttribute('data-tema', 'obsidian');</script>
+)}

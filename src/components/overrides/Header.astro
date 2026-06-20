@@ -1,19 +1,47 @@
 ---
-import SiteTitle from 'virtual:starlight/components/SiteTitle';
+import Search from 'virtual:starlight/components/Search';
+import BrandMark from '../BrandMark.astro';
+import { etiquetaCategoria } from '../../lib/categorias';
+
+const route = Astro.locals.starlightRoute;
+const entry = route?.entry as any;
+
+// Etiqueta del masthead (derecha): categoría del artículo o lema por defecto.
+const catLabel = entry ? etiquetaCategoria(entry) : '';
+const mhRight = catLabel || 'Producto + IA';
+
+// Fecha legible en español, capitalizada.
+const fechaRaw = new Intl.DateTimeFormat('es-ES', {
+	weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+}).format(new Date());
+const fecha = fechaRaw.charAt(0).toUpperCase() + fechaRaw.slice(1);
+
+// Marca de navegación activa según la ruta actual.
+const id = route?.id ?? '';
+const isArticulos = id.startsWith('articulos') || (!!catLabel);
+const isTemas = id.startsWith('tags');
+const isContacto = id.startsWith('contacto');
 ---
 
-<!-- En móvil muestra el título. En desktop el header está oculto via CSS
-     y el branding vive en el sidebar (estilo Godot). -->
-<div class="md:sl-hidden mobile-header-title">
-	<SiteTitle />
-</div>
+<div class="site-chrome">
+	<div class="masthead">
+		<span>Edición digital</span>
+		<span class="mh-date">{fecha}</span>
+		<span class="mh-edition">{mhRight}</span>
+	</div>
 
-<style>
-	@layer starlight.core {
-		.mobile-header-title {
-			display: flex;
-			align-items: center;
-			height: 100%;
-		}
-	}
-</style>
+	<div class="site-header">
+		<a href="/" class="brand">
+			<span class="brand-mark" aria-hidden="true"><BrandMark /></span>
+			<span class="brand-name">Anatomía del Producto</span>
+		</a>
+		<div class="header-right">
+			<div class="header-search"><Search /></div>
+			<nav class="site-nav">
+				<a href="/articulos/" class:list={{ 'is-active': isArticulos }}>Artículos</a>
+				<a href="/tags/" class:list={{ 'is-active': isTemas }}>Temas</a>
+				<a href="/contacto/" class:list={{ 'is-active': isContacto }}>Contacto</a>
+			</nav>
+		</div>
+	</div>
+</div>

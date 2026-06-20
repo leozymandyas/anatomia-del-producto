@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
-import { esArticulo } from '../../lib/regiones';
+import { esArticulo } from '../../lib/categorias';
 
 const allDocs = await getCollection('docs');
 const articulos = allDocs.filter((doc) => esArticulo(doc));
@@ -21,55 +21,20 @@ function slugifyTag(tag: string) {
 const tags = Object.entries(tagCounts).sort(([a], [b]) => a.localeCompare(b, 'es'));
 ---
 
-<StarlightPage frontmatter={{ title: 'Tags', description: 'Artículos organizados por tema.' }}>
-	<p>Explora los artículos agrupados por tema.</p>
-	<div class="tag-list">
-		{tags.map(([tag, count]) => (
-			<a href={`/tags/${slugifyTag(tag)}/`} class="tag-chip">
-				{tag}
-				<span class="tag-count">{count}</span>
-			</a>
-		))}
+<StarlightPage frontmatter={{ title: 'Temas', description: 'Artículos organizados por tema.', landing: true }}>
+	<div class="adp-page archivo">
+		<section class="archivo-head">
+			<div class="hero-kicker">Por tema</div>
+			<h1 class="archivo-title">Temas</h1>
+			<p class="archivo-intro">Explora los artículos agrupados por tema.</p>
+			<div class="tema-list">
+				{tags.map(([tag, count]) => (
+					<a href={`/tags/${slugifyTag(tag)}/`} class="tema-chip">
+						{tag}
+						<span class="tema-count">{count}</span>
+					</a>
+				))}
+			</div>
+		</section>
 	</div>
 </StarlightPage>
-
-<style>
-	.tag-list {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.6rem;
-		margin-block-start: 1.5rem;
-	}
-
-	.tag-chip {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.45rem;
-		padding: 0.3rem 0.85rem;
-		border-radius: 999px;
-		background-color: var(--c-surface-soft);
-		border: 1px solid var(--c-border);
-		color: var(--c-navy-dark);
-		font-size: 0.9rem;
-		font-weight: 600;
-		text-decoration: none;
-		transition: background-color 0.15s, color 0.15s, border-color 0.15s;
-	}
-
-	.tag-chip:hover {
-		background-color: var(--c-navy-tint);
-		border-color: var(--c-navy-tint-2);
-		color: var(--c-navy-dark);
-	}
-
-	.tag-count {
-		font-size: 0.72rem;
-		font-weight: 700;
-		color: #F6F8FF;
-		background-color: var(--c-navy);
-		padding: 0.05rem 0.45rem;
-		border-radius: 999px;
-		min-width: 1.3rem;
-		text-align: center;
-	}
-</style>

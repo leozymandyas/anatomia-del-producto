@@ -1,762 +1,687 @@
 /* ═══════════════════════════════════════════════════════════════════════════════
-   ANATOMÍA DEL PRODUCTO — Estilos globales personalizados
-   Paleta: gris frío (#F7F8FB) · tinta pizarra (#1E2433) · índigo (#3D5AE0)
-   Tipografía: Fraunces (display/títulos) · Inter (cuerpo/UI)
+   ANATOMÍA DEL PRODUCTO — "Edición digital"
+   Rediseño tipo periódico/revista con estética liquid-glass.
+   Tipografía: Newsreader (serif, títulos/cuerpo) · IBM Plex Mono (etiquetas/UI)
+   Dos temas: azul (por defecto) · morado (Obsidian, vía [data-tema="obsidian"])
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-/* ─── Paleta de colores ──────────────────────────────────────────────────────── */
-/*
-  Variables propias del proyecto. Cambiar un valor aquí lo propaga a todo el sitio.
-  La sección "Tokens Starlight" más abajo mapea estas variables a las internas de
-  Starlight, lo que permite forzar siempre el modo claro.
-
-  Nota: los tokens de acento conservan el nombre `--c-navy` por compatibilidad
-  con el resto del código; su valor es el índigo de marca.
-*/
+/* ─── Tokens ─────────────────────────────────────────────────────────────────── */
 :root {
-	/* ── Superficies */
-	--c-bg:                #F7F8FB;   /* gris frío muy claro — área de contenido */
-	--c-bg-sidebar:        #ECEEF4;   /* gris algo más marcado — sidebar y header móvil */
-	--c-surface:           #FFFFFF;   /* tarjetas y bloques elevados */
-	--c-surface-soft:      #EEF1F7;   /* relleno sutil — chips, código, citas */
+	/* Papel y tinta */
+	--paper-1:      #F6F5F0;
+	--paper-2:      #EEEDE6;
+	--ink:          #1A1814;
+	--ink-soft:     #56524A;
+	--mono-muted:   #7d7868;
+	--hairline:     #D9D5CA;
+	--surface-line: #1A1814;   /* línea gruesa de encabezado de sección */
 
-	/* ── Texto (pizarra fría, alta legibilidad) */
-	--c-text:              #1E2433;   /* cuerpo del artículo */
-	--c-text-strong:       #11151F;   /* negritas */
-	--c-text-muted:        #5A6478;   /* texto secundario */
+	/* Tema azul (por defecto) */
+	--accent:        #2C5BA8;
+	--accent-dark:   #21407E;
+	--accent-rgb:    44, 91, 168;
+	--accent-dark-rgb: 33, 64, 126;
+	--glow-rgb:      70, 120, 200;
+	--footer-from:   58, 108, 186;
+	--footer-to:     33, 64, 126;
+	--footer-ink:    #C6D6EF;
 
-	/* ── Acento / títulos — índigo (el token conserva el nombre --c-navy) */
-	--c-navy:              #3D5AE0;   /* índigo — títulos, tags, acento */
-	--c-navy-dark:         #2B3FB5;   /* índigo oscuro — hover */
-	--c-navy-tint:         #E7EBFC;   /* índigo muy claro — fondos sutiles */
-	--c-navy-tint-2:       #C7D0F5;   /* índigo claro — bordes/hover de acento */
+	/* Vidrio reutilizable */
+	--glass-control: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.52));
+	--glass-soft:    linear-gradient(180deg, rgba(252,251,247,0.66), rgba(252,251,247,0.36));
 
-	/* ── Escala pizarra fría (1 = más oscuro → 7 = más claro) */
-	--c-gray-1:            #11151F;
-	--c-gray-2:            #1E2433;
-	--c-gray-3:            #49526A;
-	--c-gray-4:            #79839A;
-	--c-gray-5:            #A9B2C5;
-	--c-gray-6:            #D3D9E4;
-	--c-gray-7:            #E9ECF3;
+	/* Radios */
+	--r-sm: 11px;
+	--r-md: 16px;
+	--r-lg: 22px;
 
-	/* ── Bordes */
-	--c-border:            #DEE3ED;   /* borde estándar */
-	--c-border-soft:       #E8EBF2;   /* borde suave (sidebar interno) */
-	--c-border-dark:       #C7CEDC;   /* borde con más contraste */
-
-	/* ── Scrollbar */
-	--c-scroll-thumb:      #B7C0D2;
-	--c-scroll-track:      #E9ECF3;
-	--c-scroll-thumb-hover:#79839A;
-
-	/* ── Sombras (frías, suaves) */
-	--shadow-sm: 0 1px 2px rgba(20, 30, 60, 0.05), 0 1px 3px rgba(20, 30, 60, 0.07);
-	--shadow-md: 0 6px 20px rgba(20, 30, 60, 0.08);
-	--shadow-lg: 0 18px 44px rgba(20, 30, 60, 0.12);
-
-	/* ── Radios */
-	--radius-sm: 0.5rem;
-	--radius-md: 0.75rem;
-	--radius-lg: 1rem;
+	--content-max: 1180px;
 }
 
-/* ─── Ancho del área de contenido ───────────────────────────────────────────── */
-/*
-  Starlight usa --sl-content-width como max-width del bloque de texto.
-  Con el sidebar expandido (~300px), el main-frame tiene ~980px disponibles.
-  Con 52rem (~832px) el contenido respira y la lectura es más cómoda.
-*/
-:root {
-	--sl-content-width: 52rem;
+/* Tema Obsidian (morado) — se activa con [data-tema="obsidian"] en <html>/<body> */
+:root[data-tema='obsidian'],
+[data-tema='obsidian'] {
+	--accent:        #6A4FB0;
+	--accent-dark:   #43356E;
+	--accent-rgb:    106, 79, 176;
+	--accent-dark-rgb: 67, 53, 110;
+	--glow-rgb:      120, 95, 200;
+	--footer-from:   122, 95, 200;
+	--footer-to:     74, 53, 134;
+	--footer-ink:    #D8CEEF;
 }
 
-/* ─── Tokens Starlight (mapeados desde la paleta) ───────────────────────────── */
-/*
-  Se sobreescriben tanto light como dark para mantener siempre la misma paleta.
-  --sl-color-black: corrige el fondo del modal de búsqueda (Pagefind usa esta
-  variable como fondo en modo claro).
-*/
+/* ─── Tokens de Starlight (mapeados; siempre claro) ─────────────────────────── */
 :root,
 :root[data-theme='light'],
 :root[data-theme='dark'] {
-	/* Fondos */
-	--sl-color-bg:             var(--c-bg);
-	--sl-color-bg-nav:         var(--c-bg-sidebar);
-	--sl-color-bg-sidebar:     var(--c-bg-sidebar);
-	--sl-color-black:          var(--c-bg);
-
-	/* Texto */
-	--sl-color-text:           var(--c-text);
-	--sl-color-text-accent:    var(--c-navy);
-	--sl-color-text-invert:    #F6F8FF;        /* texto claro sobre acento (link activo) */
-	--sl-color-white:          var(--c-gray-1);
-
-	/* Acento */
-	--sl-color-accent:         var(--c-navy);
-	--sl-color-accent-low:     var(--c-navy-tint);
-	--sl-color-accent-high:    var(--c-navy-dark);
-
-	/* Escala de grises */
-	--sl-color-gray-1:         var(--c-gray-1);
-	--sl-color-gray-2:         var(--c-gray-2);
-	--sl-color-gray-3:         var(--c-gray-3);
-	--sl-color-gray-4:         var(--c-gray-4);
-	--sl-color-gray-5:         var(--c-gray-5);
-	--sl-color-gray-6:         var(--c-gray-6);
-	--sl-color-gray-7:         var(--c-gray-7);
-
-	/* Bordes */
-	--sl-color-hairline:       var(--c-border);
-	--sl-color-hairline-light: var(--c-border-soft);
-	--sl-color-hairline-shade: var(--c-border-dark);
+	--sl-color-bg:             var(--paper-1);
+	--sl-color-bg-nav:         transparent;
+	--sl-color-bg-sidebar:     var(--paper-1);
+	--sl-color-black:          var(--paper-1);
+	--sl-color-text:           var(--ink);
+	--sl-color-text-accent:    var(--accent);
+	--sl-color-white:          var(--ink);
+	--sl-color-accent:         var(--accent);
+	--sl-color-accent-low:     rgba(var(--accent-rgb), 0.12);
+	--sl-color-accent-high:    var(--accent-dark);
+	--sl-color-gray-1:         #2b2925;
+	--sl-color-gray-2:         #3a372f;
+	--sl-color-gray-3:         var(--ink-soft);
+	--sl-color-gray-4:         var(--mono-muted);
+	--sl-color-gray-5:         #b8b2a4;
+	--sl-color-gray-6:         #ddd8cb;
+	--sl-color-gray-7:         #ECEBE3;
+	--sl-color-hairline:       var(--hairline);
+	--sl-color-hairline-light: rgba(217, 213, 202, 0.6);
+	--sl-color-hairline-shade: var(--hairline);
+	--sl-content-width:        43rem;   /* ~688px, ancho de lectura del artículo */
 }
 
-/* ─── Layout: sin header en desktop (estilo Godot) ──────────────────────────── */
+/* ─── Layout: cabecera arriba, sin sidebar ──────────────────────────────────── */
 /*
-  El header queda oculto en pantallas grandes; el branding vive en el sidebar.
-  En móvil se mantiene el header nativo de Starlight con el botón de menú.
+  Invertimos el modelo de Starlight: el sidebar izquierdo se oculta y la cabecera
+  (Header override) pasa a ser el chrome superior a todo el ancho. El contenido
+  fluye debajo, centrado por su propio contenedor.
 */
-@media (min-width: 50rem) {
-	.header {
-		display: none;
-	}
+:root { --sl-nav-height: 0rem; }
 
-	:root {
-		--sl-nav-height: 0rem;
-	}
+.header {
+	position: static;
+	height: auto;
+	padding: 0;
+	border: none;
+	background: transparent;
+	box-shadow: none;
+	inset: auto;
 }
 
-/* ─── Sidebar colapsable (solo desktop) ─────────────────────────────────────── */
-/*
-  El atributo data-sidebar-collapsed en <html> controla el estado.
-  Se persiste en localStorage y se restaura sin flash con un script is:inline
-  en src/components/overrides/Sidebar.astro.
-*/
-@media (min-width: 50rem) {
-	.sidebar-pane {
-		transition: width 0.2s ease-in-out;
-		border-inline-end: 1px solid var(--c-border);
-	}
-
-	.main-frame {
-		transition: padding-inline-start 0.2s ease-in-out,
-			padding-inline-end 0.2s ease-in-out;
-	}
-
-	:root[data-sidebar-collapsed] {
-		--sl-sidebar-width: 3.75rem;
-	}
-
-	[data-sidebar-collapsed] .sidebar-content {
-		padding-inline: 0.4rem;
-		align-items: center;
-	}
-
-	[data-sidebar-collapsed] .brand-name,
-	[data-sidebar-collapsed] .sidebar-search-wrapper,
-	[data-sidebar-collapsed] .top-level {
-		display: none;
-	}
-
-	[data-sidebar-collapsed] .sidebar-brand {
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		gap: 0.6rem;
-		border-bottom: none;
-		padding-bottom: 0.5rem;
-	}
-
-	[data-sidebar-collapsed] .collapse-btn {
-		transform: rotate(180deg);
-	}
+.sidebar-pane,
+nav.sidebar,
+.right-sidebar-container,
+.right-sidebar {
+	display: none !important;
 }
 
-/* ─── Footer siempre al fondo de la pantalla ────────────────────────────────── */
-@media (min-width: 50rem) {
-	.main-pane {
-		min-height: calc(100dvh - var(--sl-nav-height, 0rem));
-	}
+.main-frame {
+	padding-inline: 0 !important;
+	padding-top: 0 !important;
 }
 
-/* ─── Layout: centrar contenido, ocultar panel TOC derecho ──────────────────── */
-/*
-  El TOC se muestra inline dentro del sidebar (SidebarWithToc.astro),
-  por lo que el panel derecho nativo de Starlight se oculta.
-*/
-@media (min-width: 72rem) {
-	.right-sidebar-container {
-		display: none;
-	}
-
-	[data-has-sidebar][data-has-toc] .main-pane {
-		width: 100%;
-		order: unset;
-	}
-
-	.main-pane .sl-container {
-		margin-inline: auto;
-	}
+.main-pane {
+	width: 100%;
+	max-width: none;
 }
 
-/* ─── Scrollbar ─────────────────────────────────────────────────────────────── */
-* {
-	scrollbar-color: var(--c-scroll-thumb) var(--c-scroll-track);
-	scrollbar-width: thin;
+.main-pane > .main,
+.main-pane .sl-container {
+	background: transparent;
 }
 
-::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
+/* El área de contenido ocupa todo el ancho; cada bloque (artículo, home, etc.)
+   centra su propia columna con margin:auto. Así el artículo queda centrado en la
+   pantalla y no pegado a la izquierda. */
+.main-pane :is(main, .sl-container) {
+	max-width: none;
+	padding: 0;
+	margin: 0;
 }
 
-::-webkit-scrollbar-track {
-	background: var(--c-scroll-track);
+/* Footer pegado al fondo en páginas cortas: cadena flex-column desde .page hasta
+   el contenedor del footer; min-height:0 evita el bug de crecimiento en flex
+   anidado. El footer empuja con margin-top:auto. */
+.page { flex-direction: column; min-height: 100dvh; }
+.main-frame,
+.main-pane,
+.main-pane > main,
+.content-panel:has(.site-footer),
+.content-panel:has(.site-footer) > .sl-container {
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
 }
-
-::-webkit-scrollbar-thumb {
-	background-color: var(--c-scroll-thumb);
-	border-radius: 999px;
-	border: 2px solid var(--c-scroll-track);
-}
-
-::-webkit-scrollbar-thumb:hover {
-	background-color: var(--c-scroll-thumb-hover);
-}
-
-/* ─── Fix Firefox "sinopsis" en elementos <details> ─────────────────────────── */
-summary {
-	display: block;
-}
-summary::-webkit-details-marker,
-summary::marker {
+/* La fila intermedia (sidebar + contenido) debe crecer para que main-pane llene. */
+.main-frame > .lg\:sl-flex { flex: 1 1 auto; min-height: 0; }
+.site-footer { margin-top: auto; }
+/* El panel de título queda vacío en landing (PageTitle no renderiza): se colapsa,
+   junto con su borde y padding, para que el contenido empiece bajo la cabecera. */
+.main-pane:has(.sl-markdown-content[data-landing]) .content-panel:first-child {
 	display: none;
+}
+.main-pane:has(.sl-markdown-content[data-landing]) .content-panel {
+	border-top: none;
+	padding: 0;
+}
+.sl-markdown-content[data-landing] { max-width: none; }
+.sl-markdown-content[data-landing] > * + * { margin-top: 0; }
+
+/* Los paneles no añaden padding propio; cada bloque controla su columna. */
+.content-panel { padding: 0; border: none !important; }
+
+/* Cuerpo del artículo: columna de lectura centrada. */
+.sl-markdown-content:not([data-landing]) {
+	max-width: 760px;
+	margin-inline: auto;
+	padding: 50px clamp(20px, 5vw, 56px) 10px;
+}
+
+/* Fondo papel con resplandor de color (cambia con el tema) */
+html, body {
+	background:
+		radial-gradient(760px 380px at 90% -12%, rgba(var(--glow-rgb), 0.12), transparent 60%),
+		linear-gradient(180deg, var(--paper-1), var(--paper-2));
+	background-attachment: fixed;
+	min-height: 100vh;
 }
 
 /* ─── Tipografía ─────────────────────────────────────────────────────────────── */
 body {
-	font-family: 'Inter', system-ui, -apple-system, sans-serif;
+	font-family: 'Newsreader', Georgia, serif;
+	color: var(--ink);
 	-webkit-font-smoothing: antialiased;
-	text-rendering: optimizeLegibility;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.sl-markdown-content h1,
-.sl-markdown-content h2,
-.sl-markdown-content h3,
-.sl-markdown-content h4,
-.sl-markdown-content h5,
-.sl-markdown-content h6 {
-	font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
-	font-optical-sizing: auto;
-	letter-spacing: -0.01em;
-}
-
-/* Título del sitio en el sidebar */
-.site-title {
-	font-family: 'Fraunces', Georgia, serif;
-	color: var(--c-navy);
-}
-
-/* Título del artículo — h1 generado por Starlight fuera de .sl-markdown-content */
-h1#_top {
-	color: var(--c-text-strong);
-	font-weight: 600;
-	line-height: 1.12;
-	letter-spacing: -0.02em;
-}
-
-/* Encabezados dentro del cuerpo del artículo */
-.sl-markdown-content :is(h2, h3, h4, h5, h6) {
-	color: var(--c-text-strong);
-	font-weight: 600;
-}
-
-.sl-markdown-content h2 {
-	margin-top: 2.75rem;
-	padding-top: 0.2rem;
-	font-size: 1.6rem;
-	line-height: 1.25;
-}
-
-/* Marca de acento antes de cada h2 del cuerpo */
-.sl-markdown-content h2::before {
-	content: '';
-	display: block;
-	width: 2.25rem;
-	height: 3px;
-	border-radius: 999px;
-	background-color: var(--c-navy);
-	margin-bottom: 0.9rem;
-}
-
-.sl-markdown-content h3 {
-	margin-top: 2rem;
-	font-size: 1.25rem;
-}
-
-/* Texto en negrita */
-.sl-markdown-content strong {
-	color: var(--c-text-strong);
+h1, h2, h3, h4, h5, h6,
+.sl-markdown-content :is(h1, h2, h3, h4, h5, h6) {
+	font-family: 'Newsreader', Georgia, serif;
 	font-weight: 700;
+	letter-spacing: -0.02em;
+	color: var(--ink);
 }
 
-/* Cuerpo: ritmo de lectura cómodo */
-.sl-markdown-content {
-	font-size: 1.0625rem;
-	line-height: 1.75;
+.mono {
+	font-family: 'IBM Plex Mono', ui-monospace, monospace;
 }
 
-/* Ocultar ícono de ancla al pasar el cursor sobre encabezados */
-.sl-markdown-content .sl-anchor-link {
-	display: none;
+::placeholder { color: #9a9486; }
+
+/* ─── Chrome: masthead + cabecera + nav (Header override) ───────────────────── */
+.site-chrome { position: relative; z-index: 10; }
+
+/* El chrome y el contenido ocupan todo el ancho de la pantalla, con un padding
+   lateral consistente (no una columna centrada). */
+
+.masthead {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 16px;
+	padding: 9px clamp(20px, 5vw, 56px);
+	font-family: 'IBM Plex Mono', monospace;
+	font-size: 11px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--mono-muted);
+	border-bottom: 1px solid var(--hairline);
+}
+.masthead .mh-date { color: var(--ink); }
+.masthead .mh-edition { color: var(--accent); white-space: nowrap; }
+
+.site-header {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	padding: 16px clamp(20px, 5vw, 56px);
+	border-bottom: 3px solid var(--accent-dark);
+	background: var(--glass-soft);
+	backdrop-filter: blur(12px) saturate(1.15);
+	-webkit-backdrop-filter: blur(12px) saturate(1.15);
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
 }
 
-/* ─── Enlaces dentro del contenido ──────────────────────────────────────────── */
-/*
-  Se estilizan solo los enlaces de prosa real (dentro de párrafos, listas, tablas
-  o citas). Así los componentes de UI que viven dentro de .sl-markdown-content
-  (botones, tarjetas, chips, paginación) conservan su propio estilo.
-*/
-.sl-markdown-content :is(p, li, td, th, blockquote) a:not(:where(
-	.not-content *, .article-link, .tag-chip, .related-card,
-	.home-card, .btn-primario, .btn-ghost, .btn-ultimo, .pg-link, .back-link
-)) {
-	color: var(--c-navy);
-	text-decoration: underline;
-	text-decoration-color: var(--c-navy-tint-2);
-	text-decoration-thickness: 1.5px;
-	text-underline-offset: 0.18em;
-	transition: text-decoration-color 0.15s, color 0.15s;
+.brand {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	flex: none;
+	text-decoration: none;
+	color: var(--ink);
 }
-
-.sl-markdown-content :is(p, li, td, th, blockquote) a:not(:where(
-	.not-content *, .article-link, .tag-chip, .related-card,
-	.home-card, .btn-primario, .btn-ghost, .btn-ultimo, .pg-link, .back-link
-)):hover {
-	color: var(--c-navy-dark);
-	text-decoration-color: var(--c-navy);
+.brand-mark {
+	width: 34px; height: 34px; flex: none; display: block;
+	border-radius: 50%;
+	box-shadow: 0 1px 3px rgba(20,40,80,0.25), inset 0 1px 0 rgba(255,255,255,0.35);
 }
+.brand-mark svg { width: 100%; height: 100%; display: block; }
+.brand-name { font-size: 22px; font-weight: 700; letter-spacing: -0.015em; }
 
-/* ─── Citas ─────────────────────────────────────────────────────────────────── */
-.sl-markdown-content blockquote {
-	border-inline-start: 3px solid var(--c-navy);
-	background-color: var(--c-surface-soft);
-	border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-	padding: 0.85rem 1.25rem;
-	margin-inline: 0;
-	color: var(--c-text);
-	font-style: italic;
+.header-right { display: flex; align-items: center; gap: 22px; }
+
+.site-nav {
+	display: flex; align-items: center; gap: 22px;
+	font-family: 'IBM Plex Mono', monospace;
+	font-size: 13px; letter-spacing: 0.02em;
+	color: var(--ink-soft);
 }
+.site-nav a { text-decoration: none; color: var(--ink-soft); padding-bottom: 3px; transition: color 0.15s; }
+.site-nav a:hover { color: var(--accent); }
+.site-nav a[aria-current='page'],
+.site-nav a.is-active { color: var(--accent); border-bottom: 2px solid var(--accent); }
 
-.sl-markdown-content blockquote :last-child {
-	margin-bottom: 0;
-}
-
-/* ─── Código ────────────────────────────────────────────────────────────────── */
-.sl-markdown-content :not(pre) > code {
-	background-color: var(--c-surface-soft);
-	border: 1px solid var(--c-border);
-	border-radius: 0.35rem;
-	padding: 0.12em 0.4em;
-	font-size: 0.875em;
-	color: var(--c-navy-dark);
-}
-
-.sl-markdown-content pre {
-	border: 1px solid var(--c-border);
-	border-radius: var(--radius-md);
-	box-shadow: var(--shadow-sm);
-}
-
-/* ─── Imágenes y separadores ────────────────────────────────────────────────── */
-.sl-markdown-content img {
-	border-radius: var(--radius-md);
-	border: 1px solid var(--c-border);
-}
-
-.sl-markdown-content hr {
-	border: none;
-	border-top: 1px solid var(--c-border);
-	margin-block: 2.5rem;
-}
-
-/* ─── Tablas ────────────────────────────────────────────────────────────────── */
-.sl-markdown-content table {
-	border-radius: var(--radius-sm);
-	overflow: hidden;
-}
-
-.sl-markdown-content th {
-	background-color: var(--c-surface-soft);
-	color: var(--c-text-strong);
-	font-family: 'Inter', sans-serif;
-}
-
-/* ─── Sidebar: marca y branding ──────────────────────────────────────────────── */
-.site-title {
-	font-weight: 600;
-}
-
-/* ─── Sidebar: colores de links ──────────────────────────────────────────────── */
-.sidebar-pane a:not([aria-current='page']) {
-	color: var(--c-gray-3);
-}
-
-.sidebar-pane a:hover:not([aria-current='page']),
-.sidebar-pane a:focus:not([aria-current='page']) {
-	color: var(--c-navy);
-}
-
-/* ─── Sidebar: etiquetas de grupos (Cabeza, Caja torácica…) ─────────────────── */
-.group-label .large {
-	color: var(--c-text-strong);
-	font-family: 'Fraunces', Georgia, serif;
-}
-
-/* ─── Sidebar: separador antes de "Todos los artículos" ─────────────────────── */
-.sidebar a.sidebar-sep-link {
-	margin-top: 0.75rem;
-	padding-top: 0.75rem;
-	border-top: 1px solid var(--sl-color-hairline);
-	display: block;
-}
-
-/* ─── Sidebar: buscador ──────────────────────────────────────────────────────── */
-.sidebar-search-wrapper {
-	padding: 0.5rem 0 0.25rem;
-}
-
-.sidebar-search-wrapper button[data-open-modal] {
+/* Buscador en la cabecera — estilizamos el botón de Pagefind como pastilla glass */
+.header-search { width: clamp(160px, 22vw, 240px); }
+.header-search :is(button, [data-open-modal]) {
 	width: 100%;
-	border-radius: var(--radius-sm);
-	background-color: var(--c-surface);
-	border-color: var(--c-border);
-	box-shadow: var(--shadow-sm);
-	transition: border-color 0.15s, box-shadow 0.15s;
+	display: flex; align-items: center; gap: 9px;
+	border: 1px solid rgba(var(--accent-rgb), 0.38);
+	border-radius: 12px;
+	padding: 10px 14px;
+	background: var(--glass-control);
+	backdrop-filter: blur(16px) saturate(1.5);
+	-webkit-backdrop-filter: blur(16px) saturate(1.5);
+	box-shadow: 0 6px 16px -7px rgba(20,40,80,0.38), inset 0 1px 0 rgba(255,255,255,0.95);
+	font-family: 'IBM Plex Mono', monospace;
+	font-size: 13px;
+	color: var(--mono-muted);
+}
+.header-search :is(button, [data-open-modal]):hover { border-color: rgba(var(--accent-rgb), 0.7); }
+.header-search kbd { display: none; }
+
+/* ─── Footer (Footer override) ──────────────────────────────────────────────── */
+.site-footer {
+	margin-top: auto;
+	display: flex; justify-content: space-between; align-items: center;
+	gap: 30px; flex-wrap: wrap;
+	padding: 34px clamp(20px, 5vw, 56px);
+	background: linear-gradient(180deg, rgba(var(--footer-from), 0.5), rgba(var(--footer-to), 0.42));
+	backdrop-filter: blur(16px) saturate(1.4);
+	-webkit-backdrop-filter: blur(16px) saturate(1.4);
+	border-top: 1px solid rgba(255,255,255,0.4);
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.55);
+	color: var(--footer-ink);
+}
+.site-footer .ft-name { font-size: 20px; font-weight: 700; color: #fff; }
+.site-footer .ft-credit { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.03em; }
+
+/* ─── Contenedor de página ──────────────────────────────────────────────────── */
+.adp-page {
+	padding-inline: clamp(20px, 5vw, 56px);
 }
 
-.sidebar-search-wrapper button[data-open-modal]:hover {
-	border-color: var(--c-navy);
+/* ─── Botones glass ─────────────────────────────────────────────────────────── */
+.btn-primary, .btn-ghost {
+	display: inline-flex; align-items: center; gap: 8px;
+	font-family: 'IBM Plex Mono', monospace; font-size: 14px; letter-spacing: 0.02em;
+	padding: 15px 26px; border-radius: 13px; text-decoration: none; cursor: pointer;
+	transition: transform 0.15s, box-shadow 0.15s;
 }
-
-/* Ocultar el hint "Ctrl K" en el botón de búsqueda */
-button[data-open-modal] kbd {
-	display: none;
+.btn-primary {
+	color: #fff;
+	background: linear-gradient(180deg, rgba(var(--accent-rgb), 0.62), rgba(var(--accent-dark-rgb), 0.5));
+	backdrop-filter: blur(12px) saturate(1.4);
+	-webkit-backdrop-filter: blur(12px) saturate(1.4);
+	border: 1px solid rgba(255,255,255,0.5);
+	box-shadow: 0 10px 22px -10px rgba(20,40,80,0.45), inset 0 1px 0 rgba(255,255,255,0.6);
+	text-shadow: 0 1px 1px rgba(18,36,72,0.4);
 }
-
-/* ─── Botones reutilizables ──────────────────────────────────────────────────── */
-/*
-  Clases compartidas por la home, 404 y otros: .btn-primario (acento sólido)
-  y .btn-ghost (contorno sutil). Definidas globalmente para reutilizarse.
-*/
-.btn-primario {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.4rem;
-	padding: 0.62rem 1.4rem;
-	border-radius: var(--radius-sm);
-	background-color: var(--c-navy);
-	color: #F6F8FF;
-	text-decoration: none;
-	font-weight: 600;
-	font-size: 0.95rem;
-	box-shadow: var(--shadow-sm);
-	transition: background-color 0.15s, transform 0.15s, box-shadow 0.15s;
-}
-
-.btn-primario:hover {
-	background-color: var(--c-navy-dark);
-	transform: translateY(-1px);
-	box-shadow: var(--shadow-md);
-	color: #F6F8FF;
-	text-decoration: none;
-}
-
 .btn-ghost {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.4rem;
-	padding: 0.62rem 1.4rem;
-	border-radius: var(--radius-sm);
-	border: 1px solid var(--c-border-dark);
-	background-color: var(--c-surface);
-	color: var(--c-text-strong);
+	color: var(--accent-dark);
+	background: linear-gradient(180deg, rgba(255,255,255,0.42), rgba(255,255,255,0.16));
+	backdrop-filter: blur(12px) saturate(1.25);
+	-webkit-backdrop-filter: blur(12px) saturate(1.25);
+	border: 1px solid rgba(255,255,255,0.85);
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.92), 0 4px 12px -6px rgba(20,40,80,0.18);
+}
+.btn-primary:hover, .btn-ghost:hover { transform: translateY(-1px); }
+
+/* ─── Chips de categoría ────────────────────────────────────────────────────── */
+.chip {
+	display: inline-block;
+	font-family: 'IBM Plex Mono', monospace;
+	font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase;
+	color: var(--cat, var(--accent));
+	background: linear-gradient(180deg, rgba(var(--cat-rgb, var(--accent-rgb)), 0.14), rgba(var(--cat-rgb, var(--accent-rgb)), 0.05));
+	backdrop-filter: blur(8px) saturate(1.25);
+	-webkit-backdrop-filter: blur(8px) saturate(1.25);
+	border: 1px solid rgba(255,255,255,0.7);
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.85);
+	padding: 5px 12px; border-radius: 20px;
 	text-decoration: none;
+}
+
+/* ─── Encabezados de sección (líneas de periódico) ──────────────────────────── */
+.section-head {
+	display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+	font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+	letter-spacing: 0.14em; text-transform: uppercase; color: var(--mono-muted);
+	border-top: 3px solid var(--surface-line);
+	padding-top: 24px; margin-bottom: 8px;
+}
+
+/* ─── HOME ──────────────────────────────────────────────────────────────────── */
+.issue-strip {
+	display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+	padding: 13px clamp(20px, 5vw, 56px);
+	border-bottom: 1px solid rgba(255,255,255,0.6);
+	background: linear-gradient(180deg, rgba(252,251,247,0.55), rgba(252,251,247,0.28));
+	backdrop-filter: blur(10px) saturate(1.12);
+	-webkit-backdrop-filter: blur(10px) saturate(1.12);
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.75);
+	font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+}
+.issue-strip .label { letter-spacing: 0.1em; text-transform: uppercase; color: var(--mono-muted); }
+.issue-strip .dot { white-space: nowrap; }
+
+.hero { padding: clamp(48px, 7vw, 74px) 0 58px; max-width: 980px; }
+.hero-kicker {
+	font-family: 'IBM Plex Mono', monospace; font-size: 13px;
+	letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent);
+	margin-bottom: 24px;
+}
+.hero h1 {
+	font-size: clamp(40px, 6.2vw, 70px); line-height: 1.04; font-weight: 700;
+	letter-spacing: -0.025em; margin: 0 0 28px;
+}
+.hero h1 em {
+	display: inline-block; font-style: italic; font-weight: 600; color: var(--accent-dark);
+	background: linear-gradient(180deg, rgba(var(--accent-rgb), 0.16), rgba(var(--accent-rgb), 0.05));
+	backdrop-filter: blur(6px) saturate(1.2); -webkit-backdrop-filter: blur(6px) saturate(1.2);
+	border: 1px solid rgba(255,255,255,0.7); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+	padding: 0 16px; border-radius: 16px;
+}
+.hero-lead { font-size: clamp(18px, 2.4vw, 22px); line-height: 1.55; color: var(--ink-soft); max-width: 660px; margin: 0 0 36px; }
+.hero-actions { display: flex; align-items: center; gap: 14px; margin-bottom: 36px; flex-wrap: wrap; }
+.byline { display: flex; align-items: center; gap: 11px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--mono-muted); }
+.byline .avatar, .avatar {
+	border-radius: 50%; flex: none;
+	background: repeating-linear-gradient(45deg,#DAD6C9,#DAD6C9 5px,#E4E1D6 5px,#E4E1D6 10px);
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+}
+.byline .avatar { width: 30px; height: 30px; }
+.byline-mark { width: 30px; height: 30px; flex: none; display: block; opacity: 0.4; }
+.byline-mark svg { width: 100%; height: 100%; display: block; }
+
+/* Filas de secciones */
+.secciones { margin-bottom: 64px; }
+.seccion-row {
+	display: flex; align-items: center; gap: 24px;
+	padding: 22px 0; border-bottom: 1px solid var(--hairline);
+	text-decoration: none; color: var(--ink);
+	transition: padding-left 0.15s;
+}
+.seccion-row:hover { padding-left: 10px; }
+.seccion-bar { width: 8px; height: 44px; border-radius: 3px; flex: none; background: var(--cat); box-shadow: 0 2px 6px -1px rgba(20,40,80,0.4), inset 0 1px 0 rgba(255,255,255,0.4); }
+.seccion-n { font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: var(--cat); width: 30px; flex: none; }
+.seccion-name { font-size: clamp(20px, 2.6vw, 27px); font-weight: 600; letter-spacing: -0.01em; width: 230px; flex: none; }
+.seccion-desc { font-size: 18px; color: var(--ink-soft); flex: 1; }
+.seccion-row .arrow { font-family: 'IBM Plex Mono', monospace; color: var(--cat); flex: none; }
+
+/* Filas de artículos (listas planas) */
+.articles { margin-bottom: 56px; }
+.article-row {
+	display: grid; grid-template-columns: 170px 1fr 40px; gap: 30px; align-items: baseline;
+	padding: 26px 0; border-bottom: 1px solid var(--hairline);
+	text-decoration: none; color: var(--ink); transition: padding-left 0.15s;
+}
+.article-row:hover { padding-left: 8px; }
+.article-meta { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.article-meta .date { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--mono-muted); }
+.article-row .title { display: block; font-size: clamp(22px, 3vw, 30px); font-weight: 600; letter-spacing: -0.01em; line-height: 1.16; margin-bottom: 9px; }
+.article-row .excerpt { display: block; font-size: 18px; color: var(--ink-soft); line-height: 1.5; max-width: 620px; }
+.article-row .arrow { font-family: 'IBM Plex Mono', monospace; color: var(--cat, var(--accent)); font-size: 18px; }
+.no-results { padding: 40px 0; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: var(--mono-muted); border-bottom: 1px solid var(--hairline); }
+
+/* Newsletter */
+.newsletter {
+	display: flex; align-items: center; justify-content: space-between; gap: 30px; flex-wrap: wrap;
+	padding: 30px 34px; border-radius: var(--r-md); margin-bottom: 60px;
+	background: linear-gradient(180deg, rgba(var(--accent-rgb), 0.10), rgba(42,147,176,0.07));
+	backdrop-filter: blur(10px) saturate(1.1); -webkit-backdrop-filter: blur(10px) saturate(1.1);
+	border: 1px solid rgba(255,255,255,0.7);
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 10px 26px -18px rgba(20,40,80,0.4);
+}
+.newsletter .nl-kicker { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.newsletter .nl-title { font-size: clamp(20px, 2.6vw, 25px); font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; max-width: 560px; }
+.newsletter form { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.newsletter input {
+	font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--ink);
+	background: rgba(255,255,255,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+	border: 1px solid rgba(255,255,255,0.85); border-radius: var(--r-sm); padding: 12px 16px;
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+}
+.newsletter .btn-primary { padding: 13px 20px; font-size: 13px; border-radius: var(--r-sm); }
+
+/* ─── ARTÍCULO (base; se refina en fases siguientes) ────────────────────────── */
+.sl-markdown-content { font-size: 20px; line-height: 1.65; color: var(--ink); }
+.sl-markdown-content > :first-child { margin-top: 0; }
+.sl-markdown-content :is(h2) { font-size: 30px; margin: 44px 0 18px; }
+.sl-markdown-content :is(h3) { font-size: 24px; margin: 32px 0 14px; }
+.sl-markdown-content :is(p, li, td, th, blockquote) a:not(:where(.not-content *, .chip, .btn-primary, .btn-ghost, .seccion-row, .article-row)) {
+	color: var(--accent); text-decoration: underline; text-decoration-color: rgba(var(--accent-rgb), 0.4);
+	text-underline-offset: 0.18em; text-decoration-thickness: 1.5px;
+}
+.sl-markdown-content :is(p, li, td, th, blockquote) a:hover { color: var(--accent-dark); text-decoration-color: var(--accent); }
+.sl-markdown-content blockquote {
+	margin: 38px 0; padding: 30px 34px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.7);
+	background: linear-gradient(180deg, rgba(255,255,255,0.5), rgba(255,255,255,0.26)), linear-gradient(180deg, rgba(var(--accent-rgb), 0.16), rgba(var(--accent-rgb), 0.06));
+	backdrop-filter: blur(16px) saturate(1.45); -webkit-backdrop-filter: blur(16px) saturate(1.45);
+	box-shadow: 0 18px 40px -22px rgba(20,40,80,0.5), inset 5px 0 0 rgba(var(--accent-rgb), 0.85), inset 0 1px 0 rgba(255,255,255,0.85);
+	font-style: italic; font-size: 27px; line-height: 1.4; color: var(--accent-dark);
+}
+.sl-markdown-content :not(pre) > code {
+	font-family: 'IBM Plex Mono', monospace; font-size: 0.85em;
+	background: rgba(var(--accent-rgb), 0.08); border: 1px solid rgba(var(--accent-rgb), 0.2);
+	border-radius: 6px; padding: 0.1em 0.4em; color: var(--accent-dark);
+}
+
+/* ─── Listado / Archivo ─────────────────────────────────────────────────────── */
+.archivo-head { padding-top: clamp(40px, 6vw, 64px); padding-bottom: 28px; }
+.archivo-title { font-size: clamp(40px, 6vw, 60px); font-weight: 700; letter-spacing: -0.025em; margin: 0 0 28px; }
+
+.big-search {
+	display: flex; align-items: center; gap: 14px;
+	border: 1px solid rgba(var(--accent-rgb), 0.4); border-radius: 15px; padding: 17px 22px;
+	background: var(--glass-control);
+	backdrop-filter: blur(18px) saturate(1.55); -webkit-backdrop-filter: blur(18px) saturate(1.55);
+	box-shadow: 0 12px 28px -12px rgba(20,40,80,0.42), inset 0 1px 0 rgba(255,255,255,0.95);
+	margin-bottom: 22px;
+}
+.big-search .ico { color: var(--accent); font-size: 22px; }
+.big-search input {
+	border: none; outline: none; background: transparent; width: 100%;
+	font-family: 'IBM Plex Mono', monospace; font-size: 16px; color: var(--ink);
+}
+.big-search .count { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--mono-muted); white-space: nowrap; }
+
+.filters { display: flex; gap: 10px; flex-wrap: wrap; }
+.filter {
+	font-family: 'IBM Plex Mono', monospace; font-size: 13px; cursor: pointer;
+	padding: 9px 16px; border-radius: 20px;
+	color: var(--cat, var(--accent));
+	background: linear-gradient(180deg, rgba(var(--cat-rgb, var(--accent-rgb)), 0.14), rgba(var(--cat-rgb, var(--accent-rgb)), 0.05));
+	backdrop-filter: blur(8px) saturate(1.25); -webkit-backdrop-filter: blur(8px) saturate(1.25);
+	border: 1px solid rgba(255,255,255,0.7);
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.85);
+	transition: transform 0.12s;
+}
+.filter:hover { transform: translateY(-1px); }
+/* Activo: mismo lenguaje que el resto (tinte de su color), realzado con borde y
+   peso — sin un relleno sólido que haga ver "Todos" como otro componente. */
+.filter.is-active {
 	font-weight: 600;
-	font-size: 0.95rem;
-	transition: border-color 0.15s, color 0.15s, transform 0.15s;
+	color: var(--cat, var(--accent-dark));
+	background: linear-gradient(180deg, rgba(var(--cat-rgb, var(--accent-rgb)), 0.22), rgba(var(--cat-rgb, var(--accent-rgb)), 0.10));
+	border-color: var(--cat, var(--accent));
+	box-shadow: inset 0 0 0 1px var(--cat, var(--accent)), inset 0 1px 0 rgba(255,255,255,0.85);
 }
 
-.btn-ghost:hover {
-	border-color: var(--c-navy);
-	color: var(--c-navy);
-	transform: translateY(-1px);
-	text-decoration: none;
-}
+.archivo-list { padding-bottom: 80px; }
 
-/* ─── Temas de página ────────────────────────────────────────────────────────── */
-/*
-  Uso: añadir `pageTheme: terracota` al frontmatter del artículo para pintar toda
-  el área de página en terracota con texto crema. El selector :has() detecta el
-  atributo en el contenido y aplica los estilos sin tocar sidebar ni header.
-*/
-.main-pane:has([data-page-theme='terracota']) {
-	background-color: var(--c-navy);
-	color: #F6F8FF;
-	--c-navy:              #F6F8FF;
-	--c-text:              #F6F8FF;
-	--c-text-strong:       #F6F8FF;
-	--c-border:            rgba(246, 248, 255, 0.25);
-	--c-border-soft:       rgba(246, 248, 255, 0.18);
-	--sl-color-bg:         var(--c-navy);
-	--sl-color-text:       #F6F8FF;
-	--sl-color-white:      #F6F8FF;
-	--sl-color-text-accent:#F6F8FF;
-	--sl-color-accent:     #F6F8FF;
-	--sl-color-hairline:        rgba(246, 248, 255, 0.25);
-	--sl-color-hairline-light:  rgba(246, 248, 255, 0.18);
-}
+.archivo-intro { font-size: 18px; color: var(--ink-soft); margin: 0 0 22px; }
+.archivo-intro a, .archivo-back { color: var(--accent); text-decoration: none; }
+.archivo-intro a:hover { text-decoration: underline; }
 
-.main-pane:has([data-page-theme='terracota']) a {
-	color: #F6F8FF;
-	text-decoration-color: rgba(246, 248, 255, 0.5);
+/* Chips de tema */
+.tema-list { display: flex; flex-wrap: wrap; gap: 10px; padding-bottom: 70px; }
+.tema-chip {
+	display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+	font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: var(--accent-dark);
+	padding: 9px 16px; border-radius: 20px;
+	background: var(--glass-control);
+	backdrop-filter: blur(10px) saturate(1.3); -webkit-backdrop-filter: blur(10px) saturate(1.3);
+	border: 1px solid rgba(var(--accent-rgb), 0.25);
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+	transition: transform 0.12s, border-color 0.12s;
 }
+.tema-chip:hover { transform: translateY(-1px); border-color: rgba(var(--accent-rgb), 0.6); }
+.tema-count { font-size: 11px; font-weight: 600; color: #fff; background: var(--accent); border-radius: 999px; padding: 1px 7px; }
 
-.main-pane:has([data-page-theme='terracota']) a:hover {
-	text-decoration-color: #F6F8FF;
-}
-
-.main-pane:has([data-page-theme='terracota']) .tag-chip {
-	background-color: rgba(246, 248, 255, 0.18);
-	color: #F6F8FF;
-	border-color: transparent;
-}
-
-.main-pane:has([data-page-theme='terracota']) .tag-chip:hover {
-	background-color: rgba(246, 248, 255, 0.32);
-}
-
-/* ─── Tags de artículos ──────────────────────────────────────────────────────── */
-.article-tags-header {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.4rem;
-	margin-bottom: 1.75rem;
-}
-
-.tag-chip {
-	display: inline-flex;
-	align-items: center;
-	padding: 0.2rem 0.65rem;
-	border-radius: 999px;
-	background-color: var(--c-surface-soft);
-	border: 1px solid var(--c-border);
-	color: var(--c-navy-dark);
-	font-size: 0.8rem;
-	font-weight: 600;
-	text-decoration: none;
-	white-space: nowrap;
-	transition: background-color 0.15s, color 0.15s, border-color 0.15s;
-	line-height: 1.6;
-}
-
-.tag-chip:hover {
-	background-color: var(--c-navy-tint);
-	border-color: var(--c-navy-tint-2);
-	color: var(--c-navy-dark);
-}
-
-/* ─── TOC móvil: ocultar indicador de sección actual ───────────────────────── */
-mobile-starlight-toc .display-current {
-	display: none;
-}
-
-/* ─── Paginación anterior / siguiente ────────────────────────────────────────── */
-.pagination-links {
-	margin-top: 2rem;
-	gap: 0.6rem;
-}
-
-.pagination-links a {
-	padding: 0.5rem 0.8rem;
-	border-color: var(--c-border);
-	box-shadow: none;
-	color: var(--c-gray-3);
-	font-size: var(--sl-text-sm);
-	gap: 0.35rem;
-	border-radius: var(--radius-sm);
-}
-
-.pagination-links a:hover {
-	border-color: var(--c-navy);
-	color: var(--c-navy);
-}
-
-.pagination-links .link-title {
-	color: var(--c-navy);
-	font-size: var(--sl-text-sm);
-	line-height: 1.3;
-	font-weight: 600;
-}
-
-.pagination-links svg {
-	width: 1rem;
-	height: 1rem;
-	flex-shrink: 0;
-}
-
-/* ─── Landing: hero de portada y contacto ───────────────────────────────────── */
-/*
-  Clases compartidas por la portada (index) y Contacto. Ambas usan
-  `template: splash` en el frontmatter para quitar el TOC y el título
-  automático y sentirse como una introducción, no como un artículo.
-*/
-/* En portadas, el panel del título queda vacío (PageTitle no renderiza nada).
-   Lo ocultamos para que el hero empiece justo bajo el header/sidebar. */
-.main-pane:has(.sl-markdown-content[data-landing]) .content-panel:first-child {
-	display: none;
-}
-
-/* Sin la línea divisoria que separaba título de contenido. */
-.content-panel:has(.sl-markdown-content[data-landing]) {
-	border-top: none;
-}
-
-.hero {
-	text-align: center;
-	background:
-		radial-gradient(125% 90% at 50% -15%, var(--c-navy-tint) 0%, rgba(231, 235, 252, 0) 62%),
-		var(--c-surface);
-	border: 1px solid var(--c-border);
-	border-radius: var(--radius-lg);
-	padding: 3.75rem 1.75rem 3.25rem;
-	box-shadow: var(--shadow-sm);
-	margin-bottom: 3rem;
-}
-
-.hero--sm {
-	padding: 3.25rem 1.75rem 2.75rem;
-	margin-bottom: 2.5rem;
-}
-
-.hero-logo {
-	width: 66px;
-	height: 66px;
-	margin: 0 auto 1.5rem;
-	display: block;
-}
-
-.hero-eyebrow {
-	font-family: 'Inter', sans-serif;
-	font-size: 0.74rem;
-	font-weight: 700;
-	text-transform: uppercase;
-	letter-spacing: 0.16em;
-	color: var(--c-navy);
-	margin: 0 0 1rem;
-}
-
-.hero-title,
-.sl-markdown-content .hero-title {
-	font-family: 'Fraunces', Georgia, serif;
-	font-weight: 600;
-	font-size: clamp(2.1rem, 4.6vw, 3.1rem);
-	line-height: 1.08;
-	letter-spacing: -0.02em;
-	color: var(--c-text-strong);
-	max-width: 18ch;
-	margin: 0 auto 1.1rem;
-}
-
-.hero-lead {
-	font-size: 1.15rem;
-	line-height: 1.6;
-	color: var(--c-text-muted);
-	max-width: 52ch;
-	margin: 0 auto 2rem;
-}
-
-.hero-cta {
-	display: flex;
-	gap: 0.75rem;
-	justify-content: center;
-	flex-wrap: wrap;
-	margin: 0;
-}
-
-/* ─── Tarjetas de contacto ───────────────────────────────────────────────────── */
-.contact-cards {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-	gap: 0.9rem;
-	margin-block: 1.5rem 0;
-}
-
+/* Tarjetas de contacto */
+.contact-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; padding-bottom: 70px; }
 .contact-card {
-	display: flex;
-	align-items: center;
-	gap: 1rem;
-	padding: 1.3rem 1.4rem;
-	background-color: var(--c-surface);
-	border: 1px solid var(--c-border);
-	border-radius: var(--radius-md);
-	box-shadow: var(--shadow-sm);
-	text-decoration: none;
-	color: var(--c-text);
-	transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+	display: flex; align-items: center; gap: 16px; padding: 22px 24px; border-radius: 16px;
+	text-decoration: none; color: var(--ink);
+	background:
+		linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.3)),
+		linear-gradient(180deg, rgba(var(--accent-rgb), 0.10), rgba(var(--accent-rgb), 0.04));
+	backdrop-filter: blur(13px) saturate(1.3); -webkit-backdrop-filter: blur(13px) saturate(1.3);
+	border: 1px solid rgba(255,255,255,0.7);
+	box-shadow: 0 12px 28px -18px rgba(20,40,80,0.42), inset 0 1px 0 rgba(255,255,255,0.88);
+	transition: transform 0.15s, box-shadow 0.15s;
+}
+.contact-card:hover { transform: translateY(-2px); box-shadow: 0 18px 36px -20px rgba(20,40,80,0.5), inset 0 1px 0 rgba(255,255,255,0.9); }
+.contact-ico {
+	width: 46px; height: 46px; border-radius: 12px; flex: none;
+	display: flex; align-items: center; justify-content: center;
+	color: var(--accent); background: rgba(var(--accent-rgb), 0.12); border: 1px solid rgba(255,255,255,0.7);
+}
+.contact-ico svg { width: 22px; height: 22px; }
+.contact-label { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mono-muted); }
+.contact-value { display: block; font-size: 18px; font-weight: 600; color: var(--ink); overflow-wrap: anywhere; }
+
+/* 404 */
+.notfound { padding: clamp(60px, 12vw, 120px) 0; text-align: center; }
+.notfound h1 { font-size: clamp(48px, 9vw, 90px); margin: 0 0 12px; }
+.notfound p { font-size: 19px; color: var(--ink-soft); margin: 0 0 28px; }
+
+/* ─── Artículo: tarjeta de título en vidrio ─────────────────────────────────── */
+.page-title-simple { max-width: 980px; margin-inline: auto; padding: 56px clamp(20px, 5vw, 56px) 0; }
+.page-title-simple h1 { font-size: clamp(40px, 6vw, 60px); letter-spacing: -0.025em; }
+
+.article-head {
+	position: relative;
+	max-width: 760px;
+	margin: 44px auto 0;
+	padding-inline: clamp(20px, 5vw, 46px);
+}
+.article-head-glow {
+	position: absolute; inset: -26px -22px; z-index: 1; pointer-events: none; border-radius: 34px;
+	background:
+		radial-gradient(closest-side at 28% 30%, rgba(var(--accent-rgb), 0.34), transparent 72%),
+		radial-gradient(closest-side at 80% 74%, rgba(var(--accent-rgb), 0.24), transparent 70%);
+	filter: blur(30px);
+}
+.article-head-card {
+	position: relative; z-index: 3;
+	padding: clamp(28px, 5vw, 42px) clamp(24px, 5vw, 46px);
+	border-radius: 22px;
+	background:
+		linear-gradient(180deg, rgba(255,255,255,0.4), rgba(255,255,255,0.2)),
+		linear-gradient(160deg, rgba(var(--accent-rgb), 0.12), rgba(var(--accent-rgb), 0.04));
+	backdrop-filter: blur(18px) saturate(1.7);
+	-webkit-backdrop-filter: blur(18px) saturate(1.7);
+	border: 1px solid rgba(255,255,255,0.8);
+	box-shadow: 0 26px 56px -26px rgba(20,40,80,0.5), inset 0 1px 0 rgba(255,255,255,0.95);
+}
+.article-head-card .crumb {
+	font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--mono-muted); margin-bottom: 22px;
+}
+.article-head-card .crumb a, .article-head-card .crumb span { color: var(--accent); text-decoration: none; }
+.article-head-card .chip { margin-bottom: 22px; }
+.article-head-card h1 {
+	font-size: clamp(34px, 5.4vw, 56px); line-height: 1.04; font-weight: 700;
+	letter-spacing: -0.025em; margin: 0 0 24px;
+}
+.article-byline {
+	display: flex; align-items: center; gap: 14px;
+	font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--mono-muted);
 }
 
-.contact-card:hover {
-	border-color: var(--c-navy);
-	box-shadow: var(--shadow-md);
-	transform: translateY(-3px);
-	text-decoration: none;
+/* Capitular (drop cap) y primer párrafo destacado */
+.sl-markdown-content:not([data-landing]) > p:first-of-type {
+	font-size: 23px; line-height: 1.5; color: var(--ink);
+}
+.sl-markdown-content:not([data-landing]) > p:first-of-type::first-letter {
+	float: left; font-size: 78px; line-height: 0.74; font-weight: 700;
+	padding: 9px 14px 0 0; color: var(--accent);
 }
 
-.contact-card-icon {
-	width: 2.85rem;
-	height: 2.85rem;
-	border-radius: var(--radius-sm);
-	background-color: var(--c-navy-tint);
-	color: var(--c-navy);
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	flex-shrink: 0;
+/* Artículos relacionados + paginación (tarjetas glass) */
+.related { margin-top: 44px; }
+.related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; margin-top: 16px; }
+.related-card, .pager-card {
+	display: flex; flex-direction: column; gap: 8px; padding: 18px 20px; border-radius: 16px;
+	text-decoration: none; color: var(--ink);
+	background:
+		linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.3)),
+		linear-gradient(180deg, rgba(var(--accent-rgb), 0.08), rgba(var(--accent-rgb), 0.03));
+	backdrop-filter: blur(12px) saturate(1.3);
+	-webkit-backdrop-filter: blur(12px) saturate(1.3);
+	border: 1px solid rgba(255,255,255,0.7);
+	box-shadow: 0 12px 28px -20px rgba(20,40,80,0.4), inset 0 1px 0 rgba(255,255,255,0.85);
+	transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+.related-card:hover, .pager-card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 18px 34px -20px rgba(20,40,80,0.5), inset 0 1px 0 rgba(255,255,255,0.9);
+	border-color: rgba(var(--accent-rgb), 0.4);
+}
+.related-card .chip { align-self: flex-start; }
+.related-title { font-family: 'Newsreader', Georgia, serif; font-size: 19px; font-weight: 600; line-height: 1.22; }
+.related-desc {
+	font-size: 14px; color: var(--ink-soft); line-height: 1.45;
+	display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 
-.contact-card-icon svg {
-	width: 1.4rem;
-	height: 1.4rem;
-}
+.article-pager { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 22px; padding-bottom: 50px; }
+.pager-next { text-align: right; align-items: flex-end; }
+.pager-label { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.04em; color: var(--accent); }
+.pager-title { font-family: 'Newsreader', Georgia, serif; font-size: 17px; font-weight: 600; line-height: 1.25; }
 
-.contact-card-body {
-	display: flex;
-	flex-direction: column;
-	gap: 0.2rem;
-	min-width: 0;
+/* Tarjetas destacadas (asides de Starlight) en vidrio, tintadas con el tema */
+.sl-markdown-content .starlight-aside {
+	border: 1px solid rgba(255,255,255,0.7);
+	border-radius: 16px;
+	padding: 20px 24px;
+	background:
+		linear-gradient(180deg, rgba(255,255,255,0.5), rgba(255,255,255,0.26)),
+		linear-gradient(180deg, rgba(var(--accent-rgb), 0.14), rgba(var(--accent-rgb), 0.05));
+	backdrop-filter: blur(15px) saturate(1.4);
+	-webkit-backdrop-filter: blur(15px) saturate(1.4);
+	box-shadow: 0 16px 36px -22px rgba(20,40,80,0.45), inset 5px 0 0 rgba(var(--accent-rgb), 0.85), inset 0 1px 0 rgba(255,255,255,0.85);
 }
-
-.contact-card-label {
-	font-size: 0.7rem;
-	font-weight: 700;
-	text-transform: uppercase;
-	letter-spacing: 0.1em;
-	color: var(--c-text-muted);
+.sl-markdown-content .starlight-aside__title {
+	font-family: 'IBM Plex Mono', monospace;
+	color: var(--accent-dark);
+	letter-spacing: 0.02em;
 }
+.sl-markdown-content .starlight-aside__icon { color: var(--accent); }
 
-.contact-card-value {
-	font-family: 'Fraunces', Georgia, serif;
-	font-size: 1.02rem;
-	font-weight: 600;
-	color: var(--c-text-strong);
-	line-height: 1.25;
-	overflow-wrap: anywhere;
+/* ─── Scrollbar / detalles ──────────────────────────────────────────────────── */
+* { scrollbar-color: #c7c1b2 #ECEBE3; scrollbar-width: thin; }
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: #ECEBE3; }
+::-webkit-scrollbar-thumb { background-color: #c7c1b2; border-radius: 999px; border: 2px solid #ECEBE3; }
+::-webkit-scrollbar-thumb:hover { background-color: var(--accent); }
+
+summary { display: block; }
+summary::-webkit-details-marker, summary::marker { display: none; }
+
+/* ─── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 50rem) {
+	.masthead { font-size: 10px; gap: 8px; }
+	.masthead .mh-edition { display: none; }
+	.site-header { flex-wrap: wrap; gap: 14px; }
+	.brand-name { font-size: 19px; }
+	.header-right { width: 100%; justify-content: space-between; gap: 14px; }
+	.header-search { width: 100%; order: 2; }
+	.article-row { grid-template-columns: 1fr; gap: 10px; }
+	.article-row .arrow { display: none; }
+	.article-pager { grid-template-columns: 1fr; }
+	.pager-next { text-align: left; align-items: flex-start; }
+	.seccion-name { width: auto; }
+	.seccion-desc { display: none; }
 }

@@ -1,159 +1,86 @@
 ---
 import { getCollection } from 'astro:content';
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
-import { esArticulo } from '../../lib/regiones';
+import {
+	esArticulo, categoriaDeDoc, etiquetaCategoria, colorCategoria, minutosLectura,
+} from '../../lib/categorias';
 
-function slugifyTag(tag: string) {
-	return tag.toLowerCase().replace(/\s+/g, '-');
+function hexToRgb(hex: string): string {
+	const n = parseInt(hex.replace('#', ''), 16);
+	return `${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}`;
 }
 
 interface ArticuloItem {
-	id: string;
-	title: string;
-	description: string | undefined;
-	tags: string[];
+	id: string; title: string; excerpt: string;
+	cat: string; catKey: string; color: string; date: string; read: string;
 }
 
 export async function getStaticPaths() {
-	function slugifyTag(tag: string) {
-		return tag.toLowerCase().replace(/\s+/g, '-');
-	}
+	// getStaticPaths corre aislado: define aquí los helpers locales (solo los
+	// imports están disponibles, no las funciones del frontmatter).
+	const slugifyTag = (tag: string) => tag.toLowerCase().replace(/\s+/g, '-');
+	const fechaCorta = (d?: Date) =>
+		d ? new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'numeric' }).format(d).replace('.', '') : '';
 
 	const allDocs = await getCollection('docs');
 	const articulos = allDocs.filter((doc) => esArticulo(doc));
 
-	const tagMap: Record<string, ArticuloItem[]> = {};
+	const tagMap: Record<string, { label: string; items: ArticuloItem[] }> = {};
 	for (const doc of articulos) {
 		const tags = (doc.data.tags ?? []) as string[];
+		const item: ArticuloItem = {
+			id: doc.id,
+			title: doc.data.title,
+			excerpt: doc.data.description ?? '',
+			cat: etiquetaCategoria(doc),
+			catKey: categoriaDeDoc(doc)!,
+			color: colorCategoria(doc),
+			date: fechaCorta(doc.data.pubDate as Date | undefined),
+			read: `${minutosLectura(doc)} min`,
+		};
 		for (const tag of tags) {
 			const slug = slugifyTag(tag);
-			if (!tagMap[slug]) tagMap[slug] = [];
-			tagMap[slug].push({
-				id: doc.id,
-				title: doc.data.title,
-				description: doc.data.description,
-				tags,
-			});
+			if (!tagMap[slug]) tagMap[slug] = { label: tag, items: [] };
+			tagMap[slug].items.push(item);
 		}
 	}
 
-	return Object.entries(tagMap).map(([slug, items]) => ({
+	return Object.entries(tagMap).map(([slug, { label, items }]) => ({
 		params: { tag: slug },
-		props: {
-			tagLabel: items[0].tags.find((t) => slugifyTag(t) === slug) ?? slug,
-			articulos: items.sort((a, b) => a.title.localeCompare(b.title, 'es')),
-		},
+		props: { tagLabel: label, articulos: items.sort((a, b) => a.title.localeCompare(b.title, 'es')) },
 	}));
 }
 
-const { tagLabel, articulos } = Astro.props as {
-	tagLabel: string;
-	articulos: ArticuloItem[];
-};
+const { tagLabel, articulos } = Astro.props as { tagLabel: string; articulos: ArticuloItem[] };
 ---
 
 <StarlightPage
-	frontmatter={{
-		title: `Tag: ${tagLabel}`,
-		description: `Artículos sobre ${tagLabel} en Anatomía del Producto.`,
-	}}
+	frontmatter={{ title: `Tema: ${tagLabel}`, description: `Artículos sobre ${tagLabel}.`, landing: true }}
 >
-	<p>
-		{articulos.length} artículo{articulos.length !== 1 ? 's' : ''} con el tag <strong>{tagLabel}</strong>.
-	</p>
+	<div class="adp-page archivo">
+		<section class="archivo-head">
+			<div class="hero-kicker">Tema</div>
+			<h1 class="archivo-title">{tagLabel}</h1>
+			<p class="archivo-intro">
+				{articulos.length} artículo{articulos.length !== 1 ? 's' : ''} ·{' '}
+				<a href="/tags/" class="archivo-back">ver todos los temas</a>
+			</p>
+		</section>
 
-	<ul class="article-list">
-		{articulos.map((art) => (
-			<li>
-				<a href={`/${art.id}/`} class="article-link">
-					<span class="article-title">{art.title}</span>
-					{art.description && (
-						<span class="article-description">{art.description}</span>
-					)}
+		<section class="archivo-list">
+			{articulos.map((a) => (
+				<a href={`/${a.id}/`} class="article-row" style={`--cat:${a.color}`}>
+					<span class="article-meta">
+						<span class="chip" style={`--cat:${a.color};--cat-rgb:${hexToRgb(a.color)}`}>{a.cat}</span>
+						<span class="date">{a.date} · {a.read}</span>
+					</span>
+					<span>
+						<span class="title">{a.title}</span>
+						<span class="excerpt">{a.excerpt}</span>
+					</span>
+					<span class="arrow">→</span>
 				</a>
-				{art.tags.length > 0 && (
-					<div class="article-tags">
-						{art.tags.map((tag) => (
-							<a href={`/tags/${slugifyTag(tag)}/`} class="tag-chip">{tag}</a>
-						))}
-					</div>
-				)}
-			</li>
-		))}
-	</ul>
-
-	<a href="/tags/" class="back-link">← Ver todos los tags</a>
+			))}
+		</section>
+	</div>
 </StarlightPage>
-
-<style>
-	.article-list {
-		list-style: none;
-		padding: 0;
-		display: flex;
-		flex-direction: column;
-		gap: 0.9rem;
-		margin-block: 1.5rem;
-	}
-
-	.article-list li {
-		background-color: var(--c-surface);
-		border: 1px solid var(--c-border);
-		border-radius: var(--radius-md);
-		padding: 1.15rem 1.35rem;
-		box-shadow: var(--shadow-sm);
-		transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
-	}
-
-	.article-list li:hover {
-		border-color: var(--c-navy);
-		box-shadow: var(--shadow-md);
-		transform: translateY(-2px);
-	}
-
-	.article-link {
-		display: flex;
-		flex-direction: column;
-		gap: 0.3rem;
-		text-decoration: none;
-		color: var(--c-text);
-	}
-
-	.article-title {
-		font-family: 'Fraunces', Georgia, serif;
-		font-size: 1.2rem;
-		font-weight: 600;
-		color: var(--c-text-strong);
-		line-height: 1.25;
-	}
-
-	.article-link:hover .article-title {
-		color: var(--c-navy);
-	}
-
-	.article-description {
-		font-size: 0.9rem;
-		color: var(--c-text-muted);
-		line-height: 1.5;
-	}
-
-	.article-tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.4rem;
-		margin-top: 0.85rem;
-	}
-
-	.back-link {
-		display: inline-block;
-		margin-top: 0.5rem;
-		font-size: 0.9rem;
-		color: var(--c-navy);
-		text-decoration: none;
-		font-weight: 600;
-	}
-
-	.back-link:hover {
-		color: var(--c-navy-dark);
-		text-decoration: underline;
-	}
-</style>

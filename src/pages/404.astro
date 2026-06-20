@@ -2,13 +2,13 @@
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 ---
 
-<StarlightPage frontmatter={{ title: 'Página no encontrada', description: 'Esta página no existe o fue movida.' }}>
-	<p>La página que buscas no existe o fue movida.</p>
-	<a href="/" class="btn-primario btn-inicio">← Ir al inicio</a>
+<StarlightPage frontmatter={{ title: 'Página no encontrada', description: 'Esta página no existe o fue movida.', landing: true }}>
+	<div class="adp-page">
+		<div class="notfound">
+			<div class="hero-kicker">Error 404</div>
+			<h1>Página no encontrada</h1>
+			<p>La página que buscas no existe o fue movida.</p>
+			<a href="/" class="btn-primary">← Volver al inicio</a>
+		</div>
+	</div>
 </StarlightPage>
-
-<style>
-	.btn-inicio {
-		margin-top: 1.5rem;
-	}
-</style>
