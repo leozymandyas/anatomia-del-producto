@@ -167,14 +167,12 @@ nav.sidebar,
 }
 
 /* Fondo papel con resplandor de color (cambia con el tema).
-   Sin background-attachment:fixed (causa jank de scroll en móvil) y con
-   overflow-x:clip como red de seguridad contra desbordes horizontales. */
+   Sin background-attachment:fixed (causa jank de scroll en móvil). */
 html, body {
 	background:
 		radial-gradient(760px 380px at 90% -12%, rgba(var(--glow-rgb), 0.12), transparent 60%),
 		linear-gradient(180deg, var(--paper-1), var(--paper-2));
 	min-height: 100vh;
-	overflow-x: clip;
 }
 
 /* ─── Tipografía ─────────────────────────────────────────────────────────────── */
@@ -575,7 +573,7 @@ h1, h2, h3, h4, h5, h6,
 	padding-inline: clamp(20px, 5vw, 46px);
 }
 .article-head-glow {
-	position: absolute; inset: -26px -22px; z-index: 1; pointer-events: none; border-radius: 34px;
+	position: absolute; inset: -26px 8px; z-index: 1; pointer-events: none; border-radius: 34px;
 	background:
 		radial-gradient(closest-side at 28% 30%, rgba(var(--accent-rgb), 0.34), transparent 72%),
 		radial-gradient(closest-side at 80% 74%, rgba(var(--accent-rgb), 0.24), transparent 70%);
