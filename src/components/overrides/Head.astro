@@ -12,5 +12,10 @@ const tema = entry ? temaDeDoc(entry) : 'azul';
 
 <Default {...Astro.props}><slot /></Default>
 {tema === 'obsidian' && (
-	<script is:inline>document.documentElement.setAttribute('data-tema', 'obsidian');</script>
+	<script is:inline>
+		document.documentElement.setAttribute('data-tema', 'obsidian');
+		document.querySelectorAll('link[rel~="icon"]').forEach(function (l) {
+			l.href = l.href.replace('favicon.svg', 'favicon-obsidian.svg');
+		});
+	</script>
 )}
