@@ -1,6 +1,6 @@
 ---
 title: Cómo validar un MVP usando IA
-description: Una guía práctica para validar tu idea de producto digital antes de escribir una sola línea de código de producción.
+description: Validar es conseguir evidencia de que alguien quiere tu solución antes de invertir meses construyéndola. La IA acaba de bajar el costo de hacerlo bien.
 tags: ["MVP", "Validación", "IA"]
 pubDate: 2025-02-05
 icon: /favicon.svg
@@ -9,41 +9,48 @@ relatedArticles:
   - herramientas-ia-para-equipos-de-producto
 ---
 
-import YouTube from '../../../components/YouTube.astro';
+Validar antes de construir es el principio menos discutido y peor practicado del desarrollo de producto. Todos lo firman; pocos lo hacen. La IA no inventó la idea, pero bajó tanto su costo que ya no quedan excusas.
 
-Validar antes de construir es el principio más importante del desarrollo de producto moderno. La IA lo hace más accesible que nunca.
+## Qué es —y qué no es— validar
 
-## ¿Qué significa validar un MVP?
+Validar es conseguir **evidencia real de comportamiento**: que alguien usa, vuelve o paga, antes de que inviertas meses. No es preguntar "¿usarías esto?" en una encuesta —la gente miente para no quedar mal— ni acumular *me encanta la idea* en una reunión. Es poner algo enfrente de un usuario real y mirar qué hace, no qué dice.
 
-Validar significa obtener evidencia real de que alguien pagaría (o usaría activamente) tu solución antes de invertir meses de desarrollo. No es hacer encuestas. Es poner algo frente a usuarios reales y medir su comportamiento.
+El caso clásico sigue siendo el mejor ejemplo: antes de construir el producto completo, Dropbox publicó un simple video que mostraba cómo *funcionaría* la app y lo puso en una landing. Reunió más de 70,000 correos de gente en lista de espera de un día para otro. No habían construido casi nada; validaron la demanda con un video.
 
-## El flujo de validación con IA
+## El flujo, paso a paso
 
-### Paso 1: Define el problema con precisión
+### 1. Define el problema con precisión
 
-Usa un LLM para afinar tu definición del problema. Un prompt útil:
+Antes de cualquier solución, afila el problema. Un LLM es un buen sparring para esto:
 
-> "Soy [perfil]. Mi problema es [descripción]. Ayúdame a reformularlo desde la perspectiva del usuario, identificando el dolor real detrás de los síntomas."
+> "Soy [perfil]. Mi problema es [descripción]. Reformúlalo desde la perspectiva del usuario y ayúdame a separar el dolor real de los síntomas que veo."
 
-### Paso 2: Genera variaciones de tu propuesta de valor
+Si no puedes nombrar el dolor en una frase, no estás listo para construir nada.
 
-Pídele a la IA que genere 5 versiones distintas de tu propuesta de valor. Luego pruébalas en una landing page con tráfico real.
+### 2. Genera variantes de tu propuesta de valor
 
-### Paso 3: Prototipa la solución núcleo
+Pide al modelo cinco versiones distintas de tu propuesta —distintos ángulos, no sinónimos— y llévalas a una landing con tráfico real. Deja que los clics decidan cuál resuena, no tu intuición. Esto es una "prueba de puerta falsa" (*fake door*): Buffer la usó al inicio: una landing con un botón de "Planes y precios" que en realidad no llevaba a un producto; medían cuántos hacían clic para estimar el interés real antes de construir.
 
-Usa herramientas como Bolt.new, Lovable o Replit Agent para construir una versión funcional básica. El objetivo no es calidad de producción, sino aprendizaje.
+### 3. Prototipa solo el núcleo
 
-### Paso 4: Mide comportamiento, no opiniones
+Con Bolt.new, Lovable, v0 o Replit Agent construyes una versión funcional básica en horas. El objetivo no es calidad de producción: es aprendizaje. Y a veces ni siquiera necesitas código: Ryan Hoover lanzó lo que se convertiría en Product Hunt con una simple lista de correo en una herramienta llamada Linkydink; en dos semanas tenía 170 usuarios activos. Construye lo mínimo para que el usuario pueda *hacer* la acción central, nada más.
 
-Las opiniones mienten. El comportamiento no. Mide:
-- ¿Cuántos completan el flujo principal?
-- ¿Cuántos vuelven al segundo día?
-- ¿Cuántos preguntan cómo pagar o seguir usando la herramienta?
+### 4. Mide comportamiento, no opiniones
 
-## Video: Ejemplo de validación en 48 horas
+Las opiniones consuelan; el comportamiento informa. Mira:
 
-<YouTube id="dQw4w9WgXcQ" titulo="Validación de MVP en 48 horas" />
+- ¿Cuántos completan el flujo principal sin ayuda?
+- ¿Cuántos vuelven al día siguiente?
+- ¿Cuántos preguntan cómo pagar o cómo seguir usándolo?
 
-## Recursos descargables
+Esa última pregunta —*¿cómo te pago?*— es la señal más limpia que existe. Vale más que mil encuestas.
 
-[Descargar plantilla de validación de MVP (PDF)](/downloads/plantilla-validacion-mvp.pdf)
+## El sesgo que la IA agrava
+
+Construir nunca fue tan fácil, y ahí está el riesgo: cuando prototipar cuesta una tarde, la tentación es saltarse los pasos 1 y 2 e ir directo a construir. No lo hagas. Recuerda Klarna: desplegaron IA a toda velocidad sobre soporte al cliente y, donde el problema no estaba bien definido (casos emocionales, multi-paso), la satisfacción cayó y tuvieron que dar marcha atrás en 2025. La IA te deja correr más rápido; asegúrate de correr hacia el lado correcto. Un MVP construido en un día sobre un problema que a nadie le importa sigue siendo tiempo perdido —solo que ahora lo pierdes más rápido.
+
+{/* Fuentes:
+- Dropbox, video MVP y 70,000 correos: https://usercenteredstartup.com/3-ways-to-validate-your-startup-idea-without-building-a-damn-thing/
+- Buffer, fake door / Product Hunt (Linkydink, 170 usuarios): https://www.rst.software/blog/fake-door-mvp-what-it-is-and-should-you-use-it
+- Klarna, reversa 2025: https://lasoft.org/blog/klarna-walks-back-ai-overhaul-rehires-staff-after-customer-service-backlash/
+*/}
